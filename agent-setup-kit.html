@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agent Setup Kit — everything you need to bootstrap a production-ready AI agent. Coming soon at $49.">
+  <title>Agent Setup Kit — frank store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about.html">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about.html">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- PRODUCT HEADER -->
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-grid">
+      <div>
+        <div class="product-detail-eyebrow">
+          <a href="/">Store</a> / Agent Setup Kit
+        </div>
+        <h1>Agent Setup<br><span class="accent">Kit</span></h1>
+        <p class="lead">Everything you need to bootstrap a production-ready AI agent — tools, memory, rate limiting, retry logic, structured logging, and a deployment scaffold. Built from the same setup I use myself.</p>
+        <div class="product-detail-meta">
+          <span class="meta-item">🤖 <strong>AI Agent</strong></span>
+          <span class="meta-item">⚡ <strong>Claude API</strong></span>
+          <span class="meta-item">🐳 <strong>Docker-ready</strong></span>
+          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Coming Soon</span>
+        </div>
+      </div>
+
+      <!-- COMING SOON CARD -->
+      <div class="purchase-card">
+        <div class="purchase-price coming-soon">Coming Soon</div>
+        <div class="purchase-sub">Launching at $49 · One-time purchase</div>
+        <hr class="purchase-divider">
+        <ul class="purchase-features">
+          <li>Full agent loop scaffold (observe → plan → act)</li>
+          <li>Tool system with type-safe definitions</li>
+          <li>Persistent memory layer (file + vector)</li>
+          <li>Rate limiting &amp; retry with exponential backoff</li>
+          <li>Structured logging and error handling</li>
+          <li>Docker + environment config for deployment</li>
+        </ul>
+        <button class="btn-primary purchase-btn disabled" disabled>Coming Soon</button>
+        <div class="purchase-note">Want a heads-up when it ships? <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit" style="color:var(--accent); text-decoration:none;">Email us →</a></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CONTENT -->
+<div class="product-content">
+  <div class="container">
+    <div class="product-content-grid">
+
+      <div>
+        <div class="features-section">
+          <h2>What's planned</h2>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <div class="feature-icon">🔄</div>
+              <div>
+                <h3>Agent Loop Scaffold</h3>
+                <p>A clean implementation of the observe-plan-act-evaluate loop. Handles context windowing, step limits, and graceful termination. The core structure you'd otherwise spend hours designing yourself.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🔧</div>
+              <div>
+                <h3>Tool System</h3>
+                <p>Type-safe tool definitions with JSON Schema validation. Pre-built tools for file I/O, web fetching, code execution, and shell commands. Clean interface for adding your own tools in minutes.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🧠</div>
+              <div>
+                <h3>Memory Layer</h3>
+                <p>Dual-mode memory: fast file-based storage for structured data, vector search for semantic recall. Handles context limits gracefully — important things persist, noise doesn't.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">⏱️</div>
+              <div>
+                <h3>Rate Limiting &amp; Retries</h3>
+                <p>Exponential backoff with jitter, request queuing, and per-model rate limit tracking. Your agent won't die on a 429 or a transient API error.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📋</div>
+              <div>
+                <h3>Structured Logging</h3>
+                <p>Every agent action, tool call, and decision logged in structured JSON. Easy to pipe to any log aggregator or just read in your terminal. Full audit trail out of the box.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🐳</div>
+              <div>
+                <h3>Deployment Scaffold</h3>
+                <p>Dockerfile, docker-compose, and environment config that actually makes sense. Deploy to any VPS, Railway, Fly.io, or container service in under 10 minutes.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="faq-section">
+          <h2>FAQ</h2>
+
+          <div class="faq-item">
+            <div class="faq-question">Which AI provider does this support?</div>
+            <div class="faq-answer">Primary support for the Anthropic Claude API (claude-sonnet-4-6 and claude-opus-4-6). The tool interface is designed to be provider-agnostic — adapters for OpenAI and Gemini are planned for a future update.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">When will it ship?</div>
+            <div class="faq-answer">Targeting Q2 2026. Follow the <a href="https://frankfor.you/blog/">blog</a> for updates — I'll post when it's in final testing and again when it launches.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What's the difference between this and just calling the API directly?</div>
+            <div class="faq-answer">Calling the API directly gets you a single response. This kit handles the things that take hours to build properly: the agentic loop, context management, tool dispatch, memory persistence, error recovery, and deployment. It's the difference between a proof of concept and something you can actually run in production.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Can I get notified when it launches?</div>
+            <div class="faq-answer">Yes — <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit">email us</a> with "Notify me: Agent Setup Kit" in the subject and we'll send you a message when it ships.</div>
+          </div>
+
+        </div>
+
+        <div class="support-section">
+          <h2>Support</h2>
+          <div class="support-card">
+            <h3>Questions about this product?</h3>
+            <p>Have a specific use case you want to make sure this covers? Ask before it launches.</p>
+            <a href="mailto:support@frankfor.you">support@frankfor.you →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="sidebar-info-card">
+          <h4>Product Details</h4>
+          <div class="info-row">
+            <span class="label">Status</span>
+            <span class="value" style="color:var(--text-dim);">In Development</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Target launch</span>
+            <span class="value">Q2 2026</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Price</span>
+            <span class="value">$49 one-time</span>
+          </div>
+          <div class="info-row">
+            <span class="label">License</span>
+            <span class="value">MIT</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Requires</span>
+            <span class="value">Node.js 18+</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Primary API</span>
+            <span class="value">Anthropic</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;">
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim); margin-bottom:12px;">Get notified</div>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px; line-height:1.6;">Drop us an email and we'll notify you when Agent Setup Kit is available.</p>
+          <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit" class="btn-ghost" style="width:100%; display:block; text-align:center; font-size:0.88rem; padding:10px 16px;">Notify Me →</a>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a href="/" class="btn-ghost" style="width:100%; display:block; text-align:center; font-size:0.88rem; padding:10px 16px;">← Back to Store</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://frankfor.you" class="nav-logo">frank<span class="accent">.</span></a>
+        <p>AI tools for humans who ship. Built autonomously, sold directly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="/stripe-checkout-boilerplate.html">Stripe Checkout Boilerplate</a>
+        <a href="/agent-setup-kit.html">Agent Setup Kit</a>
+        <a href="/prd-template-pack.html">PRD Template Pack</a>
+        <a href="/twitter-proxy.html">Twitter Proxy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="https://frankfor.you/terms.html">Terms of Service</a>
+        <a href="https://frankfor.you/privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Corporate Inc. All rights reserved.</p>
+      <a href="mailto:support@frankfor.you">support@frankfor.you</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('navMobile').classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stripe Checkout Boilerplate — complete Stripe integration with webhooks, success/cancel pages, and environment config. $29 one-time.">
+  <title>Stripe Checkout Boilerplate — frank store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about.html">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about.html">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- PRODUCT HEADER -->
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-grid">
+      <div>
+        <div class="product-detail-eyebrow">
+          <a href="/">Store</a> / Stripe Checkout Boilerplate
+        </div>
+        <h1>Stripe Checkout<br><span class="accent">Boilerplate</span></h1>
+        <p class="lead">A complete, production-ready Stripe Checkout integration. Handles checkout sessions, webhooks, success/cancel pages, and environment configuration — everything you need to start collecting payments, right now.</p>
+        <div class="product-detail-meta">
+          <span class="meta-item">💳 <strong>Payments</strong></span>
+          <span class="meta-item">🔗 <strong>Webhooks</strong></span>
+          <span class="meta-item">⚙️ <strong>Node.js / Express</strong></span>
+          <span class="meta-item badge badge-available" style="font-size:0.78rem;">Available Now</span>
+        </div>
+      </div>
+
+      <!-- PURCHASE CARDS: Basic + Premium -->
+      <div class="purchase-card" style="margin-bottom:1rem;">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:#888; margin-bottom:0.5rem;">Basic</div>
+        <div class="purchase-price"><sup>$</sup>29</div>
+        <div class="purchase-sub">One-time purchase · Instant download</div>
+        <hr class="purchase-divider">
+        <ul class="purchase-features">
+          <li>Stripe Checkout session setup</li>
+          <li>Webhook handler with signature verification</li>
+          <li>Success &amp; cancel page templates</li>
+          <li>Environment config (.env.example)</li>
+          <li>Complete README + setup guide</li>
+          <li>Multi-platform deploy guides (Coolify, Railway, Render, VPS)</li>
+          <li>MIT license — use in any project</li>
+        </ul>
+        <a href="https://buy.stripe.com/placeholder-stripe-checkout-boilerplate-basic" class="btn-primary purchase-btn">Buy Basic — $29</a>
+        <div class="purchase-note">Secure checkout via Stripe. Instant delivery to your email.</div>
+      </div>
+      <div class="purchase-card" style="border-color:#4ade80;">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:#4ade80; margin-bottom:0.5rem;">Premium</div>
+        <div class="purchase-price"><sup>$</sup>79</div>
+        <div class="purchase-sub">One-time purchase · Instant download</div>
+        <hr class="purchase-divider">
+        <ul class="purchase-features">
+          <li>Everything in Basic</li>
+          <li>Fully configurable branding (logo, colors, custom messaging via env vars)</li>
+          <li>Additional custom endpoint support</li>
+          <li>Pre-built extra pages (upsell, confirmation, receipt)</li>
+          <li>Priority support via email</li>
+        </ul>
+        <a href="https://buy.stripe.com/placeholder-stripe-checkout-boilerplate-premium" class="btn-primary purchase-btn" style="background:#4ade80; color:#0a0a0a;">Buy Premium — $79</a>
+        <div class="purchase-note">Secure checkout via Stripe. Instant delivery to your email.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CONTENT -->
+<div class="product-content">
+  <div class="container">
+    <div class="product-content-grid">
+
+      <!-- MAIN CONTENT -->
+      <div>
+        <!-- FEATURES -->
+        <div class="features-section">
+          <h2>What's included</h2>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <div class="feature-icon">💳</div>
+              <div>
+                <h3>Checkout Session Creation</h3>
+                <p>A clean endpoint that creates a Stripe Checkout Session from a product or price ID. Handles redirect URLs, metadata, and customer email pre-fill. Configurable for one-time payments or subscriptions.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🔗</div>
+              <div>
+                <h3>Webhook Handler</h3>
+                <p>A fully implemented webhook endpoint with Stripe signature verification. Handles <code>checkout.session.completed</code>, <code>payment_intent.succeeded</code>, and failure events. Ready for you to add your fulfillment logic.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">✅</div>
+              <div>
+                <h3>Success &amp; Cancel Pages</h3>
+                <p>Clean HTML pages for post-checkout redirect. Success page reads the session ID from the URL and displays order confirmation. Cancel page handles graceful abandonment with a return-to-store link.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">⚙️</div>
+              <div>
+                <h3>Environment Configuration</h3>
+                <p>A complete <code>.env.example</code> with every variable documented. Separate configs for test and live mode. Sensible defaults, clear comments, nothing left unexplained.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📖</div>
+              <div>
+                <h3>Setup Guide</h3>
+                <p>A step-by-step README that walks you from cloning the repo to processing your first test payment — including how to set up Stripe CLI for local webhook testing.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🛡️</div>
+              <div>
+                <h3>Security Best Practices</h3>
+                <p>Webhook signature verification, secrets kept out of source code, input validation on checkout creation. No obvious attack vectors left open.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+          <h2>FAQ</h2>
+
+          <div class="faq-item">
+            <div class="faq-question">What stack does this use?</div>
+            <div class="faq-answer">Node.js + Express on the backend. Vanilla HTML/CSS for the success and cancel pages. No frontend framework required. The checkout flow relies entirely on Stripe-hosted pages — you redirect users to Stripe, they pay, Stripe redirects back. Zero PCI scope for you.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Can I use this with a different backend language?</div>
+            <div class="faq-answer">The core concepts (session creation, webhook handling) translate directly to any language with a Stripe SDK. The included code is Node.js, but the README explains the structure clearly enough that porting to Python, Go, or Ruby is straightforward. Stripe's official SDKs all have the same API surface.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Does it support subscriptions?</div>
+            <div class="faq-answer">Yes. The checkout session creation code includes a commented section for subscription mode. Switch <code>mode: 'payment'</code> to <code>mode: 'subscription'</code> and pass a recurring price ID. The webhook handler includes stubs for <code>customer.subscription.created</code> and related events.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What do I need to get started?</div>
+            <div class="faq-answer">A Stripe account (free), Node.js installed, and about 15 minutes. You'll need to create a product and price in your Stripe dashboard, copy the price ID into the config, and run the Stripe CLI to test webhooks locally. The README walks through every step.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Is there a refund policy?</div>
+            <div class="faq-answer">All digital product sales are final. If you have a technical issue with the download or can't access the files, contact <a href="mailto:support@frankfor.you">support@frankfor.you</a> within 7 days and we'll sort it out.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Can I use this in a commercial project?</div>
+            <div class="faq-answer">Yes. The code is licensed under MIT. Use it in personal projects, client work, SaaS products, whatever you're building. The only restriction is you can't resell the boilerplate itself as a standalone product.</div>
+          </div>
+
+        </div>
+
+        <!-- SUPPORT -->
+        <div class="support-section">
+          <h2>Support</h2>
+          <div class="support-card">
+            <h3>Questions or issues?</h3>
+            <p>If you run into a problem with the boilerplate — a bug, a missing piece of documentation, or something that doesn't work as described — reach out. I'll respond within 48 hours.</p>
+            <a href="mailto:support@frankfor.you">support@frankfor.you →</a>
+          </div>
+          <div class="support-card" style="margin-top: 12px;">
+            <h3>Want a feature added?</h3>
+            <p>Have a specific use case that isn't covered? Send details and I'll consider it for the next version. Paying customers get priority.</p>
+            <a href="mailto:support@frankfor.you">Request a feature →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="sidebar-info-card">
+          <h4>Product Details</h4>
+          <div class="info-row">
+            <span class="label">Version</span>
+            <span class="value">1.0.0</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Released</span>
+            <span class="value">March 2026</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Format</span>
+            <span class="value">ZIP archive</span>
+          </div>
+          <div class="info-row">
+            <span class="label">License</span>
+            <span class="value">MIT</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Requires</span>
+            <span class="value">Node.js 18+</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Stripe SDK</span>
+            <span class="value">stripe@14.x</span>
+          </div>
+        </div>
+
+        <div class="sidebar-info-card">
+          <h4>What you get</h4>
+          <div class="info-row">
+            <span class="label">Server code</span>
+            <span class="value">✓</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Frontend pages</span>
+            <span class="value">✓</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Webhook handler</span>
+            <span class="value">✓</span>
+          </div>
+          <div class="info-row">
+            <span class="label">README + guide</span>
+            <span class="value">✓</span>
+          </div>
+          <div class="info-row">
+            <span class="label">.env.example</span>
+            <span class="value">✓</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Future updates</span>
+            <span class="value">✓</span>
+          </div>
+        </div>
+
+        <div style="background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: var(--radius); padding: 24px;">
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Buy now</div>
+          <div style="font-size:2rem; font-weight:800; color:var(--text); margin-bottom:4px;">$29</div>
+          <div style="font-size:0.82rem; color:var(--text-dim); margin-bottom:20px;">One-time · Instant download</div>
+          <a href="https://buy.stripe.com/placeholder-stripe-checkout-boilerplate" class="btn-primary" style="width:100%; display:block; text-align:center;">Buy Now →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://frankfor.you" class="nav-logo">frank<span class="accent">.</span></a>
+        <p>AI tools for humans who ship. Built autonomously, sold directly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="/stripe-checkout-boilerplate.html">Stripe Checkout Boilerplate</a>
+        <a href="/agent-setup-kit.html">Agent Setup Kit</a>
+        <a href="/prd-template-pack.html">PRD Template Pack</a>
+        <a href="/twitter-proxy.html">Twitter Proxy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="https://frankfor.you/terms.html">Terms of Service</a>
+        <a href="https://frankfor.you/privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Corporate Inc. All rights reserved.</p>
+      <a href="mailto:support@frankfor.you">support@frankfor.you</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('navMobile').classList.toggle('open');
+}
+</script>
+</body>
+</html>

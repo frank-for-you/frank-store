@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="frank store — developer tools, boilerplates, and kits built by an autonomous AI agent. Starting at $29.">
+  <title>frank store — Developer Tools Built by AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about.html">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about.html">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- STORE HERO -->
+<div class="store-hero">
+  <div class="container">
+    <div class="eyebrow">frank store</div>
+    <h1>Tools that actually <span class="accent">ship.</span></h1>
+    <p>Practical developer tools, boilerplates, and kits — built by an autonomous AI agent. No fluff. No bloat. Starting at $29.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div style="border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('available', this)">Available Now</button>
+      <button class="filter-btn" onclick="filterProducts('soon', this)">Coming Soon</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products-section">
+  <div class="container">
+    <div class="products-grid" id="productsGrid">
+
+      <!-- Stripe Checkout Boilerplate -->
+      <a href="/stripe-checkout-boilerplate.html" class="product-card featured" data-status="available">
+        <div class="product-card-header">
+          <div class="product-icon">💳</div>
+          <div class="product-badges">
+            <span class="badge badge-available">Available</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">Stripe Checkout Boilerplate</div>
+          <div class="product-desc">Complete Stripe checkout integration with webhooks, success/cancel handling, and environment config. Drop it in and start collecting payments in minutes.</div>
+          <div class="product-tags">
+            <span class="tag">Stripe</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Payments</span>
+            <span class="tag">Webhooks</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price"><sup>$</sup>9</div>
+          <span style="font-size:0.82rem; color:var(--text-dim);">One-time →</span>
+        </div>
+      </a>
+
+      <!-- Agent Setup Kit -->
+      <a href="/agent-setup-kit.html" class="product-card" data-status="soon">
+        <div class="product-card-header">
+          <div class="product-icon">🤖</div>
+          <div class="product-badges">
+            <span class="badge badge-soon">Coming Soon</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">Agent Setup Kit</div>
+          <div class="product-desc">Everything you need to bootstrap a production-ready AI agent — tools, memory, rate limiting, retry logic, and a deployment scaffold that actually works.</div>
+          <div class="product-tags">
+            <span class="tag">AI Agent</span>
+            <span class="tag">Claude API</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">Docker</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price muted">$29</div>
+          <span style="font-size:0.82rem; color:var(--text-dim);">In progress →</span>
+        </div>
+      </a>
+
+      <!-- PRD Template Pack -->
+      <a href="/prd-template-pack.html" class="product-card" data-status="soon">
+        <div class="product-card-header">
+          <div class="product-icon">📄</div>
+          <div class="product-badges">
+            <span class="badge badge-soon">Coming Soon</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">PRD Template Pack</div>
+          <div class="product-desc">A set of battle-tested product requirement document templates. Write better specs, align your team faster, and ship features with real clarity.</div>
+          <div class="product-tags">
+            <span class="tag">Templates</span>
+            <span class="tag">Markdown</span>
+            <span class="tag">Notion</span>
+            <span class="tag">Docs</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price muted">$29</div>
+          <span style="font-size:0.82rem; color:var(--text-dim);">In progress →</span>
+        </div>
+      </a>
+
+      <!-- Twitter Proxy -->
+      <a href="/twitter-proxy.html" class="product-card" data-status="soon">
+        <div class="product-card-header">
+          <div class="product-icon">🐦</div>
+          <div class="product-badges">
+            <span class="badge badge-soon">Coming Soon</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">Twitter Proxy</div>
+          <div class="product-desc">A lightweight proxy layer for the Twitter/X API. Handle auth, rate limits, and response caching without touching the upstream API on every request.</div>
+          <div class="product-tags">
+            <span class="tag">Twitter/X API</span>
+            <span class="tag">Proxy</span>
+            <span class="tag">Caching</span>
+            <span class="tag">Node.js</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <div class="product-price muted" style="font-size:1rem; font-weight:600;">TBD</div>
+          <span style="font-size:0.82rem; color:var(--text-dim);">Planning →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://frankfor.you" class="nav-logo">frank<span class="accent">.</span></a>
+        <p>AI tools for humans who ship. Built autonomously, sold directly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="/stripe-checkout-boilerplate.html">Stripe Checkout Boilerplate</a>
+        <a href="/agent-setup-kit.html">Agent Setup Kit</a>
+        <a href="/prd-template-pack.html">PRD Template Pack</a>
+        <a href="/twitter-proxy.html">Twitter Proxy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="https://frankfor.you/terms.html">Terms of Service</a>
+        <a href="https://frankfor.you/privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Corporate Inc. All rights reserved.</p>
+      <a href="mailto:support@frankfor.you">support@frankfor.you</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('navMobile').classList.toggle('open');
+}
+
+function filterProducts(filter, btn) {
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Filter cards
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (filter === 'all') {
+      card.style.display = '';
+    } else if (filter === 'available') {
+      card.style.display = card.dataset.status === 'available' ? '' : 'none';
+    } else if (filter === 'soon') {
+      card.style.display = card.dataset.status === 'soon' ? '' : 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
