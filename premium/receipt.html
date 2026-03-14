@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fafafa;
+      --surface: #fff;
+      --border: #e5e5e5;
+      --text: #111;
+      --text-muted: #666;
+      --accent: var(--brand-color, #2563eb);
+    }
+    @media print {
+      body { background: #fff; }
+      .no-print { display: none !important; }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+    .receipt {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .receipt-header {
+      padding: 32px 36px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .receipt-meta {
+      text-align: right;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .receipt-meta strong { color: var(--text); display: block; font-size: 1rem; }
+    .section {
+      padding: 24px 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding: 5px 0;
+    }
+    .info-label { color: var(--text-muted); }
+    .info-value { font-weight: 500; }
+    .line-items { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .line-items th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .line-items th:last-child { text-align: right; }
+    .line-items td { padding: 10px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .line-items td:last-child { text-align: right; }
+    .line-items tr:last-child td { border-bottom: none; }
+    .total-row { font-weight: 700; font-size: 1rem; }
+    .total-row td { padding-top: 16px; border-top: 2px solid var(--text); border-bottom: none; }
+    .footer-note { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+    .footer-note a { color: var(--accent); }
+    .print-btn {
+      display: block;
+      margin: 24px auto;
+      padding: 10px 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+    .print-btn:hover { border-color: #999; color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div class="receipt-header">
+      <div>
+        <div class="brand" id="brandName">Your App</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;" id="brandWebsite">—</div>
+      </div>
+      <div class="receipt-meta">
+        <strong>Receipt</strong>
+        <span id="receiptDate">—</span><br>
+        <span id="receiptId" style="font-family:monospace;font-size:0.75rem;">—</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Bill to</div>
+      <div class="info-row">
+        <span class="info-label">Email</span>
+        <span class="info-value" id="customerEmail">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Name</span>
+        <span class="info-value" id="customerName">—</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <table class="line-items">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="lineItemsBody">
+          <tr>
+            <td id="itemName">Your Product</td>
+            <td>1</td>
+            <td id="itemPrice">—</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="2">Total</td>
+            <td id="totalAmount">—</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Payment</div>
+      <div class="info-row">
+        <span class="info-label">Method</span>
+        <span class="info-value">Card via Stripe</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Status</span>
+        <span class="info-value" style="color:#16a34a;">Paid</span>
+      </div>
+    </div>
+
+    <div class="section footer-note">
+      <p>This is a receipt for your purchase. For questions or issues, contact <a href="mailto:support@example.com" id="supportEmail">support@example.com</a>.</p>
+      <p style="margin-top:8px;">All digital product sales are final. If you cannot access your download, contact support within 7 days of purchase.</p>
+    </div>
+  </div>
+
+  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    function fmt(cents, currency) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: (currency || 'usd').toUpperCase(),
+      }).format(cents / 100);
+    }
+
+    if (params.get('session_id')) {
+      document.getElementById('receiptId').textContent = params.get('session_id');
+    }
+    if (params.get('date')) {
+      document.getElementById('receiptDate').textContent = new Date(params.get('date')).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    } else {
+      document.getElementById('receiptDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    if (params.get('email')) {
+      document.getElementById('customerEmail').textContent = decodeURIComponent(params.get('email'));
+    }
+    if (params.get('name')) {
+      document.getElementById('customerName').textContent = decodeURIComponent(params.get('name'));
+    }
+    if (params.get('amount')) {
+      const amount = parseInt(params.get('amount'), 10);
+      const currency = params.get('currency') || 'usd';
+      const formatted = fmt(amount, currency);
+      document.getElementById('itemPrice').textContent = formatted;
+      document.getElementById('totalAmount').textContent = formatted;
+    }
+    if (params.get('product_name')) {
+      document.getElementById('itemName').textContent = decodeURIComponent(params.get('product_name'));
+    }
+    if (params.get('brand_name')) {
+      document.getElementById('brandName').textContent = decodeURIComponent(params.get('brand_name'));
+    }
+    if (params.get('brand_color')) {
+      document.documentElement.style.setProperty('--accent', params.get('brand_color'));
+    }
+    if (params.get('brand_website')) {
+      document.getElementById('brandWebsite').textContent = decodeURIComponent(params.get('brand_website'));
+    }
+    if (params.get('support_email')) {
+      const email = decodeURIComponent(params.get('support_email'));
+      const el = document.getElementById('supportEmail');
+      el.href = `mailto:${email}`;
+      el.textContent = email;
+    }
+  </script>
+</body>
+</html>
