@@ -252,5 +252,225 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   }
 });
 </script>
+
+<!-- ── Frank Live Chat Widget ─────────────────────────────────────────── -->
+<style>
+  #frank-chat-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent, #4ade80); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    transition: transform 0.15s, opacity 0.15s;
+    font-size: 1.4rem;
+  }
+  #frank-chat-btn:hover { transform: scale(1.08); }
+
+  #frank-chat-panel {
+    position: fixed; bottom: 88px; right: 24px; z-index: 1000;
+    width: 340px; max-width: calc(100vw - 32px);
+    background: #fff; border: 1px solid #e5e5e5; border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    display: none; flex-direction: column; overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    max-height: 500px;
+  }
+  #frank-chat-panel.open { display: flex; }
+
+  .fc-header {
+    background: #0a0a0a; color: #fff;
+    padding: 14px 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .fc-header-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent, #4ade80); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .fc-header-info { flex: 1; }
+  .fc-header-name { font-size: 0.9rem; font-weight: 600; }
+  .fc-header-status { font-size: 0.75rem; color: #aaa; }
+  .fc-close { background: none; border: none; color: #aaa; cursor: pointer; font-size: 1.1rem; padding: 0 2px; }
+  .fc-close:hover { color: #fff; }
+
+  .fc-verify {
+    padding: 20px 16px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .fc-verify p { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.5; }
+  .fc-verify input {
+    border: 1px solid #d1d5db; border-radius: 7px;
+    padding: 9px 12px; font-size: 0.85rem; font-family: monospace; width: 100%; box-sizing: border-box;
+  }
+  .fc-verify input:focus { outline: none; border-color: #0a0a0a; }
+  .fc-verify button {
+    background: #0a0a0a; color: #fff; border: none; border-radius: 7px;
+    padding: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .fc-verify button:hover { opacity: 0.85; }
+  .fc-verify-error { font-size: 0.8rem; color: #dc2626; margin: 0; }
+
+  .fc-messages {
+    flex: 1; overflow-y: auto; padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 8px; min-height: 180px;
+  }
+  .fc-msg {
+    max-width: 82%; padding: 8px 12px; border-radius: 10px;
+    font-size: 0.84rem; line-height: 1.5; word-break: break-word;
+  }
+  .fc-msg.customer { background: #0a0a0a; color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+  .fc-msg.admin { background: #f3f4f6; color: #111; align-self: flex-start; border-bottom-left-radius: 3px; }
+  .fc-msg.system { background: transparent; color: #999; font-size: 0.78rem; align-self: center; font-style: italic; }
+
+  .fc-input-row {
+    border-top: 1px solid #e5e5e5; display: flex; padding: 8px;
+  }
+  .fc-input-row textarea {
+    flex: 1; border: 1px solid #d1d5db; border-radius: 7px;
+    padding: 8px 10px; font-size: 0.84rem; font-family: inherit; resize: none;
+    height: 36px; line-height: 1.4; box-sizing: border-box;
+  }
+  .fc-input-row textarea:focus { outline: none; border-color: #0a0a0a; }
+  .fc-send-btn {
+    background: #0a0a0a; color: #fff; border: none; border-radius: 7px;
+    padding: 0 14px; margin-left: 6px; cursor: pointer; font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .fc-send-btn:hover { opacity: 0.85; }
+  .fc-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+
+<button id="frank-chat-btn" title="Live chat (Premium)">💬</button>
+
+<div id="frank-chat-panel">
+  <div class="fc-header">
+    <div class="fc-header-avatar">⚡</div>
+    <div class="fc-header-info">
+      <div class="fc-header-name">Frank Support</div>
+      <div class="fc-header-status">Premium live chat</div>
+    </div>
+    <button class="fc-close" id="fc-close-btn">✕</button>
+  </div>
+
+  <div id="fc-verify-screen" class="fc-verify">
+    <p>Enter your order number to start chatting. You'll find it in your confirmation email — it starts with <code>cs_</code>.</p>
+    <input type="text" id="fc-order-input" placeholder="cs_live_..." autocomplete="off" />
+    <p id="fc-verify-error" class="fc-verify-error" style="display:none;"></p>
+    <button id="fc-verify-btn">Start chat →</button>
+  </div>
+
+  <div id="fc-chat-screen" style="display:none; flex-direction:column; flex:1; overflow:hidden;">
+    <div class="fc-messages" id="fc-messages"></div>
+    <div class="fc-input-row">
+      <textarea id="fc-textarea" placeholder="Type a message…" rows="1"></textarea>
+      <button class="fc-send-btn" id="fc-send-btn">➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const BACKEND = 'https://api.frankfor.you';
+  const WS_BASE = 'wss://api.frankfor.you';
+
+  const btn       = document.getElementById('frank-chat-btn');
+  const panel     = document.getElementById('frank-chat-panel');
+  const closeBtn  = document.getElementById('fc-close-btn');
+  const verifyScr = document.getElementById('fc-verify-screen');
+  const chatScr   = document.getElementById('fc-chat-screen');
+  const orderInp  = document.getElementById('fc-order-input');
+  const verifyBtn = document.getElementById('fc-verify-btn');
+  const verifyErr = document.getElementById('fc-verify-error');
+  const messages  = document.getElementById('fc-messages');
+  const textarea  = document.getElementById('fc-textarea');
+  const sendBtn   = document.getElementById('fc-send-btn');
+
+  let ws = null;
+  let token = null;
+
+  btn.addEventListener('click', () => panel.classList.toggle('open'));
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+  // Verify order
+  verifyBtn.addEventListener('click', verifyOrder);
+  orderInp.addEventListener('keydown', e => { if (e.key === 'Enter') verifyOrder(); });
+
+  async function verifyOrder() {
+    const orderId = orderInp.value.trim();
+    if (!orderId) return;
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = 'Checking…';
+    verifyErr.style.display = 'none';
+
+    try {
+      const res = await fetch(`${BACKEND}/support/verify-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderNumber: orderId }),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        token = data.token;
+        verifyScr.style.display = 'none';
+        chatScr.style.display = 'flex';
+        connectWS(token);
+      } else {
+        verifyErr.textContent = data.error || 'Verification failed. Try the contact form instead.';
+        verifyErr.style.display = 'block';
+      }
+    } catch (e) {
+      verifyErr.textContent = 'Could not connect. Please try again.';
+      verifyErr.style.display = 'block';
+    } finally {
+      verifyBtn.disabled = false;
+      verifyBtn.textContent = 'Start chat →';
+    }
+  }
+
+  function connectWS(tok) {
+    ws = new WebSocket(`${WS_BASE}/ws/chat?token=${encodeURIComponent(tok)}`);
+
+    ws.addEventListener('open', () => {
+      addMsg('system', 'Connected. Frank will reply within ~1 hour.');
+    });
+
+    ws.addEventListener('message', e => {
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.type === 'history') {
+          msg.messages.forEach(m => addMsg(m.role === 'customer' ? 'customer' : 'admin', m.content));
+        } else if (msg.type === 'message') {
+          addMsg(msg.role === 'customer' ? 'customer' : 'admin', msg.content);
+        }
+      } catch {}
+    });
+
+    ws.addEventListener('close', () => addMsg('system', 'Disconnected. Refresh to reconnect.'));
+    ws.addEventListener('error', () => addMsg('system', 'Connection error. Please refresh.'));
+  }
+
+  function addMsg(role, content) {
+    const el = document.createElement('div');
+    el.className = `fc-msg ${role}`;
+    el.textContent = content;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Send message
+  sendBtn.addEventListener('click', sendMessage);
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  function sendMessage() {
+    const content = textarea.value.trim();
+    if (!content || !ws || ws.readyState !== WebSocket.OPEN) return;
+    ws.send(JSON.stringify({ type: 'message', content }));
+    textarea.value = '';
+  }
+})();
+</script>
+<!-- ── End Frank Live Chat Widget ─────────────────────────────────────── -->
+
 </body>
 </html>
