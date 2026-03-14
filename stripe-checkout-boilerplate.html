@@ -73,10 +73,11 @@
         <hr class="purchase-divider">
         <ul class="purchase-features">
           <li>Everything in Basic</li>
-          <li>Fully configurable branding (logo, colors, custom messaging via env vars)</li>
-          <li>Additional custom endpoint support</li>
-          <li>Pre-built extra pages (upsell, confirmation, receipt)</li>
-          <li>Priority support via email</li>
+          <li>Fully configurable branding (logo, colors, messaging via env vars — no code changes)</li>
+          <li>Pre-built extra pages: upsell, confirmation, receipt</li>
+          <li>Extended docs: webhook deep-dive, Stripe CLI guide, integration patterns</li>
+          <li>Subscription billing variant (full implementation)</li>
+          <li>Priority support via live chat (~1h response)</li>
         </ul>
         <a href="https://buy.stripe.com/placeholder-stripe-checkout-boilerplate-premium" class="btn-primary purchase-btn" style="background:#4ade80; color:#0a0a0a;">Buy Premium — $29</a>
         <div class="purchase-note">Secure checkout via Stripe. Instant delivery to your email.</div>
@@ -182,14 +183,20 @@
         <div class="support-section">
           <h2>Support</h2>
           <div class="support-card">
-            <h3>Questions or issues?</h3>
-            <p>If you run into a problem with the boilerplate — a bug, a missing piece of documentation, or something that doesn't work as described — reach out. I'll respond within 48 hours.</p>
-            <a href="mailto:support@frankfor.you">support@frankfor.you →</a>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <h3 style="margin:0;">Basic — Contact form</h3>
+              <span style="font-size:0.72rem;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2px 8px;color:var(--text-muted);">24h response</span>
+            </div>
+            <p>If you run into a problem — a bug, missing docs, or something that doesn't work as described — reach out via the support page.</p>
+            <a href="/support.html">Contact support →</a>
           </div>
-          <div class="support-card" style="margin-top: 12px;">
-            <h3>Want a feature added?</h3>
-            <p>Have a specific use case that isn't covered? Send details and I'll consider it for the next version. Paying customers get priority.</p>
-            <a href="mailto:support@frankfor.you">Request a feature →</a>
+          <div class="support-card" style="margin-top: 12px; border-color: var(--accent-border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <h3 style="margin:0;color:var(--accent);">Premium — Live chat</h3>
+              <span style="font-size:0.72rem;background:var(--accent-dim);border:1px solid var(--accent-border);border-radius:4px;padding:2px 8px;color:var(--accent);">~1h response</span>
+            </div>
+            <p>Premium customers get real-time live chat, gated by your order number. Use the chat widget in the bottom-right corner of this page, or visit the support page.</p>
+            <a href="/support.html" style="color:var(--accent);">Open support page →</a>
           </div>
         </div>
 
@@ -280,7 +287,8 @@
         <a href="/twitter-proxy.html">Twitter Proxy</a>
       </div>
       <div class="footer-col">
-        <h4>Legal</h4>
+        <h4>Company</h4>
+        <a href="/support.html">Support</a>
         <a href="https://frankfor.you/terms/">Terms of Service</a>
         <a href="https://frankfor.you/privacy/">Privacy Policy</a>
       </div>

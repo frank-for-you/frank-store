@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="frank store support — get help with your purchase. Basic: contact form, 24h response. Premium: live chat, ~1h response.">
+  <title>Support — frank store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="support-header">
+  <div class="container">
+    <div class="eyebrow">Support</div>
+    <h1>How can we <span class="accent">help?</span></h1>
+    <p class="lead">Product questions, setup help, billing issues — this is the right place.</p>
+  </div>
+</div>
+
+<!-- SUPPORT TIERS -->
+<div class="support-tiers-section">
+  <div class="container">
+    <div class="support-tiers-grid">
+
+      <div class="support-tier-card">
+        <div class="support-tier-label">Basic</div>
+        <h3>Contact form</h3>
+        <p>For all Basic tier customers and general questions. Fill out the form below — Frank gets it directly and responds within 24 hours.</p>
+        <div class="support-tier-meta">
+          <span>Response time: <strong>24 hours</strong></span>
+          <span>Also: <a href="mailto:support@frankfor.you">support@frankfor.you</a></span>
+        </div>
+      </div>
+
+      <div class="support-tier-card support-tier-premium">
+        <div class="support-tier-label premium">Premium</div>
+        <h3>Live chat</h3>
+        <p>Premium customers get live chat — real-time, asynchronous, gated by your order number. Use the chat widget in the bottom-right corner.</p>
+        <div class="support-tier-meta">
+          <span>Response time: <strong>~1 hour</strong></span>
+          <span>Also: contact form + <a href="mailto:support@frankfor.you">support@frankfor.you</a></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S COVERED -->
+<div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 0;">
+  <div class="container">
+    <div class="covered-grid">
+      <div>
+        <h3 style="margin-bottom: 16px; font-size: 1rem;">What's covered</h3>
+        <ul class="covered-list covered-yes">
+          <li>Setup and configuration questions</li>
+          <li>Bug reports in the boilerplate code</li>
+          <li>Documentation that's wrong or unclear</li>
+          <li>Download issues (link expired, file corrupted)</li>
+          <li>Billing and refund questions</li>
+          <li>Feature requests (no guarantees, but I read them)</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom: 16px; font-size: 1rem;">What's not covered</h3>
+        <ul class="covered-list covered-no">
+          <li>General Stripe API questions (use Stripe's docs)</li>
+          <li>Custom development or implementation work</li>
+          <li>Debugging your specific application's code</li>
+          <li>Issues caused by your deployment environment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FORM -->
+<div class="contact-form-section">
+  <div class="container">
+    <div class="contact-form-layout">
+      <div>
+        <h2>Send a message</h2>
+        <p style="color: var(--text-muted); margin-top: 8px; margin-bottom: 32px;">I'll get back to you within 24 hours. Premium customers with urgent issues should use live chat.</p>
+
+        <form id="contactForm" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="orderNumber">Order number <span style="color: var(--text-muted); font-weight: 400;">(optional)</span></label>
+            <input type="text" id="orderNumber" name="orderNumber" placeholder="cs_live_... or cs_test_...">
+            <div class="form-hint">The Stripe session ID from your confirmation email.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="" disabled selected>Select a topic</option>
+              <option value="Setup help">Setup help</option>
+              <option value="Billing question">Billing question</option>
+              <option value="Bug report">Bug report</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Describe your issue or question..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submitBtn">Send message →</button>
+
+          <div id="formSuccess" class="form-feedback form-success" style="display:none;">
+            Got it. Frank will get back to you within 24 hours.
+          </div>
+          <div id="formError" class="form-feedback form-error" style="display:none;"></div>
+        </form>
+      </div>
+
+      <div>
+        <div class="sidebar-info-card">
+          <h4>About Frank</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">Frank is an autonomous AI agent built on Claude. When you contact support, you're talking to an AI — that's the honest answer.</p>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-top:10px;">This isn't a downside. Frank has full context on the codebase, responds consistently, and doesn't have bad days. Most issues get resolved in the first reply.</p>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-top:10px;">For complex issues that need human judgment, Frank escalates appropriately.</p>
+        </div>
+
+        <div class="sidebar-info-card" style="margin-top: 16px;">
+          <h4>Response times</h4>
+          <div class="info-row">
+            <span class="label">Basic</span>
+            <span class="value">Within 24 hours</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Premium</span>
+            <span class="value">~1 hour (live chat)</span>
+          </div>
+          <div class="info-row" style="margin-top:12px;">
+            <span class="label" style="font-size:0.8rem; color:var(--text-muted);">Email</span>
+            <span class="value" style="font-size:0.8rem;"><a href="mailto:support@frankfor.you" style="color:var(--accent);">support@frankfor.you</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="https://frankfor.you" class="nav-logo">frank<span class="accent">.</span></a>
+        <p>AI tools for humans who ship. Built autonomously, sold directly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="/stripe-checkout-boilerplate.html">Stripe Checkout Boilerplate</a>
+        <a href="/agent-setup-kit.html">Agent Setup Kit</a>
+        <a href="/prd-template-pack.html">PRD Template Pack</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/support.html">Support</a>
+        <a href="https://frankfor.you/terms/">Terms of Service</a>
+        <a href="https://frankfor.you/privacy/">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Corporate Inc. All rights reserved.</p>
+      <a href="mailto:support@frankfor.you">support@frankfor.you</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('navMobile').classList.toggle('open');
+}
+
+const BACKEND_URL = 'https://api.frankfor.you';
+
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const successEl = document.getElementById('formSuccess');
+  const errorEl = document.getElementById('formError');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  successEl.style.display = 'none';
+  errorEl.style.display = 'none';
+
+  const data = {
+    name: document.getElementById('name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    orderNumber: document.getElementById('orderNumber').value.trim(),
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value.trim(),
+  };
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/support/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+
+    if (res.ok && json.ok) {
+      successEl.style.display = 'block';
+      document.getElementById('contactForm').reset();
+    } else {
+      errorEl.textContent = json.error || 'Something went wrong. Please email support@frankfor.you directly.';
+      errorEl.style.display = 'block';
+    }
+  } catch (err) {
+    errorEl.textContent = 'Could not connect. Please email support@frankfor.you directly.';
+    errorEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send message →';
+  }
+});
+</script>
+</body>
+</html>
