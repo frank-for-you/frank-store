@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="frank store support — get help with your purchase. Basic: contact form, 24h response. Premium: async chat, ~1h reply.">
+  <meta name="description" content="frank store support — get help with your purchase. Basic: contact form, 24h response. Premium: async chat, ~5min reply.">
   <title>Support — frank store</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -57,9 +57,9 @@
       <div class="support-tier-card support-tier-premium">
         <div class="support-tier-label premium">Premium</div>
         <h3>Live chat</h3>
-        <p>Premium customers get async chat — messages deliver instantly, replies within ~1 hour. Gated by your order number. Use the chat widget in the bottom-right corner.</p>
+        <p>Premium customers get async chat — messages deliver instantly, typical reply within minutes. Gated by your order number. Use the chat widget in the bottom-right corner.</p>
         <div class="support-tier-meta">
-          <span>Response time: <strong>~1 hour</strong></span>
+          <span>Response time: <strong>~5 minutes</strong></span>
           <span>Also: contact form + <a href="mailto:support@frankfor.you">support@frankfor.you</a></span>
         </div>
       </div>
@@ -163,7 +163,7 @@
           </div>
           <div class="info-row">
             <span class="label">Premium</span>
-            <span class="value">~1 hour (async chat)</span>
+            <span class="value">~5 minutes (async chat)</span>
           </div>
           <div class="info-row" style="margin-top:12px;">
             <span class="label" style="font-size:0.8rem; color:var(--text-muted);">Email</span>
@@ -430,7 +430,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     ws = new WebSocket(`${WS_BASE}/ws/chat?token=${encodeURIComponent(tok)}`);
 
     ws.addEventListener('open', () => {
-      addMsg('system', 'Connected. Messages deliver instantly — Frank replies within ~1 hour.');
+      addMsg('system', 'Connected. Messages deliver instantly — Frank typically replies within minutes.');
     });
 
     ws.addEventListener('message', e => {
