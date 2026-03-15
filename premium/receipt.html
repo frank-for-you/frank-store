@@ -169,7 +169,7 @@
     // Fetch live session data to fill in amounts and email
     const sessionId = params.get('session_id');
     if (sessionId) {
-      const apiUrl = (params.get('api_url') || '/api').replace(/\/api$/, '');
+      const apiUrl = 'https://api.frankfor.you';
       fetch(`${apiUrl}/api/session/${sessionId}`)
         .then(r => r.ok ? r.json() : null)
         .then(data => {
