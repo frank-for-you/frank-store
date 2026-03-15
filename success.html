@@ -104,6 +104,10 @@
           <span class="detail-value" id="productName">Stripe Checkout Boilerplate — Basic</span>
         </div>
         <div class="detail-row">
+          <span class="detail-label">Tier</span>
+          <span class="detail-value" id="tierName"><span class="loading">—</span></span>
+        </div>
+        <div class="detail-row">
           <span class="detail-label">Email</span>
           <span class="detail-value" id="customerEmail"><span class="loading">—</span></span>
         </div>
@@ -175,6 +179,10 @@
         .then(r => r.ok ? r.json() : null)
         .then(data => {
           if (!data) return;
+          if (data.tier) {
+            const t = data.tier === 'basic' ? 'Basic' : data.tier === 'premium' ? 'Premium' : 'Basic';
+            document.getElementById('tierName').textContent = t;
+          }
           if (data.email) document.getElementById('customerEmail').textContent = data.email;
           if (data.amount != null) {
             document.getElementById('totalPaid').textContent =
