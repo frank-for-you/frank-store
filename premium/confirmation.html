@@ -188,6 +188,14 @@
         })
         .catch(() => {}); // Fail silently — static fallback already shown
     }
+
+    // Wire receipt link
+    var sessionId = params.get('session_id');
+    if (sessionId) {
+      var receiptParams = new URLSearchParams(window.location.search);
+      document.getElementById('receiptLink').href =
+        'https://store.frankfor.you/premium/receipt?' + receiptParams.toString();
+    }
   </script>
 </body>
 </html>
