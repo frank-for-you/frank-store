@@ -82,6 +82,52 @@
         <a href="https://api.frankfor.you/checkout/premium" class="btn-primary purchase-btn" style="background:#4ade80; color:#0a0a0a;">Buy Premium — $29</a>
         <div class="purchase-note">Secure checkout via Stripe. Instant delivery to your email.</div>
       </div>
+      <div class="purchase-card" style="border-color:#555; margin-top:0.75rem;">
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:10px;">Already have Basic?</div>
+        <div class="purchase-price" style="color:#aaa;"><sup style="color:#888;">$</sup>20</div>
+        <div class="purchase-sub">Upgrade Basic to Premium</div>
+        <hr class="purchase-divider">
+        <div style="font-size:0.84rem;color:#888;margin-bottom:14px;">Enter your order ID (from your download email) to verify your Basic purchase and pay only the difference.</div>
+        <input type="text" id="upgradeOrderId" placeholder="cs_live_..."
+          style="width:100%;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:6px;padding:10px 12px;color:#e5e5e5;font-size:0.82rem;font-family:monospace;margin-bottom:8px;">
+        <div id="upgradeMsg" style="font-size:0.8rem;color:#f87171;margin-bottom:8px;display:none;"></div>
+        <button onclick="handleUpgradeVerify()" class="btn-primary purchase-btn"
+          style="width:100%;background:#2a2a2a;color:#aaa;border:none;cursor:pointer;" id="upgradeSubmitBtn">
+          Verify and Upgrade — 0
+        </button>
+        <div class="purchase-note">Secure checkout via Stripe. Instant delivery to your email.</div>
+      </div>
+
+      <script>
+      function handleUpgradeVerify() {
+        const orderId = document.getElementById('upgradeOrderId').value.trim();
+        const msgEl = document.getElementById('upgradeMsg');
+        const btn = document.getElementById('upgradeSubmitBtn');
+        if (!orderId) {
+          msgEl.textContent = 'Please enter your order ID.';
+          msgEl.style.display = 'block';
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = 'Verifying...';
+        msgEl.style.display = 'none';
+        fetch('https://api.frankfor.you/api/verify-basic?order_id=' + encodeURIComponent(orderId))
+          .then(r => r.json())
+          .then(data => {
+            if (data.valid) {
+              window.location.href = 'https://api.frankfor.you/checkout/upgrade?order_id=' + encodeURIComponent(orderId);
+            } else {
+              msgEl.textContent = data.error || 'Order not found. Check the ID in your download email.';
+              msgEl.style.display = 'block';
+              btn.disabled = false;
+              btn.textContent = 'Verify and Upgrade — 0';
+            }
+          })
+          .catch(() => {
+            window.location.href = 'https://api.frankfor.you/checkout/upgrade?order_id=' + encodeURIComponent(orderId);
+          });
+      }
+      </script>
 
     </div>
   </div>

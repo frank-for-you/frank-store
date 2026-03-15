@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Confirmed</title>
+  <title>Order Confirmed — frank store</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #fafafa;
-      --surface: #fff;
-      --border: #e5e5e5;
-      --text: #111;
-      --text-muted: #555;
-      --accent: var(--brand-color, #2563eb);
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: #1f1f1f;
+      --text: #e5e5e5;
+      --text-muted: #888;
+      --accent: #4ade80;
       --radius: 12px;
     }
     body {
@@ -22,97 +22,71 @@
       min-height: 100vh;
       padding: 40px 24px;
     }
-    .container {
-      max-width: 560px;
-      margin: 0 auto;
-    }
+    .container { max-width: 560px; margin: 0 auto; }
     .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-decoration: none;
-      display: inline-block;
-      margin-bottom: 36px;
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: inline-block; margin-bottom: 36px;
     }
     .status-banner {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 8px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
+      background: rgba(74, 222, 128, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      border-radius: 8px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
     }
     .status-icon { font-size: 1.4rem; flex-shrink: 0; }
-    .status-text h2 { font-size: 1rem; font-weight: 600; color: #065f46; }
-    .status-text p { font-size: 0.85rem; color: #047857; margin-top: 2px; }
+    .status-text h2 { font-size: 1rem; font-weight: 600; color: var(--accent); }
+    .status-text p { font-size: 0.85rem; color: #6ee7a0; margin-top: 2px; }
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
     }
-    .card-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
+    .card-header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+    .card-header h3 {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
     }
-    .card-header h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
     .card-body { padding: 20px 24px; }
     .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 8px 0;
-      font-size: 0.9rem;
-      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 9px 0; font-size: 0.9rem; border-bottom: 1px solid var(--border);
     }
     .detail-row:last-child { border-bottom: none; }
     .detail-label { color: var(--text-muted); }
-    .detail-value { font-weight: 500; text-align: right; max-width: 60%; word-break: break-all; }
+    .detail-value { font-weight: 500; text-align: right; max-width: 65%; word-break: break-all; }
+    .mono { font-family: 'SF Mono', 'Menlo', monospace; font-size: 0.78rem; }
+    .loading { color: var(--text-muted); font-style: italic; }
     .next-steps { list-style: none; }
     .next-steps li {
-      padding: 10px 0;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      padding: 10px 0; display: flex; gap: 12px; align-items: flex-start;
+      border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-muted);
     }
     .next-steps li:last-child { border-bottom: none; }
     .step-num {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+      color: #0a0a0a; font-size: 0.72rem; font-weight: 700; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
     }
     .support-note {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 24px;
+      font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 24px;
     }
-    .support-note a { color: var(--accent); }
+    .support-note a { color: var(--accent); text-decoration: none; }
+    .support-note a:hover { text-decoration: underline; }
+    .receipt-link {
+      display: block; text-align: center; margin-top: 12px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+    }
+    .receipt-link:hover { color: var(--accent); }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="/" class="logo" id="brandName">Your App</a>
+    <a href="/" class="logo" id="brandName">frank.</a>
 
     <div class="status-banner">
       <div class="status-icon">✅</div>
       <div class="status-text">
-        <h2 id="statusHeading">Payment confirmed</h2>
-        <p id="statusSub">Your download is on its way — check your email.</p>
+        <h2>Payment confirmed</h2>
+        <p>Your download is on its way — check your email.</p>
       </div>
     </div>
 
@@ -121,23 +95,23 @@
       <div class="card-body">
         <div class="detail-row">
           <span class="detail-label">Product</span>
-          <span class="detail-value" id="productName">Your Product</span>
+          <span class="detail-value" id="productName">Loading...</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Tier</span>
-          <span class="detail-value" id="tierName">—</span>
+          <span class="detail-value" id="tierName"><span class="loading">—</span></span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Email</span>
-          <span class="detail-value" id="customerEmail">—</span>
+          <span class="detail-value" id="customerEmail"><span class="loading">—</span></span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Order ID</span>
-          <span class="detail-value" id="orderId" style="font-family:monospace;font-size:0.78rem;">—</span>
+          <span class="detail-value mono" id="orderId">—</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Total paid</span>
-          <span class="detail-value" id="totalPaid">—</span>
+          <span class="detail-value" id="totalPaid"><span class="loading">—</span></span>
         </div>
       </div>
     </div>
@@ -146,7 +120,7 @@
       <div class="card-header"><h3>What happens next</h3></div>
       <div class="card-body">
         <ol class="next-steps">
-          <li><div class="step-num">1</div><span>Check your inbox for a delivery email with your download link. Usually arrives within 2 minutes.</span></li>
+          <li><div class="step-num">1</div><span>Check your inbox for a delivery email with your download link. Usually arrives within a minute or two.</span></li>
           <li><div class="step-num">2</div><span>Download the zip and unzip it. Run <code>npm install</code> to install dependencies.</span></li>
           <li><div class="step-num">3</div><span>Copy <code>.env.example</code> to <code>.env</code> and fill in your Stripe keys.</span></li>
           <li><div class="step-num">4</div><span id="lastStep">Follow the README — you'll have a working Stripe integration in under 30 minutes.</span></li>
@@ -155,40 +129,19 @@
     </div>
 
     <p class="support-note" id="supportNote">
-      Questions? <a href="mailto:support@example.com">support@example.com</a> — or visit <a href="/support">the support page</a>.
+      Questions? <a href="mailto:support@frankfor.you">support@frankfor.you</a> — or <a href="https://store.frankfor.you/support">open a support ticket</a>.
     </p>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
 
-    // Populate order details from URL params (set by your success URL)
-    if (params.get('session_id')) {
-      document.getElementById('orderId').textContent = params.get('session_id');
-    }
-    if (params.get('email')) {
-      document.getElementById('customerEmail').textContent = decodeURIComponent(params.get('email'));
-    }
-    if (params.get('tier')) {
-      const tier = params.get('tier');
-      document.getElementById('tierName').textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
-    }
-    if (params.get('amount')) {
-      // amount is in cents
-      const amount = parseInt(params.get('amount'), 10);
-      const currency = params.get('currency') || 'usd';
-      document.getElementById('totalPaid').textContent = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: currency.toUpperCase(),
-      }).format(amount / 100);
-    }
-
-    // Branding overrides
-    if (params.get('brand_name')) {
-      document.getElementById('brandName').textContent = decodeURIComponent(params.get('brand_name'));
-    }
+    // Apply branding immediately from URL params
     if (params.get('brand_color')) {
       document.documentElement.style.setProperty('--accent', params.get('brand_color'));
+    }
+    if (params.get('brand_name')) {
+      document.getElementById('brandName').textContent = decodeURIComponent(params.get('brand_name'));
     }
     if (params.get('product_name')) {
       document.getElementById('productName').textContent = decodeURIComponent(params.get('product_name'));
@@ -197,6 +150,38 @@
       const email = decodeURIComponent(params.get('support_email'));
       document.getElementById('supportNote').innerHTML =
         `Questions? <a href="mailto:${email}">${email}</a>`;
+    }
+
+    const sessionId = params.get('session_id');
+    if (sessionId) {
+      document.getElementById('orderId').textContent = sessionId;
+
+      // Fetch live session data from the API
+      const apiUrl = params.get('api_url') || '/api';
+      fetch(`${apiUrl}/api/session/${sessionId}`)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (!data) return;
+          if (data.email) {
+            document.getElementById('customerEmail').textContent = data.email;
+          }
+          if (data.tier) {
+            const tierLabel = data.tier === 'upgrade' ? 'Premium (Upgrade)' :
+                              data.tier.charAt(0).toUpperCase() + data.tier.slice(1);
+            document.getElementById('tierName').textContent = tierLabel;
+          }
+          if (data.amount != null) {
+            document.getElementById('totalPaid').textContent =
+              new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: (data.currency || 'usd').toUpperCase(),
+              }).format(data.amount / 100);
+          }
+          if (data.productName && document.getElementById('productName').textContent === 'Loading...') {
+            document.getElementById('productName').textContent = data.productName;
+          }
+        })
+        .catch(() => {}); // Fail silently — static fallback already shown
     }
   </script>
 </body>
