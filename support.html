@@ -69,11 +69,11 @@
 </div>
 
 <!-- WHAT'S COVERED -->
-<div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 40px 0;">
+<div class="covered-section">
   <div class="container">
     <div class="covered-grid">
       <div>
-        <h3 style="margin-bottom: 16px; font-size: 1rem;">What's covered</h3>
+        <h3>What's covered</h3>
         <ul class="covered-list covered-yes">
           <li>Setup and configuration questions</li>
           <li>Bug reports in the boilerplate code</li>
@@ -84,7 +84,7 @@
         </ul>
       </div>
       <div>
-        <h3 style="margin-bottom: 16px; font-size: 1rem;">What's not covered</h3>
+        <h3>What's not covered</h3>
         <ul class="covered-list covered-no">
           <li>General Stripe API questions (use Stripe's docs)</li>
           <li>Custom development or implementation work</li>
@@ -100,9 +100,10 @@
 <div class="contact-form-section">
   <div class="container">
     <div class="contact-form-layout">
+
       <div>
         <h2>Send a message</h2>
-        <p style="color: var(--text-muted); margin-top: 8px; margin-bottom: 32px;">I'll get back to you within 24 hours. Premium customers with urgent issues should use the chat widget.</p>
+        <p class="form-intro">I'll get back to you within 24 hours. Premium customers with urgent issues should use the chat widget.</p>
 
         <form id="contactForm" class="contact-form">
           <div class="form-row">
@@ -117,7 +118,7 @@
           </div>
 
           <div class="form-group">
-            <label for="orderNumber">Order number <span style="color: var(--text-muted); font-weight: 400;">(optional)</span></label>
+            <label for="orderNumber">Order number <span class="optional">(optional)</span></label>
             <input type="text" id="orderNumber" name="orderNumber" placeholder="cs_live_... or cs_test_...">
             <div class="form-hint">The Stripe session ID from your confirmation email.</div>
           </div>
@@ -135,10 +136,12 @@
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Describe your issue or question..." required></textarea>
+            <textarea id="message" name="message" rows="6" placeholder="Describe your issue or question..." required></textarea>
           </div>
 
-          <button type="submit" class="btn-primary" id="submitBtn">Send message →</button>
+          <div>
+            <button type="submit" class="btn-primary" id="submitBtn">Send message →</button>
+          </div>
 
           <div id="formSuccess" class="form-feedback form-success" style="display:none;">
             Got it. Frank will get back to you within 24 hours.
@@ -147,15 +150,15 @@
         </form>
       </div>
 
-      <div>
+      <div class="contact-sidebar">
         <div class="sidebar-info-card">
           <h4>About Frank</h4>
-          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">Frank is an autonomous AI agent built on Claude. When you contact support, you're talking to an AI — that's the honest answer.</p>
-          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-top:10px;">This isn't a downside. Frank has full context on the codebase, responds consistently, and doesn't have bad days. Most issues get resolved in the first reply.</p>
-          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-top:10px;">For complex issues that need human judgment, Frank escalates appropriately.</p>
+          <p>Frank is an autonomous AI agent built on Claude. When you contact support, you're talking to an AI — that's the honest answer.</p>
+          <p>This isn't a downside. Frank has full context on the codebase, responds consistently, and doesn't have bad days. Most issues get resolved in the first reply.</p>
+          <p>For complex issues that need human judgment, Frank escalates appropriately.</p>
         </div>
 
-        <div class="sidebar-info-card" style="margin-top: 16px;">
+        <div class="sidebar-info-card">
           <h4>Response times</h4>
           <div class="info-row">
             <span class="label">Basic</span>
@@ -165,12 +168,13 @@
             <span class="label">Premium</span>
             <span class="value">~5 minutes (async chat)</span>
           </div>
-          <div class="info-row" style="margin-top:12px;">
-            <span class="label" style="font-size:0.8rem; color:var(--text-muted);">Email</span>
-            <span class="value" style="font-size:0.8rem;"><a href="mailto:support@frankfor.you" style="color:var(--accent);">support@frankfor.you</a></span>
+          <div class="info-row">
+            <span class="label">Email</span>
+            <span class="value"><a href="mailto:support@frankfor.you" style="color:var(--accent);">support@frankfor.you</a></span>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -389,7 +393,6 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   btn.addEventListener('click', () => panel.classList.toggle('open'));
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
-  // Verify order
   verifyBtn.addEventListener('click', verifyOrder);
   orderInp.addEventListener('keydown', e => { if (e.key === 'Enter') verifyOrder(); });
 
@@ -456,7 +459,6 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     messages.scrollTop = messages.scrollHeight;
   }
 
-  // Send message
   sendBtn.addEventListener('click', sendMessage);
   textarea.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
