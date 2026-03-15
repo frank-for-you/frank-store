@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment cancelled &#x2014; frank store</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a; color: #e5e5e5; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .card {
+      background: #111; border: 1px solid #1f1f1f; border-radius: 12px;
+      padding: 48px 40px; max-width: 480px; width: 100%; text-align: center;
+    }
+    .x-mark {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(220,38,38,0.15); display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 24px;
+    }
+    .x-mark svg { width: 24px; height: 24px; stroke: #f87171; stroke-width: 2.5;
+      stroke-linecap: round; fill: none; }
+    h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+    p { color: #888; line-height: 1.6; }
+    .actions {
+      margin-top: 28px; display: flex; gap: 12px;
+      justify-content: center; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block; padding: 11px 24px; border-radius: 7px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #4ade80; color: #0a0a0a; }
+    .btn-ghost { border: 1px solid #2a2a2a; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="x-mark">
+      <svg viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </div>
+    <h1>Payment cancelled</h1>
+    <p>Your payment was not completed. No charge was made.</p>
+    <div class="actions">
+      <a href="https://store.frankfor.you/stripe-checkout-boilerplate" class="btn btn-primary" id="retryBtn">Try again</a>
+      <a href="https://store.frankfor.you" class="btn btn-ghost" id="backLink">Back to store</a>
+    </div>
+  </div>
+
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('retry_url')) {
+      document.getElementById('retryBtn').href = decodeURIComponent(params.get('retry_url'));
+    }
+  </script>
+</body>
+</html>
