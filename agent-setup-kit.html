@@ -319,6 +319,13 @@ if (params.get('github') === 'connected') {
   showConnected(params.get('username'));
 }
 
+if (params.get('success') === 'true') {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:system-ui,sans-serif;';
+  overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:48px;max-width:520px;width:90%;text-align:center;"><div style="font-size:3rem;margin-bottom:16px;">🎉</div><h1 style="color:#4ade80;font-size:1.75rem;margin:0 0 12px;">You are in!</h1><p style="color:#aaa;line-height:1.6;margin:0 0 24px;">Payment confirmed. Check your email for your GitHub invite and setup instructions.</p><p style="color:#666;font-size:0.9rem;margin:0 0 24px;">Confirmation not in inbox? Check spam, or <a href="mailto:support@frankfor.you" style="color:#4ade80;">contact support</a>.</p><a href="https://store.frankfor.you/agent-setup-kit.html" style="display:inline-block;background:#4ade80;color:#0a0a0a;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:700;font-size:1rem;">Back to page</a></div>';
+  document.body.appendChild(overlay);
+}
+
 function showConnected(username) {
   const changeLink = '<a href="https://api.frankfor.you/auth/github/logout" style="font-size:0.8rem; font-weight:400; color:var(--accent); opacity:0.7; margin-left:10px; text-decoration:underline;">Change account</a>';
 
