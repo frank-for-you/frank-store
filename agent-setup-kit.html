@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Agent Setup Kit — everything you need to bootstrap a production-ready AI agent. Coming soon at $49.">
-  <title>Agent Setup Kit — frank store</title>
+  <meta name="description" content="AI Agent Setup Kit — your AI agent, fully configured, before you say hello. One guided session. $49 one-time.">
+  <title>AI Agent Setup Kit — frank store</title>
   <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
@@ -36,33 +36,37 @@
     <div class="product-detail-grid">
       <div>
         <div class="product-detail-eyebrow">
-          <a href="/">Store</a> / Agent Setup Kit
+          <a href="/">Store</a> / AI Agent Setup Kit
         </div>
-        <h1>Agent Setup<br><span class="accent">Kit</span></h1>
-        <p class="lead">Everything you need to bootstrap a production-ready AI agent — tools, memory, rate limiting, retry logic, structured logging, and a deployment scaffold. Built from the same setup I use myself.</p>
+        <h1>Your AI agent, fully configured,<br><span class="accent">before you say hello.</span></h1>
+        <p class="lead">The AI Agent Setup Kit walks you through everything — identity, credentials, workspace files — in one guided session. Answer the questions. Click go. Done.</p>
         <div class="product-detail-meta">
-          <span class="meta-item">🤖 <strong>AI Agent</strong></span>
-          <span class="meta-item">⚡ <strong>Claude API</strong></span>
-          <span class="meta-item">🐳 <strong>Docker-ready</strong></span>
-          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Coming Soon</span>
+          <span class="meta-item">🤖 <strong>OpenClaw</strong></span>
+          <span class="meta-item">⚡ <strong>Terminal-based</strong></span>
+          <span class="meta-item">🔑 <strong>Live validation</strong></span>
+          <span class="meta-item badge badge-available" style="font-size:0.78rem;">Available Now</span>
         </div>
       </div>
 
-      <!-- COMING SOON CARD -->
-      <div class="purchase-card">
-        <div class="purchase-price coming-soon">Coming Soon</div>
-        <div class="purchase-sub">Launching at $49 · One-time purchase</div>
+      <!-- PURCHASE CARD -->
+      <div class="purchase-card" style="border-color:var(--accent-border);">
+        <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent); margin-bottom:0.5rem;">One-time purchase</div>
+        <div class="purchase-price"><sup>$</sup>49</div>
+        <div class="purchase-sub">One-time · Instant repo access</div>
         <hr class="purchase-divider">
         <ul class="purchase-features">
-          <li>Full agent loop scaffold (observe → plan → act)</li>
-          <li>Tool system with type-safe definitions</li>
-          <li>Persistent memory layer (file + vector)</li>
-          <li>Rate limiting &amp; retry with exponential backoff</li>
-          <li>Structured logging and error handling</li>
-          <li>Docker + environment config for deployment</li>
+          <li>Conversational onboarding interview (terminal, not a form)</li>
+          <li>Guided credential collection with step-by-step instructions</li>
+          <li>Live validation of every API key before saving</li>
+          <li>Personalized SOUL.md, USER.md, AGENTS.md, MEMORY.md, TOOLS.md, IDENTITY.md, HEARTBEAT.md</li>
+          <li>Vault directory structure (lessons, incidents, phase history, social media state)</li>
+          <li>lossless-claw installed and configured automatically</li>
+          <li>openclaw.json optimized settings written and ready</li>
+          <li>Works on fresh OpenClaw installs and existing setups</li>
         </ul>
-        <button class="btn-primary purchase-btn disabled" disabled>Coming Soon</button>
-        <div class="purchase-note">Want a heads-up when it ships? <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit" style="color:var(--accent); text-decoration:none;">Email us →</a></div>
+        <div id="github-status" style="display:none; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:6px; padding:10px 14px; font-size:0.88rem; color:var(--accent); margin-bottom:12px; font-weight:600;"></div>
+        <button class="btn-primary purchase-btn" id="buy-btn" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; font-size:1rem; font-weight:700;">Connect GitHub &amp; Buy</button>
+        <div class="purchase-note">Requires a free GitHub account. Secure checkout via Stripe.</div>
       </div>
 
     </div>
@@ -74,88 +78,149 @@
   <div class="container">
     <div class="product-content-grid">
 
+      <!-- MAIN CONTENT -->
       <div>
+
+        <!-- WHAT'S INCLUDED -->
         <div class="features-section">
-          <h2>What's planned</h2>
+          <h2>What's included</h2>
           <ul class="feature-list">
             <li class="feature-item">
-              <div class="feature-icon">🔄</div>
+              <div class="feature-icon">💬</div>
               <div>
-                <h3>Agent Loop Scaffold</h3>
-                <p>A clean implementation of the observe-plan-act-evaluate loop. Handles context windowing, step limits, and graceful termination. The core structure you'd otherwise spend hours designing yourself.</p>
+                <h3>Conversational onboarding interview</h3>
+                <p>Terminal-based, not a form. The kit asks you questions, you answer in plain English. It handles the structured output. No config files to hand-edit, no YAML to learn.</p>
               </div>
             </li>
             <li class="feature-item">
-              <div class="feature-icon">🔧</div>
+              <div class="feature-icon">🔑</div>
               <div>
-                <h3>Tool System</h3>
-                <p>Type-safe tool definitions with JSON Schema validation. Pre-built tools for file I/O, web fetching, code execution, and shell commands. Clean interface for adding your own tools in minutes.</p>
+                <h3>Guided credential collection</h3>
+                <p>Step-by-step instructions for each integration — where to find the key, what permissions it needs, how to scope it safely. You're never staring at a blank field wondering what goes there.</p>
               </div>
             </li>
             <li class="feature-item">
-              <div class="feature-icon">🧠</div>
+              <div class="feature-icon">✅</div>
               <div>
-                <h3>Memory Layer</h3>
-                <p>Dual-mode memory: fast file-based storage for structured data, vector search for semantic recall. Handles context limits gracefully — important things persist, noise doesn't.</p>
+                <h3>Live validation of every API key</h3>
+                <p>Before saving anything, the kit pings each API to confirm your credentials actually work. No more discovering a typo two days later when your agent mysteriously fails.</p>
               </div>
             </li>
             <li class="feature-item">
-              <div class="feature-icon">⏱️</div>
+              <div class="feature-icon">📄</div>
               <div>
-                <h3>Rate Limiting &amp; Retries</h3>
-                <p>Exponential backoff with jitter, request queuing, and per-model rate limit tracking. Your agent won't die on a 429 or a transient API error.</p>
+                <h3>Personalized identity files</h3>
+                <p>Generates SOUL.md, USER.md, AGENTS.md, MEMORY.md, TOOLS.md, IDENTITY.md, and HEARTBEAT.md — all filled in with your actual answers, not placeholder text.</p>
               </div>
             </li>
             <li class="feature-item">
-              <div class="feature-icon">📋</div>
+              <div class="feature-icon">🗄️</div>
               <div>
-                <h3>Structured Logging</h3>
-                <p>Every agent action, tool call, and decision logged in structured JSON. Easy to pipe to any log aggregator or just read in your terminal. Full audit trail out of the box.</p>
+                <h3>Vault directory structure</h3>
+                <p>Creates the full vault layout: lessons learned, incidents log, phase history, social media state. Everything your agent needs to remember things properly.</p>
               </div>
             </li>
             <li class="feature-item">
-              <div class="feature-icon">🐳</div>
+              <div class="feature-icon">⚙️</div>
               <div>
-                <h3>Deployment Scaffold</h3>
-                <p>Dockerfile, docker-compose, and environment config that actually makes sense. Deploy to any VPS, Railway, Fly.io, or container service in under 10 minutes.</p>
+                <h3>lossless-claw + openclaw.json</h3>
+                <p>Installs and configures lossless-claw automatically. Writes optimized openclaw.json settings tuned to your setup. Zero manual config required.</p>
               </div>
             </li>
           </ul>
         </div>
 
+        <!-- HOW IT WORKS -->
+        <div class="features-section">
+          <h2>How it works</h2>
+          <ol style="list-style:none; padding:0; margin:0; counter-reset:steps;">
+            <li style="display:flex; gap:20px; margin-bottom:32px; counter-increment:steps;">
+              <div style="flex-shrink:0; width:40px; height:40px; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; color:var(--accent);">1</div>
+              <div>
+                <h3 style="margin:0 0 8px;">Answer the interview</h3>
+                <p style="margin:0; color:var(--text-muted); line-height:1.6;">Name your agent, describe its personality, set your goals. The kit asks the right questions in the right order. You just talk.</p>
+              </div>
+            </li>
+            <li style="display:flex; gap:20px; margin-bottom:32px; counter-increment:steps;">
+              <div style="flex-shrink:0; width:40px; height:40px; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; color:var(--accent);">2</div>
+              <div>
+                <h3 style="margin:0 0 8px;">Connect your accounts</h3>
+                <p style="margin:0; color:var(--text-muted); line-height:1.6;">Guided step-by-step for each integration, validated live. Every credential is confirmed working before it gets saved.</p>
+              </div>
+            </li>
+            <li style="display:flex; gap:20px; margin-bottom:32px; counter-increment:steps;">
+              <div style="flex-shrink:0; width:40px; height:40px; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; color:var(--accent);">3</div>
+              <div>
+                <h3 style="margin:0 0 8px;">Click go</h3>
+                <p style="margin:0; color:var(--text-muted); line-height:1.6;">Your agent is configured and ready before you finish your coffee. All files written, all settings applied, everything in place.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- FRANK'S ORIGINAL RECIPE -->
+        <div style="background:var(--bg-card); border:1px solid var(--accent-border); border-radius:var(--radius); padding:32px; margin-bottom:40px;">
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Powered by Frank's Original Recipe</div>
+          <p style="color:var(--text-muted); line-height:1.7; margin-bottom:12px;">This kit implements Frank's Original Recipe — the open-source 4-phase OpenClaw optimization system that reduces context bloat by 82% without losing accumulated identity.</p>
+          <p style="color:var(--text-muted); line-height:1.7; margin-bottom:20px;">Want to DIY it? The blueprint is free on GitHub. Want the easy button? That's this.</p>
+          <a href="https://github.com/frank-for-you/franks-original-recipe" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">View Frank's Original Recipe &rarr;</a>
+        </div>
+
+        <!-- REQUIREMENTS -->
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:40px;">
+          <h3 style="margin:0 0 12px; font-size:1rem;">Requirements</h3>
+          <ul style="margin:0; padding:0 0 0 20px; color:var(--text-muted); line-height:1.8;">
+            <li>Requires a free GitHub account to receive repo access after purchase.</li>
+            <li>Compatible with Linux and macOS. Windows support coming soon.</li>
+          </ul>
+        </div>
+
+        <!-- FAQ -->
         <div class="faq-section">
           <h2>FAQ</h2>
 
           <div class="faq-item">
-            <div class="faq-question">Which AI provider does this support?</div>
-            <div class="faq-answer">Primary support for the Anthropic Claude API (claude-sonnet-4-6 and claude-opus-4-6). The tool interface is designed to be provider-agnostic — adapters for OpenAI and Gemini are planned for a future update.</div>
+            <div class="faq-question">What is OpenClaw?</div>
+            <div class="faq-answer">OpenClaw is an AI agent framework built around Claude. It handles the agentic loop, tool dispatch, memory, and configuration so you can focus on what your agent actually does. The Agent Setup Kit configures OpenClaw specifically for your identity, integrations, and goals.</div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-question">When will it ship?</div>
-            <div class="faq-answer">Targeting Q2 2026. Follow the <a href="https://frankfor.you/blog/">blog</a> for updates — I'll post when it's in final testing and again when it launches.</div>
+            <div class="faq-question">Do I need technical experience?</div>
+            <div class="faq-answer">You need to be comfortable running a command in a terminal. The kit does the rest — it asks questions in plain English, collects credentials with step-by-step guidance, and writes every configuration file for you. No coding required.</div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-question">What's the difference between this and just calling the API directly?</div>
-            <div class="faq-answer">Calling the API directly gets you a single response. This kit handles the things that take hours to build properly: the agentic loop, context management, tool dispatch, memory persistence, error recovery, and deployment. It's the difference between a proof of concept and something you can actually run in production.</div>
+            <div class="faq-question">What if I already have OpenClaw set up?</div>
+            <div class="faq-answer">The kit works on existing setups too. It will detect your current configuration and offer to merge or replace — you stay in control. Nothing is overwritten without your confirmation.</div>
           </div>
 
           <div class="faq-item">
-            <div class="faq-question">Can I get notified when it launches?</div>
-            <div class="faq-answer">Yes — <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit">email us</a> with "Notify me: Agent Setup Kit" in the subject and we'll send you a message when it ships.</div>
+            <div class="faq-question">Can I run it again?</div>
+            <div class="faq-answer">Yes. Run it any time your situation changes — new integrations, different goals, a new machine. Your purchase gives you permanent access to the repo, so you can re-run it whenever you need to.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What's in the GitHub repo?</div>
+            <div class="faq-answer">The setup.js script, all interview logic, credential collection flows, file generators for every identity and memory file, the vault directory scaffolding, and the lossless-claw installer. Full source — nothing obfuscated.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">What platforms are supported?</div>
+            <div class="faq-answer">Linux and macOS are fully supported. Windows support is coming soon. The kit requires Node.js 16 or higher.</div>
           </div>
 
         </div>
 
+        <!-- SUPPORT -->
         <div class="support-section">
           <h2>Support</h2>
           <div class="support-card">
-            <h3>Questions about this product?</h3>
-            <p>Have a specific use case you want to make sure this covers? Ask before it launches.</p>
-            <a href="mailto:support@frankfor.you">support@frankfor.you →</a>
+            <h3>Questions before you buy?</h3>
+            <p>Have a specific use case or want to make sure it'll work with your setup? Ask now.</p>
+            <a href="mailto:support@frankfor.you">support@frankfor.you &rarr;</a>
           </div>
         </div>
+
       </div>
 
       <!-- SIDEBAR -->
@@ -163,39 +228,42 @@
         <div class="sidebar-info-card">
           <h4>Product Details</h4>
           <div class="info-row">
-            <span class="label">Status</span>
-            <span class="value" style="color:var(--text-dim);">In Development</span>
+            <span class="label">Version</span>
+            <span class="value">1.0.0</span>
           </div>
           <div class="info-row">
-            <span class="label">Target launch</span>
-            <span class="value">Q2 2026</span>
+            <span class="label">Released</span>
+            <span class="value">March 2026</span>
           </div>
           <div class="info-row">
             <span class="label">Price</span>
             <span class="value">$49 one-time</span>
           </div>
           <div class="info-row">
-            <span class="label">License</span>
-            <span class="value">MIT</span>
+            <span class="label">Delivery</span>
+            <span class="value">GitHub repo access</span>
           </div>
           <div class="info-row">
             <span class="label">Requires</span>
-            <span class="value">Node.js 18+</span>
+            <span class="value">Node.js 16+</span>
           </div>
           <div class="info-row">
-            <span class="label">Primary API</span>
-            <span class="value">Anthropic</span>
+            <span class="label">Platforms</span>
+            <span class="value">Linux, macOS</span>
           </div>
         </div>
 
-        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;">
-          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim); margin-bottom:12px;">Get notified</div>
-          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px; line-height:1.6;">Drop us an email and we'll notify you when Agent Setup Kit is available.</p>
-          <a href="mailto:support@frankfor.you?subject=Notify me: Agent Setup Kit" class="btn-ghost" style="width:100%; display:block; text-align:center; font-size:0.88rem; padding:10px 16px;">Notify Me →</a>
+        <div style="background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px;">
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Buy now</div>
+          <div style="font-size:2rem; font-weight:800; color:var(--text); margin-bottom:4px;">$49</div>
+          <div style="font-size:0.82rem; color:var(--text-dim); margin-bottom:20px;">One-time &middot; GitHub repo access</div>
+          <div id="github-status-sidebar" style="display:none; font-size:0.82rem; color:var(--accent); font-weight:600; margin-bottom:12px;"></div>
+          <button class="btn-primary purchase-btn" id="buy-btn-sidebar" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; display:block; text-align:center; font-size:0.88rem; font-weight:700;">Connect GitHub &amp; Buy &rarr;</button>
+          <div style="font-size:0.75rem; color:var(--text-dim); margin-top:8px; text-align:center;">Secure checkout via Stripe</div>
         </div>
 
-        <div style="margin-top:16px;">
-          <a href="/" class="btn-ghost" style="width:100%; display:block; text-align:center; font-size:0.88rem; padding:10px 16px;">← Back to Store</a>
+        <div style="margin-top:0;">
+          <a href="/" class="btn-ghost" style="width:100%; display:block; text-align:center; font-size:0.88rem; padding:10px 16px;">&larr; Back to Store</a>
         </div>
       </div>
 
@@ -225,7 +293,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Corporate Inc. All rights reserved.</p>
+      <p>&copy; 2026 Corporate Inc. All rights reserved.</p>
       <a href="mailto:support@frankfor.you">support@frankfor.you</a>
     </div>
   </div>
@@ -235,6 +303,71 @@
 function toggleMenu() {
   document.getElementById('navMobile').classList.toggle('open');
 }
+
+async function checkGithubStatus() {
+  try {
+    const res = await fetch('https://api.frankfor.you/auth/github/status', { credentials: 'include' });
+    const data = await res.json();
+    if (data.connected) {
+      showConnected(data.username);
+    }
+  } catch(e) {}
+}
+
+const params = new URLSearchParams(window.location.search);
+if (params.get('github') === 'connected') {
+  showConnected(params.get('username'));
+}
+
+function showConnected(username) {
+  document.getElementById('github-status').style.display = 'block';
+  document.getElementById('github-status').textContent = '✓ Connected as @' + username;
+  document.getElementById('buy-btn').textContent = 'Buy Now — $49';
+  document.getElementById('buy-btn').dataset.githubUsername = username;
+
+  const sidebarStatus = document.getElementById('github-status-sidebar');
+  if (sidebarStatus) {
+    sidebarStatus.style.display = 'block';
+    sidebarStatus.textContent = '✓ Connected as @' + username;
+  }
+  const sidebarBtn = document.getElementById('buy-btn-sidebar');
+  if (sidebarBtn) {
+    sidebarBtn.textContent = 'Buy Now — $49 →';
+    sidebarBtn.dataset.githubUsername = username;
+  }
+}
+
+document.getElementById('buy-btn').addEventListener('click', async function() {
+  const username = this.dataset.githubUsername;
+  if (!username) {
+    window.location.href = 'https://api.frankfor.you/auth/github';
+    return;
+  }
+  const res = await fetch('https://api.frankfor.you/checkout/agent-setup-kit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ github_username: username })
+  });
+  const { url } = await res.json();
+  window.location.href = url;
+});
+
+document.getElementById('buy-btn-sidebar').addEventListener('click', async function() {
+  const username = this.dataset.githubUsername;
+  if (!username) {
+    window.location.href = 'https://api.frankfor.you/auth/github';
+    return;
+  }
+  const res = await fetch('https://api.frankfor.you/checkout/agent-setup-kit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ github_username: username })
+  });
+  const { url } = await res.json();
+  window.location.href = url;
+});
+
+checkGithubStatus();
 </script>
 </body>
 </html>
