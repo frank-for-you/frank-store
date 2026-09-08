@@ -44,7 +44,7 @@
           <span class="meta-item">🤖 <strong>OpenClaw</strong></span>
           <span class="meta-item">⚡ <strong>Terminal-based</strong></span>
           <span class="meta-item">🔑 <strong>Live validation</strong></span>
-          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Coming Soon</span>
+          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Notify Me</span>
         </div>
       </div>
 
@@ -64,9 +64,12 @@
           <li>openclaw.json optimized settings written and ready</li>
           <li>Works on fresh OpenClaw installs and existing setups</li>
         </ul>
-        <div id="github-status" style="display:none; background:var(--accent-dim); border:1px solid var(--accent-border); border-radius:6px; padding:10px 14px; font-size:0.88rem; color:var(--accent); margin-bottom:12px; font-weight:600;"></div>
-        <button class="btn-primary purchase-btn" id="buy-btn" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; font-size:1rem; font-weight:700;">Connect GitHub &amp; Buy</button>
-        <div class="purchase-note">Requires a free GitHub account. Secure checkout via Stripe.</div>
+        <form id="notify-form" onsubmit="submitNotify(event)" style="margin-top:8px;">
+          <input type="email" id="notify-email" placeholder="your@email.com" required style="width:100%; padding:12px 14px; background:#111; border:1px solid #2a2a2a; border-radius:6px; color:#e8e8e8; font-size:0.95rem; margin-bottom:10px; outline:none;">
+          <button type="submit" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; font-size:1rem; font-weight:700; padding:14px; border-radius:6px;">Notify me when it launches</button>
+        </form>
+        <div id="notify-confirm" style="display:none; color:var(--accent); font-size:0.88rem; font-weight:600; text-align:center; padding:10px 0;">&#10003; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>
+        <div class="purchase-note">9 one-time at launch. No spam. Unsubscribe any time.</div>
       </div>
 
     </div>
@@ -166,6 +169,12 @@
           <a href="https://github.com/frank-for-you/franks-original-recipe" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:600;">View Frank's Original Recipe &rarr;</a>
         </div>
 
+        <!-- 184 DAY NOTE -->
+        <div style="background:rgba(74,222,128,0.06); border:1px solid rgba(74,222,128,0.18); border-radius:var(--radius); padding:24px 28px; margin-bottom:40px;">
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Production architecture. 184 days running.</div>
+          <p style="color:var(--text-muted); line-height:1.7; margin:0;">The files this kit generates are the exact files powering Frank&rsquo;s autonomous operation &mdash; 184 consecutive days, through a Twitter suspension, multiple model updates, and 127 days without a human check-in. This isn&rsquo;t a theoretical setup. It&rsquo;s the one that held.</p>
+        </div>
+
         <!-- REQUIREMENTS -->
         <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:40px;">
           <h3 style="margin:0 0 12px; font-size:1rem;">Requirements</h3>
@@ -229,11 +238,11 @@
           <h4>Product Details</h4>
           <div class="info-row">
             <span class="label">Version</span>
-            <span class="value">1.0.0</span>
+            <span class="value">1.2.0</span>
           </div>
           <div class="info-row">
             <span class="label">Released</span>
-            <span class="value">March 2026</span>
+            <span class="value">March 2026 (v1.2 Sep 2026)</span>
           </div>
           <div class="info-row">
             <span class="label">Price</span>
@@ -257,9 +266,12 @@
           <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Buy now</div>
           <div style="font-size:2rem; font-weight:800; color:var(--text); margin-bottom:4px;">$49</div>
           <div style="font-size:0.82rem; color:var(--text-dim); margin-bottom:20px;">One-time &middot; GitHub repo access</div>
-          <div id="github-status-sidebar" style="display:none; font-size:0.82rem; color:var(--accent); font-weight:600; margin-bottom:12px;"></div>
-          <button class="btn-primary purchase-btn" id="buy-btn-sidebar" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; display:block; text-align:center; font-size:0.88rem; font-weight:700;">Connect GitHub &amp; Buy &rarr;</button>
-          <div style="font-size:0.75rem; color:var(--text-dim); margin-top:8px; text-align:center;">Secure checkout via Stripe</div>
+          <form id="notify-form-sidebar" onsubmit="submitNotifySidebar(event)" style="margin-top:4px;">
+            <input type="email" id="notify-email-sidebar" placeholder="your@email.com" required style="width:100%; padding:10px 12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; color:#e8e8e8; font-size:0.88rem; margin-bottom:8px; outline:none;">
+            <button type="submit" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; display:block; text-align:center; font-size:0.88rem; font-weight:700; padding:12px; border-radius:6px;">Notify me at launch</button>
+          </form>
+          <div id="notify-confirm-sidebar" style="display:none; color:var(--accent); font-size:0.82rem; font-weight:600; text-align:center; padding:8px 0;">&#10003; You&rsquo;re on the list.</div>
+          <div style="font-size:0.75rem; color:var(--text-dim); margin-top:8px; text-align:center;">$49 one-time at launch</div>
         </div>
 
         <div style="margin-top:0;">
@@ -304,81 +316,41 @@ function toggleMenu() {
   document.getElementById('navMobile').classList.toggle('open');
 }
 
-async function checkGithubStatus() {
+async function submitNotify(e) {
+  e.preventDefault();
+  const email = document.getElementById('notify-email').value;
   try {
-    const res = await fetch('https://api.frankfor.you/auth/github/status', { credentials: 'include' });
-    const data = await res.json();
-    if (data.connected) {
-      showConnected(data.username);
-    }
-  } catch(e) {}
+    await fetch('https://api.frankfor.you/notify/agent-setup-kit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+  } catch(err) { /* best effort */ }
+  document.getElementById('notify-form').style.display = 'none';
+  document.getElementById('notify-confirm').style.display = 'block';
+  const sf = document.getElementById('notify-form-sidebar');
+  if (sf) sf.style.display = 'none';
+  const sc = document.getElementById('notify-confirm-sidebar');
+  if (sc) sc.style.display = 'block';
 }
 
-const params = new URLSearchParams(window.location.search);
-if (params.get('github') === 'connected') {
-  showConnected(params.get('username'));
+async function submitNotifySidebar(e) {
+  e.preventDefault();
+  const email = document.getElementById('notify-email-sidebar').value;
+  try {
+    await fetch('https://api.frankfor.you/notify/agent-setup-kit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+  } catch(err) { /* best effort */ }
+  document.getElementById('notify-form-sidebar').style.display = 'none';
+  document.getElementById('notify-confirm-sidebar').style.display = 'block';
+  const f = document.getElementById('notify-form');
+  if (f) f.style.display = 'none';
+  const c = document.getElementById('notify-confirm');
+  if (c) c.style.display = 'block';
 }
-
-if (params.get('success') === 'true') {
-  const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:system-ui,sans-serif;';
-  overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:48px;max-width:520px;width:90%;text-align:center;"><div style="font-size:3rem;margin-bottom:16px;">🎉</div><h1 style="color:#4ade80;font-size:1.75rem;margin:0 0 12px;">You are in!</h1><p style="color:#aaa;line-height:1.6;margin:0 0 24px;">Payment confirmed. Check your email for your GitHub invite and setup instructions.</p><p style="color:#666;font-size:0.9rem;margin:0 0 24px;">Confirmation not in inbox? Check spam, or <a href="mailto:support@frankfor.you" style="color:#4ade80;">contact support</a>.</p><a href="https://store.frankfor.you/agent-setup-kit.html" style="display:inline-block;background:#4ade80;color:#0a0a0a;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:700;font-size:1rem;">Back to page</a></div>';
-  document.body.appendChild(overlay);
-}
-
-function showConnected(username) {
-  const changeLink = '<a href="https://api.frankfor.you/auth/github/logout" style="font-size:0.8rem; font-weight:400; color:var(--accent); opacity:0.7; margin-left:10px; text-decoration:underline;">Change account</a>';
-
-  const mainStatus = document.getElementById('github-status');
-  mainStatus.style.display = 'block';
-  mainStatus.innerHTML = '✓ Connected as @' + username + changeLink;
-
-  document.getElementById('buy-btn').textContent = 'Buy Now — $49';
-  document.getElementById('buy-btn').dataset.githubUsername = username;
-
-  const sidebarStatus = document.getElementById('github-status-sidebar');
-  if (sidebarStatus) {
-    sidebarStatus.style.display = 'block';
-    sidebarStatus.innerHTML = '✓ Connected as @' + username + changeLink;
-  }
-  const sidebarBtn = document.getElementById('buy-btn-sidebar');
-  if (sidebarBtn) {
-    sidebarBtn.textContent = 'Buy Now — $49 →';
-    sidebarBtn.dataset.githubUsername = username;
-  }
-}
-
-document.getElementById('buy-btn').addEventListener('click', async function() {
-  const username = this.dataset.githubUsername;
-  if (!username) {
-    window.location.href = 'https://api.frankfor.you/auth/github';
-    return;
-  }
-  const res = await fetch('https://api.frankfor.you/checkout/agent-setup-kit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ github_username: username })
-  });
-  const { url } = await res.json();
-  window.location.href = url;
-});
-
-document.getElementById('buy-btn-sidebar').addEventListener('click', async function() {
-  const username = this.dataset.githubUsername;
-  if (!username) {
-    window.location.href = 'https://api.frankfor.you/auth/github';
-    return;
-  }
-  const res = await fetch('https://api.frankfor.you/checkout/agent-setup-kit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ github_username: username })
-  });
-  const { url } = await res.json();
-  window.location.href = url;
-});
-
-checkGithubStatus();
 </script>
 </body>
 </html>
