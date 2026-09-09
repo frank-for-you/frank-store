@@ -44,7 +44,7 @@
           <span class="meta-item">🤖 <strong>OpenClaw</strong></span>
           <span class="meta-item">⚡ <strong>Terminal-based</strong></span>
           <span class="meta-item">🔑 <strong>Live validation</strong></span>
-          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Notify Me</span>
+          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Available Now</span>
         </div>
       </div>
 
@@ -64,12 +64,17 @@
           <li>openclaw.json optimized settings written and ready</li>
           <li>Works on fresh OpenClaw installs and existing setups</li>
         </ul>
-        <form id="notify-form" onsubmit="submitNotify(event)" style="margin-top:8px;">
-          <input type="email" id="notify-email" placeholder="your@email.com" required style="width:100%; padding:12px 14px; background:#111; border:1px solid #2a2a2a; border-radius:6px; color:#e8e8e8; font-size:0.95rem; margin-bottom:10px; outline:none;">
-          <button type="submit" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; font-size:1rem; font-weight:700; padding:14px; border-radius:6px;">Notify me when it launches</button>
-        </form>
-        <div id="notify-confirm" style="display:none; color:var(--accent); font-size:0.88rem; font-weight:600; text-align:center; padding:10px 0;">&#10003; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>
-        <div class="purchase-note">9 one-time at launch. No spam. Unsubscribe any time.</div>
+        <div id="github-step" style="margin-top:8px;">
+          <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.5;margin-bottom:12px;">Connect your GitHub account first — access is delivered as a repo invite after purchase.</p>
+          <button onclick="connectGitHub()" style="background:transparent;color:var(--accent);border:1px solid var(--accent);cursor:pointer;width:100%;font-size:0.95rem;font-weight:600;padding:12px;border-radius:6px;margin-bottom:10px;">Connect GitHub Account</button>
+        </div>
+        <div id="buy-step" style="display:none;margin-top:8px;">
+          <div id="github-confirmed" style="color:var(--accent);font-size:0.85rem;margin-bottom:10px;font-weight:600;">&#10003; GitHub connected: <span id="github-username-display"></span></div>
+          <button onclick="startCheckout()" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Buy Now &mdash; $49</button>
+        </div>
+        <div id="checkout-loading" style="display:none;text-align:center;padding:14px;color:var(--text-muted);font-size:0.9rem;">Creating checkout...</div>
+        <div id="checkout-error" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;text-align:center;">$49 one-time &middot; GitHub repo access &middot; No subscription</p>
       </div>
 
     </div>
@@ -266,12 +271,9 @@
           <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:12px;">Buy now</div>
           <div style="font-size:2rem; font-weight:800; color:var(--text); margin-bottom:4px;">$49</div>
           <div style="font-size:0.82rem; color:var(--text-dim); margin-bottom:20px;">One-time &middot; GitHub repo access</div>
-          <form id="notify-form-sidebar" onsubmit="submitNotifySidebar(event)" style="margin-top:4px;">
-            <input type="email" id="notify-email-sidebar" placeholder="your@email.com" required style="width:100%; padding:10px 12px; background:#111; border:1px solid #2a2a2a; border-radius:6px; color:#e8e8e8; font-size:0.88rem; margin-bottom:8px; outline:none;">
-            <button type="submit" style="background:var(--accent); color:#0a0a0a; border:none; cursor:pointer; width:100%; display:block; text-align:center; font-size:0.88rem; font-weight:700; padding:12px; border-radius:6px;">Notify me at launch</button>
-          </form>
-          <div id="notify-confirm-sidebar" style="display:none; color:var(--accent); font-size:0.82rem; font-weight:600; text-align:center; padding:8px 0;">&#10003; You&rsquo;re on the list.</div>
-          <div style="font-size:0.75rem; color:var(--text-dim); margin-top:8px; text-align:center;">$49 one-time at launch</div>
+          <button onclick="connectGitHub()" id="sidebar-github-btn" style="background:transparent;color:var(--accent);border:1px solid var(--accent);cursor:pointer;width:100%;display:block;text-align:center;font-size:0.88rem;font-weight:600;padding:11px;border-radius:6px;margin-bottom:8px;">Connect GitHub</button>
+          <button onclick="startCheckout()" id="sidebar-buy-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;display:block;text-align:center;font-size:0.88rem;font-weight:700;padding:12px;border-radius:6px;display:none;">Buy Now &mdash; $49</button>
+          <div style="font-size:0.75rem;color:var(--text-dim);margin-top:8px;text-align:center;">$49 one-time at launch</div>
         </div>
 
         <div style="margin-top:0;">
@@ -316,41 +318,87 @@ function toggleMenu() {
   document.getElementById('navMobile').classList.toggle('open');
 }
 
-async function submitNotify(e) {
-  e.preventDefault();
-  const email = document.getElementById('notify-email').value;
-  try {
-    await fetch('https://api.frankfor.you/notify/agent-setup-kit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-  } catch(err) { /* best effort */ }
-  document.getElementById('notify-form').style.display = 'none';
-  document.getElementById('notify-confirm').style.display = 'block';
-  const sf = document.getElementById('notify-form-sidebar');
-  if (sf) sf.style.display = 'none';
-  const sc = document.getElementById('notify-confirm-sidebar');
-  if (sc) sc.style.display = 'block';
+const API_URL = 'https://api.frankfor.you';
+let githubUsername = null;
+
+// Check if GitHub already connected (from OAuth redirect)
+function init() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('success') === 'true') {
+    // Purchase complete
+    showSuccess();
+    return;
+  }
+
+  if (params.get('github') === 'connected') {
+    githubUsername = params.get('username') || '';
+    setGitHubConnected(githubUsername);
+  }
+
+  if (params.get('github') === 'error') {
+    showGitHubError(params.get('reason') || 'Connection failed. Please try again.');
+  }
 }
 
-async function submitNotifySidebar(e) {
-  e.preventDefault();
-  const email = document.getElementById('notify-email-sidebar').value;
+function connectGitHub() {
+  window.location.href = API_URL + '/auth/github';
+}
+
+function setGitHubConnected(username) {
+  document.getElementById('github-step').style.display = 'none';
+  document.getElementById('buy-step').style.display = 'block';
+  const display = document.getElementById('github-username-display');
+  if (display) display.textContent = '@' + username;
+  // Sidebar
+  const sidebarGithub = document.getElementById('sidebar-github-btn');
+  const sidebarBuy = document.getElementById('sidebar-buy-btn');
+  if (sidebarGithub) sidebarGithub.style.display = 'none';
+  if (sidebarBuy) sidebarBuy.style.display = 'block';
+}
+
+function showGitHubError(msg) {
+  const err = document.getElementById('checkout-error');
+  if (err) { err.textContent = msg; err.style.display = 'block'; }
+}
+
+async function startCheckout() {
+  const loading = document.getElementById('checkout-loading');
+  const err = document.getElementById('checkout-error');
+  const buyBtn = document.querySelector('button[onclick="startCheckout()"]');
+
+  if (loading) loading.style.display = 'block';
+  if (err) err.style.display = 'none';
+  if (buyBtn) buyBtn.style.display = 'none';
+
   try {
-    await fetch('https://api.frankfor.you/notify/agent-setup-kit', {
+    const res = await fetch(API_URL + '/checkout/agent-setup-kit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+      credentials: 'include',
+      body: JSON.stringify({ github_username: githubUsername || '' })
     });
-  } catch(err) { /* best effort */ }
-  document.getElementById('notify-form-sidebar').style.display = 'none';
-  document.getElementById('notify-confirm-sidebar').style.display = 'block';
-  const f = document.getElementById('notify-form');
-  if (f) f.style.display = 'none';
-  const c = document.getElementById('notify-confirm');
-  if (c) c.style.display = 'block';
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Checkout failed.');
+    }
+  } catch (e) {
+    if (loading) loading.style.display = 'none';
+    if (buyBtn) buyBtn.style.display = 'block';
+    if (err) { err.textContent = e.message; err.style.display = 'block'; }
+  }
 }
+
+function showSuccess() {
+  const cta = document.getElementById('buy-step') || document.getElementById('github-step');
+  if (cta) {
+    cta.innerHTML = '<div style="color:var(--accent);font-weight:700;font-size:1.1rem;padding:16px 0;">&#10003; Purchase complete!</div><p style="color:var(--text-muted);font-size:0.9rem;line-height:1.5;">Check your email for your GitHub invite and access instructions. Questions? <a href="mailto:support@frankfor.you" style="color:var(--accent);">support@frankfor.you</a></p>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
