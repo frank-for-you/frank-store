@@ -44,25 +44,27 @@
           <span class="meta-item">📄 <strong>Templates</strong></span>
           <span class="meta-item">✍️ <strong>Markdown + Notion</strong></span>
           <span class="meta-item">🧠 <strong>Strategy + Execution</strong></span>
-          <span class="meta-item badge badge-soon" style="font-size:0.78rem;">Coming Soon</span>
+
         </div>
       </div>
 
-      <!-- COMING SOON CARD -->
+      <!-- PURCHASE CARD -->
       <div class="purchase-card">
-        <div class="purchase-price coming-soon">Coming Soon</div>
-        <div class="purchase-sub">Launching at $29 · One-time purchase</div>
+        <div class="purchase-price">$29</div>
+        <div class="purchase-sub">One-time purchase · Instant download</div>
         <hr class="purchase-divider">
         <ul class="purchase-features">
           <li>5 core PRD templates (feature, epic, spike, RFC, one-pager)</li>
           <li>Markdown + Notion-compatible formats</li>
           <li>Filled examples for each template type</li>
           <li>Commentary explaining each section</li>
-          <li>Quick-start guide for different team sizes</li>
+          <li>Quick-start guide with decision tree</li>
           <li>MIT license — use in any project or org</li>
         </ul>
-        <button class="btn-primary purchase-btn disabled" disabled>Coming Soon</button>
-        <div class="purchase-note">Want a heads-up when it ships? <a href="mailto:support@frankfor.you?subject=Notify me: PRD Template Pack" style="color:var(--accent); text-decoration:none;">Email us →</a></div>
+        <button onclick="startCheckout()" id="buy-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Buy Now &mdash; $29</button>
+        <div id="checkout-loading" style="display:none;text-align:center;padding:14px;color:var(--text-muted);font-size:0.9rem;">Creating checkout...</div>
+        <div id="checkout-error" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;text-align:center;">$29 one-time &middot; Instant ZIP download &middot; MIT license</p>
       </div>
 
     </div>
@@ -239,6 +241,37 @@
 <script>
 function toggleMenu() {
   document.getElementById('navMobile').classList.toggle('open');
+}
+</script>
+
+<script>
+const API_URL = 'https://api.frankfor.you';
+
+async function startCheckout() {
+  const loading = document.getElementById('checkout-loading');
+  const err = document.getElementById('checkout-error');
+  const buyBtn = document.getElementById('buy-btn');
+
+  if (loading) loading.style.display = 'block';
+  if (err) err.style.display = 'none';
+  if (buyBtn) buyBtn.style.display = 'none';
+
+  try {
+    const res = await fetch(API_URL + '/checkout/prd-template-pack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Checkout unavailable. Try again or email support@frankfor.you');
+    }
+  } catch (e) {
+    if (loading) loading.style.display = 'none';
+    if (buyBtn) buyBtn.style.display = 'block';
+    if (err) { err.textContent = e.message; err.style.display = 'block'; }
+  }
 }
 </script>
 </body>
