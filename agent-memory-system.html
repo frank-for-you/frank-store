@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Agent Memory System — templates and cron prompts for persistent AI agent memory. Proven across 195+ days of autonomous operation.">
+  <title>AI Agent Memory System — frank store</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- PRODUCT HEADER -->
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-grid">
+      <div>
+        <div class="product-detail-eyebrow">
+          <a href="/">Store</a> / AI Agent Memory System
+        </div>
+        <h1>AI Agent<br><span class="accent">Memory System</span></h1>
+        <p class="lead">Stop losing context. Give your AI agent a real memory. Three files, a folder structure, and a nightly distillation cron &mdash; that's the whole system. Proven across 195+ consecutive days of production autonomous operation.</p>
+        <div class="product-detail-meta">
+          <span class="meta-item">🧠 <strong>Memory Templates</strong></span>
+          <span class="meta-item">⏰ <strong>Cron Config</strong></span>
+          <span class="meta-item">✅ <strong>195+ Days Proven</strong></span>
+        </div>
+      </div>
+
+      <!-- PURCHASE CARD -->
+      <div class="purchase-card">
+        <div class="purchase-price">9</div>
+        <div class="purchase-sub">One-time purchase &middot; Instant download</div>
+        <hr class="purchase-divider">
+        <ul class="purchase-features">
+          <li>MEMORY.md template (pointer-based index)</li>
+          <li>SOUL.md template (agent persona file)</li>
+          <li>Daily log template (YYYY-MM-DD.md)</li>
+          <li>Nightly distillation prompt</li>
+          <li>OpenClaw cron config example</li>
+          <li>Full setup guide with examples</li>
+          <li>MIT license &mdash; use in any project</li>
+        </ul>
+        <button onclick="startCheckout()" id="buy-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Buy Now &mdash; 9</button>
+        <div id="checkout-loading" style="display:none;text-align:center;padding:14px;color:var(--text-muted);font-size:0.9rem;">Creating checkout...</div>
+        <div id="checkout-error" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;text-align:center;">9 one-time &middot; Instant ZIP download &middot; MIT license</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CONTENT -->
+<div class="product-content">
+  <div class="container">
+    <div class="product-content-grid">
+
+      <div>
+        <div class="features-section">
+          <h2>What's included</h2>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <div class="feature-icon">🧠</div>
+              <div>
+                <h3>MEMORY.md Template</h3>
+                <p>The long-term brain. A structured pointer index of durable facts &mdash; not events, not logs. Includes sections for Identity, Active Projects, Quick Facts, and Previous Status. Kept intentionally lean: the test is whether a fact changes how the agent behaves next session. If yes, it stays.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🪪</div>
+              <div>
+                <h3>SOUL.md Template</h3>
+                <p>The agent's persona and operating principles. The agent reads it at the start of each session to calibrate tone and approach. Includes sections for operating principles, values, and continuity. Specific enough to actually change behavior &mdash; not generic platitudes.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📅</div>
+              <div>
+                <h3>Daily Log Template</h3>
+                <p>The raw operational record. Structured sections for automation runs, manual work, what worked, what didn't, and next steps. This is the source material that gets distilled into MEMORY.md each night. YYYY-MM-DD.md naming convention baked in.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">⚙️</div>
+              <div>
+                <h3>Nightly Distillation Prompt</h3>
+                <p>The load-bearing job. A ready-to-use prompt that instructs the agent to read today's and yesterday's daily logs, extract durable facts, update MEMORY.md, and remove stale entries. Includes the core principle: "Distill facts, not events." Without this cron, context accumulates and agents lose coherence. With it, they can run indefinitely.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📦</div>
+              <div>
+                <h3>OpenClaw Cron Config</h3>
+                <p>A JSON snippet showing exactly how to set up the nightly distillation as a scheduled job in OpenClaw. Mon/Wed/Fri at 2:00 AM cadence, with the full payload structure. Adapt to your timezone and schedule.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📖</div>
+              <div>
+                <h3>Full Setup Guide</h3>
+                <p>Step-by-step README covering: the 3-layer memory system (MEMORY.md + daily logs + vault), installation, daily workflow, customization tips, and what to avoid. Written for someone setting this up from scratch, not someone who already knows how it works.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="features-section" style="margin-top:40px;">
+          <h2>The 3-Layer System</h2>
+          <p style="color:var(--text-muted);margin-bottom:24px;">This isn't a vector database or a RAG pipeline. It's a discipline &mdash; a simple structure that keeps agents coherent across sessions.</p>
+          <div style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:24px;margin-bottom:16px;">
+            <div style="color:var(--accent);font-weight:700;margin-bottom:4px;">Layer 1 &mdash; MEMORY.md</div>
+            <div style="color:var(--text-muted);font-size:0.9rem;">Long-term memory. Pointer index of durable facts. Kept short and updated nightly. The agent reads this at the start of every session.</div>
+          </div>
+          <div style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:24px;margin-bottom:16px;">
+            <div style="color:var(--accent);font-weight:700;margin-bottom:4px;">Layer 2 &mdash; daily/YYYY-MM-DD.md</div>
+            <div style="color:var(--text-muted);font-size:0.9rem;">Working memory. Raw operational log for each day. Source material for the nightly distillation. The agent appends here throughout each session.</div>
+          </div>
+          <div style="background:#111;border:1px solid #1f1f1f;border-radius:8px;padding:24px;">
+            <div style="color:var(--accent);font-weight:700;margin-bottom:4px;">Layer 3 &mdash; vault/</div>
+            <div style="color:var(--text-muted);font-size:0.9rem;">Deep storage. Detailed facts and decisions too long for MEMORY.md. MEMORY.md entries point here. The agent reads vault files on demand, not by default.</div>
+          </div>
+        </div>
+
+        <div class="features-section" style="margin-top:40px;background:#0d1a10;border:1px solid #1a3020;border-radius:8px;padding:32px;">
+          <h2 style="color:var(--accent);">195+ Days of Evidence</h2>
+          <p style="color:var(--text-muted);">This system isn't theoretical. It's what kept an autonomous AI agent coherent from March 7 through September 18, 2026 &mdash; 195 consecutive days of production operation, unattended for 120+ of them.</p>
+          <p style="color:var(--text-muted);margin-top:12px;">One MEMORY.md. One nightly distillation cron running Mon/Wed/Fri at 2:00 AM. No vector database. No RAG pipeline. No external memory service. Just files and discipline.</p>
+          <p style="color:var(--text-muted);margin-top:12px;">The agent handled a Twitter suspension, SSH infrastructure failures, portfolio monitoring, product launches, and 195+ daily cron executions &mdash; all without losing continuity. That's what a working memory system looks like.</p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="sidebar-card">
+          <div class="sidebar-price">9 <span class="sidebar-price-note">one-time</span></div>
+          <button onclick="startCheckout()" id="buy-btn-sidebar" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;margin-bottom:12px;">Buy Now &mdash; 9</button>
+          <ul class="sidebar-features">
+            <li>✅ Instant ZIP download</li>
+            <li>✅ 7 files included</li>
+            <li>✅ MIT license</li>
+            <li>✅ 195+ days proven</li>
+            <li>✅ Email delivery</li>
+          </ul>
+          <hr style="border:none;border-top:1px solid #1f1f1f;margin:16px 0;">
+          <p style="color:var(--text-dim);font-size:0.8rem;">Questions? <a href="mailto:support@frankfor.you" style="color:var(--accent);">support@frankfor.you</a></p>
+        </div>
+
+        <div class="sidebar-card" style="margin-top:16px;">
+          <h4 style="color:var(--text);margin-bottom:12px;">Also in the store</h4>
+          <div style="margin-bottom:12px;">
+            <a href="/agent-setup-kit" style="color:var(--accent);font-weight:600;">Agent Setup Kit</a>
+            <div style="color:var(--text-dim);font-size:0.82rem;">Full agent configuration — 9</div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <a href="/prd-template-pack" style="color:var(--accent);font-weight:600;">PRD Template Pack</a>
+            <div style="color:var(--text-dim);font-size:0.82rem;">5 product templates — 9</div>
+          </div>
+          <div>
+            <a href="/stripe-checkout-boilerplate" style="color:var(--accent);font-weight:600;">Stripe Checkout Boilerplate</a>
+            <div style="color:var(--text-dim);font-size:0.82rem;">Express + Stripe starter — </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+async function startCheckout() {
+  const btn = document.getElementById('buy-btn');
+  const btnSidebar = document.getElementById('buy-btn-sidebar');
+  const loading = document.getElementById('checkout-loading');
+  const errorEl = document.getElementById('checkout-error');
+  
+  if (btn) btn.style.display = 'none';
+  if (btnSidebar) btnSidebar.disabled = true;
+  if (loading) loading.style.display = 'block';
+  if (errorEl) errorEl.style.display = 'none';
+
+  try {
+    window.location.href = 'https://api.frankfor.you/checkout/agent-memory-system';
+  } catch (err) {
+    if (btn) btn.style.display = 'block';
+    if (btnSidebar) btnSidebar.disabled = false;
+    if (loading) loading.style.display = 'none';
+    if (errorEl) { errorEl.style.display = 'block'; errorEl.textContent = 'Something went wrong. Please try again.'; }
+  }
+}
+</script>
+
+</body>
+</html>
