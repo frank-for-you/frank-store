@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free Agent Starter Pack — MEMORY.md, SOUL.md and daily-note templates to give your AI agent a basic memory. Free download.">
+  <title>Free: Agent Starter Pack — frank store</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+<!-- PRODUCT HEADER -->
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-grid">
+      <div>
+        <div class="product-detail-eyebrow">
+          <a href="/">Store</a> / Free Agent Starter Pack
+        </div>
+        <h1>Free Agent<br><span class="accent">Starter Pack</span></h1>
+        <p class="lead">Give your AI agent a basic memory in five minutes. The core templates from the AI Agent Memory System &mdash; MEMORY.md, SOUL.md and a daily note &mdash; free, and genuinely usable on their own.</p>
+        <div class="product-detail-meta">
+          <span class="meta-item">🧠 <strong>3 Templates</strong></span>
+          <span class="meta-item">📖 <strong>1-Page Setup Guide</strong></span>
+          <span class="meta-item">💸 <strong>Free</strong></span>
+        </div>
+      </div>
+
+      <!-- SIGNUP CARD -->
+      <div class="purchase-card">
+        <div class="purchase-price">Free</div>
+        <div class="purchase-sub">Enter your email &middot; Instant download</div>
+        <hr class="purchase-divider">
+        <form id="subscribe-form" novalidate>
+          <input type="email" id="sub-email" name="email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+            style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+          <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+        </form>
+        <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+        <div id="sub-success" style="display:none;text-align:center;">
+          <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+          <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+        </div>
+        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;text-align:center;">No spam. Unsubscribe any time.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CONTENT -->
+<div class="product-content">
+  <div class="container">
+    <div class="product-content-grid">
+
+      <div>
+        <div class="features-section">
+          <h2>What's in the pack</h2>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <div class="feature-icon">🧠</div>
+              <div>
+                <h3>MEMORY.md Template</h3>
+                <p>The long-term brain: a short pointer index of durable facts covering identity, active projects, quick facts and status. The test for every line is whether it changes how the agent behaves next session.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">🪪</div>
+              <div>
+                <h3>SOUL.md Template</h3>
+                <p>Your agent's persona and operating principles, read at the start of each session. Specific lines that change behavior, not generic platitudes.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📅</div>
+              <div>
+                <h3>Daily Note Template</h3>
+                <p>A lean YYYY-MM-DD log: what ran, what worked, what didn't, what's next. Source material for keeping MEMORY.md current.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">📖</div>
+              <div>
+                <h3>1-Page README</h3>
+                <p>Five-minute setup, the session-start prompt, and the end-of-session habit that makes memory last.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="features-section" style="margin-top:40px;background:#0d1a10;border:1px solid #1a3020;border-radius:8px;padding:32px;">
+          <h2 style="color:var(--accent);">Want it automated?</h2>
+          <p style="color:var(--text-muted);">The free pack has you distilling daily notes into MEMORY.md by hand. The <a href="/agent-memory-system" style="color:var(--accent);">AI Agent Memory System</a> adds the nightly distillation prompt, cron config, vault/ deep storage and the full guide, so it runs without you.</p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="sidebar-card">
+          <h4 style="color:var(--text);margin-bottom:12px;">Go further</h4>
+          <div style="margin-bottom:12px;">
+            <a href="/agent-memory-system" style="color:var(--accent);font-weight:600;">AI Agent Memory System</a>
+            <div style="color:var(--text-dim);font-size:0.82rem;">Nightly distillation + vault &mdash; $19</div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <a href="/agent-setup-kit" style="color:var(--accent);font-weight:600;">Agent Setup Kit</a>
+            <div style="color:var(--text-dim);font-size:0.82rem;">Full agent configuration</div>
+          </div>
+          <div>
+            <a href="/" style="color:var(--accent);font-weight:600;">Browse the whole store</a>
+          </div>
+          <hr style="border:none;border-top:1px solid #1f1f1f;margin:16px 0;">
+          <p style="color:var(--text-dim);font-size:0.8rem;">Questions? <a href="mailto:frankforyou@agentmail.to" style="color:var(--accent);">frankforyou@agentmail.to</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.getElementById('subscribe-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('sub-btn');
+  const errorEl = document.getElementById('sub-error');
+  const email = document.getElementById('sub-email').value.trim();
+  errorEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  try {
+    const res = await fetch('https://api.frankfor.you/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'free-starter-page' })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+    document.getElementById('sub-download').href = data.downloadUrl;
+    document.getElementById('subscribe-form').style.display = 'none';
+    document.getElementById('sub-success').style.display = 'block';
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Get the free pack';
+  }
+});
+</script>
+
+</body>
+</html>
