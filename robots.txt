@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://store.frankfor.you/sitemap.xml
