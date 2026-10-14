@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AI Agent Cost Calculator (Claude, GPT, Gemini) — frank store</title>
+  <meta name="description" content="Free AI agent cost calculator. Estimate daily, monthly and yearly API cost for Claude, GPT-4o/4.1 and Gemini agents, with prompt caching and cron runs, and compare cheaper models. No signup.">
+  <link rel="canonical" href="https://store.frankfor.you/tools/agent-cost-calculator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free AI Agent Cost Calculator (Claude, GPT, Gemini)">
+  <meta property="og:description" content="Free AI agent cost calculator. Estimate daily, monthly and yearly API cost for Claude, GPT-4o/4.1 and Gemini agents, with prompt caching and cron runs, and compare cheaper models. No signup.">
+  <meta property="og:url" content="https://store.frankfor.you/tools/agent-cost-calculator.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free AI Agent Cost Calculator (Claude, GPT, Gemini)">
+  <meta name="twitter:description" content="Free AI agent cost calculator. Estimate daily, monthly and yearly API cost for Claude, GPT-4o/4.1 and Gemini agents, with prompt caching and cron runs, and compare cheaper models. No signup.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Agent Cost Calculator","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser)","url":"https://store.frankfor.you/tools/agent-cost-calculator.html","description":"Free AI agent cost calculator. Estimate daily, monthly and yearly API cost for Claude, GPT-4o/4.1 and Gemini agents, with prompt caching and cron runs, and compare cheaper models. No signup.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/style.css?v=2">
+  <style>
+    .gen-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:28px;align-items:start}
+    @media(max-width:860px){.gen-grid{grid-template-columns:1fr}}
+    .gen-form label{display:block;color:var(--text-muted);font-size:.85rem;margin:14px 0 5px}
+    .gen-form input[type=number],.gen-form select{width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:.95rem;padding:10px;border-radius:6px;font-family:inherit}
+    .cost-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
+    .cost-stat{background:#0c0c0c;border:1px solid #1f1f1f;border-radius:6px;padding:14px}
+    .cost-stat span{display:block;color:var(--text-muted);font-size:.78rem;margin-bottom:4px}
+    .cost-stat strong{font-size:1.25rem;color:var(--accent)}
+    .cost-table{width:100%;border-collapse:collapse;font-size:.88rem}
+    .cost-table th,.cost-table td{text-align:left;padding:8px 10px;border-bottom:1px solid #1f1f1f;color:var(--text)}
+    .cost-table th{color:var(--text-muted);font-weight:600;font-size:.78rem}
+    .cost-table td.num,.cost-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+    .cost-table tr.sel td{color:var(--accent);font-weight:700}
+    .cost-tips li{color:var(--text-muted);line-height:1.7;margin-bottom:8px}
+    .gen-article p,.gen-article li{color:var(--text-muted);line-height:1.7}
+    .gen-article h2{margin-top:32px}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-eyebrow"><a href="/">Store</a> / Free Tools / Agent Cost Calculator</div>
+    <h1>Free AI <span class="accent">Agent Cost Calculator</span></h1>
+    <p class="lead">Estimate what your AI agent costs per day, month and year &mdash; and see how much a cheaper model, prompt caching or trimmed context would save. Runs entirely in your browser; nothing is uploaded.</p>
+  </div>
+</div>
+
+<div class="product-content">
+  <div class="container">
+    <div class="gen-grid">
+      <form class="gen-form purchase-card" id="cost-form" onsubmit="return false">
+        <label for="f-model">Model</label>
+        <select id="f-model"></select>
+        <label for="f-runs">Runs per day (interactive)</label>
+        <input type="number" id="f-runs" min="0" step="1" value="50">
+        <label for="f-cron">Scheduled / cron runs per day</label>
+        <input type="number" id="f-cron" min="0" step="1" value="24">
+        <label for="f-in">Average input tokens per run</label>
+        <input type="number" id="f-in" min="0" step="100" value="8000">
+        <label for="f-out">Average output tokens per run</label>
+        <input type="number" id="f-out" min="0" step="50" value="800">
+        <label for="f-cache">Cache hit % of input tokens</label>
+        <input type="number" id="f-cache" min="0" max="100" step="5" value="50">
+        <p style="color:var(--text-dim);font-size:.78rem;margin-top:14px">Prices are approximate list prices per million tokens and change often &mdash; check your provider. Cached input is assumed to cost ~10% of the normal input price; cache write premiums are ignored. Cron runs are assumed to use the same token sizes.</p>
+      </form>
+
+      <div>
+        <div class="cost-stats" id="cost-stats" aria-live="polite"></div>
+        <h3 style="margin-top:0">Compare models (same workload)</h3>
+        <div style="overflow-x:auto"><table class="cost-table" id="cost-table"></table></div>
+        <h3>3 ways to cut your bill</h3>
+        <ol class="cost-tips" id="cost-tips"></ol>
+      </div>
+    </div>
+
+    <div class="purchase-card" style="margin-top:40px;max-width:640px">
+      <h2 style="margin-top:0">Get the free Agent Starter Pack</h2>
+      <p style="color:var(--text-muted)">Templates for MEMORY.md, SOUL.md and daily notes, plus a one-page setup guide. Free.</p>
+      <form id="subscribe-form" novalidate>
+        <input type="email" id="sub-email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+          style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+        <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+      </form>
+      <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+      <div id="sub-success" style="display:none;text-align:center;">
+        <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+        <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;">No spam. Unsubscribe any time.</p>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">Want an agent that remembers (and costs less to re-explain)? See the <a href="/agent-memory-system">AI Agent Memory System ($19)</a> or grab everything in <a href="/complete-library">Frank's Complete Library</a>.</p>
+    </div>
+
+    <div class="gen-article" style="max-width:760px;margin-top:48px">
+      <h2>How AI agent API costs work</h2>
+      <p>API providers bill per token, with output tokens costing several times more than input tokens. An agent that re-reads a long context on every run pays for that input every time &mdash; which is why input size and run count usually dominate the bill, not the length of the answers.</p>
+      <h3>Prompt caching</h3>
+      <p>When the start of your prompt (system prompt, memory files, tool definitions) is identical between calls, providers can serve it from cache at roughly a tenth of the normal input price. Keep stable content first and changing content last.</p>
+      <h3>Scheduled runs add up</h3>
+      <p>A cron job that fires every hour is 720 runs a month. Most of those jobs (checks, summaries, triage) do not need your most capable model.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/tools/agent-generator.html">Agent Generator</a>
+        <a href="/tools/agent-cost-calculator.html">Cost Calculator</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+/* Approximate list prices in USD per 1M tokens. Check your provider for current rates. */
+const PRICES = {
+  'claude-sonnet': { label: 'Claude Sonnet', input: 3.00, output: 15.00 },
+  'claude-opus':   { label: 'Claude Opus',   input: 5.00, output: 25.00 },
+  'claude-haiku':  { label: 'Claude Haiku',  input: 1.00, output: 5.00 },
+  'gpt-4o':        { label: 'GPT-4o',        input: 2.50, output: 10.00 },
+  'gpt-4.1':       { label: 'GPT-4.1',       input: 2.00, output: 8.00 },
+  'gpt-4.1-mini':  { label: 'GPT-4.1 mini',  input: 0.40, output: 1.60 },
+  'gemini-pro':    { label: 'Gemini Pro',    input: 1.25, output: 10.00 },
+  'gemini-flash':  { label: 'Gemini Flash',  input: 0.30, output: 2.50 }
+};
+const CACHED_INPUT_FACTOR = 0.10;
+
+function costPerRun(p, inTok, outTok, cachePct) {
+  const c = Math.min(Math.max(cachePct, 0), 100) / 100;
+  const inputCost = inTok * ((1 - c) + c * CACHED_INPUT_FACTOR) * p.input / 1e6;
+  return inputCost + outTok * p.output / 1e6;
+}
+
+(function () {
+  const $ = function (id) { return document.getElementById(id); };
+  const keys = Object.keys(PRICES);
+  keys.forEach(function (k) {
+    const o = document.createElement('option');
+    o.value = k;
+    o.textContent = PRICES[k].label + ' ($' + PRICES[k].input + ' in / $' + PRICES[k].output + ' out per 1M)';
+    $('f-model').appendChild(o);
+  });
+  function num(id) { const n = parseFloat($(id).value); return isFinite(n) && n > 0 ? n : 0; }
+  function money(n) {
+    if (n >= 100) return '$' + Math.round(n).toLocaleString('en-US');
+    if (n >= 1) return '$' + n.toFixed(2);
+    if (n >= 0.01) return '$' + n.toFixed(3);
+    return '$' + n.toFixed(4);
+  }
+  function el(tag, text, cls) { const e = document.createElement(tag); e.textContent = text; if (cls) e.className = cls; return e; }
+
+  function render() {
+    const runs = num('f-runs'), cron = num('f-cron'), inTok = num('f-in'), outTok = num('f-out');
+    const cache = Math.min(num('f-cache'), 100);
+    const sel = $('f-model').value, p = PRICES[sel];
+    const per = costPerRun(p, inTok, outTok, cache);
+    const total = runs + cron;
+    const daily = per * total;
+
+    const stats = $('cost-stats');
+    stats.textContent = '';
+    [['Per run', money(per)], ['Per day', money(daily)], ['Per month (30d)', money(daily * 30)], ['Per year', money(daily * 365)]].forEach(function (s) {
+      const d = el('div', '', 'cost-stat');
+      d.appendChild(el('span', s[0]));
+      d.appendChild(el('strong', s[1]));
+      stats.appendChild(d);
+    });
+
+    const rows = keys.map(function (k) {
+      const c = costPerRun(PRICES[k], inTok, outTok, cache);
+      return { key: k, label: PRICES[k].label, per: c, month: c * total * 30 };
+    }).sort(function (a, b) { return a.per - b.per; });
+    const cur = per * total * 30;
+    const tbl = $('cost-table');
+    tbl.textContent = '';
+    const hr = document.createElement('tr');
+    [['Model', ''], ['Per run', 'num'], ['Per month', 'num'], ['vs. selected', 'num']].forEach(function (h) { hr.appendChild(el('th', h[0], h[1])); });
+    tbl.appendChild(hr);
+    rows.forEach(function (r) {
+      const tr = document.createElement('tr');
+      if (r.key === sel) tr.className = 'sel';
+      let diff = 'selected';
+      if (r.key !== sel) diff = cur > 0 ? (r.month < cur ? '-' : '+') + Math.round(Math.abs(r.month - cur) / cur * 100) + '%' : '-';
+      tr.appendChild(el('td', r.label));
+      tr.appendChild(el('td', money(r.per), 'num'));
+      tr.appendChild(el('td', money(r.month), 'num'));
+      tr.appendChild(el('td', diff, 'num'));
+      tbl.appendChild(tr);
+    });
+
+    const tips = $('cost-tips');
+    tips.textContent = '';
+    const cheapest = rows[0];
+    const cronMonthNow = per * cron * 30;
+    const cronMonthCheap = cheapest.per * cron * 30;
+    const noCache = costPerRun(p, inTok, outTok, 0) * total * 30;
+    const full = costPerRun(p, inTok, outTok, 90) * total * 30;
+    const trimmed = costPerRun(p, inTok * 0.75, outTok, cache) * total * 30;
+    tips.appendChild(el('li', cache < 90
+      ? 'Cache your stable prompt prefix. Put the system prompt, memory files and tool definitions first and keep them identical between calls. At a 90% hit rate your monthly bill would be about ' + money(full) + ' instead of ' + money(cur) + (cache === 0 ? '' : ' (at ' + cache + '% today') + (cache === 0 ? '.' : ').')
+      : 'You already cache most of your input (' + cache + '%). Without caching this workload would cost about ' + money(noCache) + ' a month, so keep the prompt prefix stable.'));
+    tips.appendChild(el('li', cron > 0 && sel !== cheapest.key
+      ? 'Use a smaller model for scheduled jobs. Your ' + cron + ' cron runs a day cost about ' + money(cronMonthNow) + '/month on ' + p.label + '; on ' + cheapest.label + ' they would cost about ' + money(cronMonthCheap) + '. Keep the big model for interactive work.'
+      : 'Route routine work (checks, triage, summaries, cron jobs) to the smallest model that does the job, and save the big model for hard problems.'));
+    tips.appendChild(el('li', 'Trim context. Load only the files and history a run needs, summarize old conversation, and cap tool output. Cutting input by 25% would take this workload to about ' + money(trimmed) + '/month.'));
+  }
+  $('cost-form').addEventListener('input', render);
+  $('cost-form').addEventListener('change', render);
+  render();
+
+  $('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = $('sub-btn'), errorEl = $('sub-error');
+    const email = $('sub-email').value.trim();
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.frankfor.you/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'agent-cost-calculator-tool' })
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      $('sub-download').href = data.downloadUrl;
+      $('subscribe-form').style.display = 'none';
+      $('sub-success').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Get the free pack';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
