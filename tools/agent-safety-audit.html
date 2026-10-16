@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AI Agent Safety &amp; Reliability Audit (15 Questions) — frank store</title>
+  <meta name="description" content="Free AI agent safety audit. Answer 15 quick questions on secrets, permissions, approval gates, logging and failure handling to get a score out of 100 and the 3 fixes that matter most. No signup.">
+  <link rel="canonical" href="https://store.frankfor.you/tools/agent-safety-audit.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free AI Agent Safety &amp; Reliability Audit">
+  <meta property="og:description" content="Free AI agent safety audit. Answer 15 quick questions on secrets, permissions, approval gates, logging and failure handling to get a score out of 100 and the 3 fixes that matter most. No signup.">
+  <meta property="og:url" content="https://store.frankfor.you/tools/agent-safety-audit.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free AI Agent Safety &amp; Reliability Audit">
+  <meta name="twitter:description" content="Free AI agent safety audit. Answer 15 quick questions on secrets, permissions, approval gates, logging and failure handling to get a score out of 100 and the 3 fixes that matter most. No signup.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Agent Safety & Reliability Audit","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser)","url":"https://store.frankfor.you/tools/agent-safety-audit.html","description":"Free AI agent safety audit. Answer 15 quick questions on secrets, permissions, approval gates, logging and failure handling to get a score out of 100 and the 3 fixes that matter most. No signup.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/style.css?v=2">
+  <style>
+    .aud-cat{margin-bottom:28px}
+    .aud-cat h3{margin:0 0 4px}
+    .aud-q{border-top:1px solid #1f1f1f;padding:14px 0}
+    .aud-q p{margin:0 0 8px;color:var(--text);line-height:1.5}
+    .aud-opts{display:flex;gap:8px;flex-wrap:wrap}
+    .aud-opts label{display:inline-flex;align-items:center;gap:6px;background:#111;border:1px solid #1f1f1f;border-radius:6px;padding:7px 14px;cursor:pointer;color:var(--text-muted);font-size:.9rem}
+    .aud-opts input{accent-color:#4ade80}
+    .aud-score{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .aud-score strong{font-size:3rem;color:var(--accent);line-height:1}
+    .aud-bar{display:grid;grid-template-columns:minmax(120px,200px) 1fr 54px;gap:12px;align-items:center;margin-bottom:10px;font-size:.88rem;color:var(--text)}
+    .aud-track{background:#111;border:1px solid #1f1f1f;border-radius:6px;height:12px;overflow:hidden}
+    .aud-fill{height:100%;background:var(--accent)}
+    .aud-fix li{color:var(--text-muted);line-height:1.7;margin-bottom:12px}
+    .aud-fix li strong{color:var(--text)}
+    .aud-summary{width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:.9rem;padding:10px;border-radius:6px;font-family:inherit}
+    .gen-article p,.gen-article li{color:var(--text-muted);line-height:1.7}
+    .gen-article h2{margin-top:32px}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-eyebrow"><a href="/">Store</a> / Free Tools / Agent Safety Audit</div>
+    <h1>Free AI <span class="accent">Agent Safety &amp; Reliability Audit</span></h1>
+    <p class="lead">Answer 15 yes/no/partial questions about how your AI agent handles secrets, permissions, approvals, memory and failure. Get a score out of 100 and the three fixes that matter most. Runs entirely in your browser; nothing is uploaded.</p>
+  </div>
+</div>
+
+<div class="product-content">
+  <div class="container">
+    <form class="purchase-card" id="audit-form" onsubmit="return false" style="max-width:820px">
+      <div id="audit-questions"></div>
+      <button type="button" id="audit-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Score my agent</button>
+      <div id="audit-note" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+    </form>
+
+    <div id="audit-results" class="purchase-card" style="display:none;margin-top:28px;max-width:820px" aria-live="polite">
+      <div class="aud-score"><strong id="res-score"></strong><span id="res-grade" style="font-size:1.2rem;font-weight:700;color:var(--text)"></span></div>
+      <div id="res-bars"></div>
+      <h3>Your 3 weakest areas &mdash; fix these first</h3>
+      <ol class="aud-fix" id="res-fixes"></ol>
+      <h3>Share your result</h3>
+      <input type="text" class="aud-summary" id="res-line" readonly aria-label="Shareable summary">
+      <button type="button" id="copy-btn" style="margin-top:10px;background:#111;color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:.95rem;font-weight:700;padding:10px 18px;border-radius:6px;">Copy my result</button>
+    </div>
+
+    <div class="purchase-card" id="capture" style="display:none;margin-top:28px;max-width:640px">
+      <h2 style="margin-top:0">Get the free Agent Starter Pack</h2>
+      <p style="color:var(--text-muted)">Templates for MEMORY.md, SOUL.md and daily notes, plus a one-page setup guide. Free.</p>
+      <form id="subscribe-form" novalidate>
+        <input type="email" id="sub-email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+          style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+        <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+      </form>
+      <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+      <div id="sub-success" style="display:none;text-align:center;">
+        <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+        <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;">No spam. Unsubscribe any time.</p>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">Ready to fix the gaps? The <a href="/autonomous-agent-playbook">Autonomous Agent Playbook ($69)</a> covers approval gates, spend caps and failure handling, and the <a href="/agent-memory-system">AI Agent Memory System ($19)</a> covers memory and audit logs. Or grab everything in <a href="/complete-library">Frank's Complete Library</a>.</p>
+    </div>
+
+    <div class="gen-article" style="max-width:760px;margin-top:48px">
+      <h2>Why audit an AI agent?</h2>
+      <p>An agent that can read email, call APIs and run on a schedule can do real damage when something goes wrong: a leaked key, an over-broad token, a prompt injected through a web page, or a retry loop that burns your budget overnight. Most of these failures are cheap to prevent once you know where to look.</p>
+      <h3>What this audit checks</h3>
+      <p>Five areas, three questions each: secrets and credentials, permissions and blast radius, human approval gates, memory and logging, and failure handling and cost limits. Partial answers earn half credit, so be honest &mdash; the score is only for you.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/tools/agent-generator.html">Agent Generator</a>
+        <a href="/tools/agent-cost-calculator.html">Cost Calculator</a>
+        <a href="/tools/agent-safety-audit.html">Safety Audit</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+const CATEGORIES = [
+  { name: 'Secrets & credentials', qs: [
+    { q: 'Are API keys and tokens stored in environment variables or a secrets manager, never in prompts or memory files?',
+      fix: 'Move every key out of prompts, notes and code into environment variables or a secrets manager. Then search your agent\'s memory, logs and git history for anything that looks like a key, and rotate any you find.' },
+    { q: 'Are secrets kept out of git, logs and chat transcripts (e.g. .env is gitignored and logs are scrubbed)?',
+      fix: 'Add .env to .gitignore, run a secret scanner over your repo, and strip keys from logs before they are written. If a key ever hit git, treat it as leaked and rotate it.' },
+    { q: 'Can you rotate or revoke each key quickly, and do you know where each one is used?',
+      fix: 'Write down every key your agent uses, what it unlocks and where to revoke it. Use a separate key per agent or project so revoking one does not break everything.' }
+  ]},
+  { name: 'Permissions & blast radius', qs: [
+    { q: 'Do the agent\'s tokens have least privilege (read-only where possible, scoped to specific resources)?',
+      fix: 'Replace broad tokens with scoped ones. Give read-only access by default and write access only to the specific folders, repos or accounts the agent really needs.' },
+    { q: 'Does the agent run in an isolated environment (own user, container or VM) rather than on your main machine or account?',
+      fix: 'Run the agent as its own low-privilege user or in a container, with no access to your personal files or main accounts. If it goes wrong, the damage stays inside that box.' },
+    { q: 'Do you treat email, web pages and documents the agent reads as untrusted input, never as instructions?',
+      fix: 'Tell the agent that content from email, web and files is data, not commands, and that only you can give instructions. Limit which tools it can use while processing outside content, so an injected message cannot trigger sending, deleting or paying.' }
+  ]},
+  { name: 'Human approval gates', qs: [
+    { q: 'Does the agent need your approval before irreversible actions (deleting, sending money, publishing, deploying)?',
+      fix: 'List every action you could not undo and require an explicit yes from you before the agent does it. Make the default "ask first" and loosen it only for actions you have watched it do safely many times.' },
+    { q: 'Does the agent need approval before sending messages or emails to other people on your behalf?',
+      fix: 'Have the agent draft outgoing messages into a queue you review, rather than sending them directly. Once you trust a specific template or recipient, you can allow that one to send automatically.' },
+    { q: 'Is there a written list of what the agent may do alone versus what needs approval?',
+      fix: 'Write a short allowed / ask-first / never-do list and put it in the agent\'s core instructions. A written boundary is far easier to enforce and review than an assumed one.' }
+  ]},
+  { name: 'Memory & logging', qs: [
+    { q: 'Does the agent keep an audit log of every action it takes (what, when, and why)?',
+      fix: 'Append a line to a log file for each action: timestamp, what it did, and the reason. When something goes wrong you can reconstruct exactly what happened.' },
+    { q: 'Is the agent\'s memory backed up and versioned (e.g. in git or with regular snapshots)?',
+      fix: 'Put memory files under version control or schedule a daily backup to somewhere else. A corrupted or overwritten memory should be a one-command restore, not a loss.' },
+    { q: 'Do you periodically review and prune what the agent remembers, and keep sensitive data out of memory?',
+      fix: 'Once a week, skim the memory files, delete stale or wrong entries, and make sure no passwords, keys or private personal data have been saved there.' }
+  ]},
+  { name: 'Failure handling & cost limits', qs: [
+    { q: 'Is there a hard spend cap or budget alert on your API accounts?',
+      fix: 'Set a monthly spend limit and alerts at 50% and 80% in your provider dashboard today. A runaway loop is the most common way agents produce a surprise bill.' },
+    { q: 'Do retries have a limit (max attempts, backoff, and a stop on repeated errors)?',
+      fix: 'Cap retries at a small number with increasing delays, and make the agent stop and report after repeated failures instead of trying forever.' },
+    { q: 'Do you have a kill switch, and alerts if a scheduled (cron) job fails or stops running?',
+      fix: 'Add a one-step way to stop the agent (a flag file, a disabled token or a stop command) and set up a heartbeat or alert so you hear about a failed or missing cron run the same day.' }
+  ]}
+];
+const POINTS = { yes: 2, partial: 1, no: 0 };
+
+function gradeFor(score) {
+  if (score >= 90) return 'Rock solid';
+  if (score >= 75) return 'Solid, a few gaps';
+  if (score >= 55) return 'Needs work';
+  if (score >= 35) return 'Risky';
+  return 'High risk';
+}
+
+(function () {
+  const $ = function (id) { return document.getElementById(id); };
+  function el(tag, text, cls) { const e = document.createElement(tag); e.textContent = text; if (cls) e.className = cls; return e; }
+
+  const box = $('audit-questions');
+  CATEGORIES.forEach(function (cat, ci) {
+    const wrap = el('div', '', 'aud-cat');
+    wrap.appendChild(el('h3', cat.name));
+    cat.qs.forEach(function (item, qi) {
+      const q = el('div', '', 'aud-q');
+      q.appendChild(el('p', (ci * 3 + qi + 1) + '. ' + item.q));
+      const opts = el('div', '', 'aud-opts');
+      [['yes', 'Yes'], ['partial', 'Partial'], ['no', 'No']].forEach(function (o) {
+        const l = document.createElement('label');
+        const r = document.createElement('input');
+        r.type = 'radio'; r.name = 'q-' + ci + '-' + qi; r.value = o[0];
+        l.appendChild(r);
+        l.appendChild(document.createTextNode(o[1]));
+        opts.appendChild(l);
+      });
+      q.appendChild(opts);
+      wrap.appendChild(q);
+    });
+    box.appendChild(wrap);
+  });
+
+  let resultText = '';
+
+  $('audit-btn').addEventListener('click', function () {
+    const note = $('audit-note');
+    note.style.display = 'none';
+    let total = 0, max = 0, missing = 0;
+    const cats = CATEGORIES.map(function (cat, ci) {
+      let pts = 0;
+      const qs = cat.qs.map(function (item, qi) {
+        const c = document.querySelector('input[name="q-' + ci + '-' + qi + '"]:checked');
+        if (!c) { missing++; return { item: item, p: 0 }; }
+        pts += POINTS[c.value];
+        return { item: item, p: POINTS[c.value] };
+      });
+      total += pts; max += cat.qs.length * 2;
+      return { name: cat.name, pts: pts, max: cat.qs.length * 2, qs: qs };
+    });
+    if (missing > 0) {
+      note.textContent = 'Please answer all 15 questions (' + missing + ' left).';
+      note.style.display = 'block';
+      return;
+    }
+    const score = Math.round(total / max * 100);
+    const grade = gradeFor(score);
+    $('res-score').textContent = score + '/100';
+    $('res-grade').textContent = grade;
+
+    const bars = $('res-bars');
+    bars.textContent = '';
+    cats.forEach(function (c) {
+      const pct = Math.round(c.pts / c.max * 100);
+      const row = el('div', '', 'aud-bar');
+      row.appendChild(el('span', c.name));
+      const track = el('div', '', 'aud-track');
+      const fill = el('div', '', 'aud-fill');
+      fill.style.width = pct + '%';
+      track.appendChild(fill);
+      row.appendChild(track);
+      row.appendChild(el('span', pct + '%'));
+      bars.appendChild(row);
+    });
+
+    // Weakest areas: lowest-scoring questions, one per category first
+    const all = [];
+    cats.forEach(function (c, ci) {
+      c.qs.forEach(function (x, qi) { all.push({ cat: c.name, p: x.p, catPct: c.pts / c.max, order: ci * 3 + qi, fix: x.item.fix }); });
+    });
+    all.sort(function (a, b) { return a.catPct - b.catPct || a.p - b.p || a.order - b.order; });
+    const picked = [], seen = {};
+    all.forEach(function (x) { if (picked.length < 3 && !seen[x.cat] && x.p < 2) { picked.push(x); seen[x.cat] = true; } });
+
+    const fixes = $('res-fixes');
+    fixes.textContent = '';
+    if (picked.length === 0) {
+      fixes.appendChild(el('li', 'Nothing urgent: you answered yes to everything. Re-run this audit whenever you add a new tool, token or scheduled job.'));
+    }
+    picked.forEach(function (x) {
+      const li = document.createElement('li');
+      li.appendChild(el('strong', x.cat + ': '));
+      li.appendChild(document.createTextNode(x.fix));
+      fixes.appendChild(li);
+    });
+
+    const weakest = picked.map(function (x) { return x.cat; });
+    const line = 'My AI agent scored ' + score + '/100 (' + grade + ') on the Agent Safety & Reliability Audit' +
+      (weakest.length ? ' - weakest: ' + weakest.join(', ') : '') + '. Try it: https://store.frankfor.you/tools/agent-safety-audit.html';
+    $('res-line').value = line;
+    resultText = line + '\n\n' + cats.map(function (c) { return c.name + ': ' + Math.round(c.pts / c.max * 100) + '%'; }).join('\n');
+
+    $('audit-results').style.display = 'block';
+    $('capture').style.display = 'block';
+    $('audit-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  $('copy-btn').addEventListener('click', function () {
+    const btn = $('copy-btn');
+    function done(ok) {
+      btn.textContent = ok ? 'Copied!' : 'Press Ctrl+C to copy';
+      if (!ok) $('res-line').select();
+      setTimeout(function () { btn.textContent = 'Copy my result'; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(resultText).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
+  });
+
+  $('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = $('sub-btn'), errorEl = $('sub-error');
+    const email = $('sub-email').value.trim();
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.frankfor.you/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'agent-safety-audit-tool' })
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      $('sub-download').href = data.downloadUrl;
+      $('subscribe-form').style.display = 'none';
+      $('sub-success').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Get the free pack';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
