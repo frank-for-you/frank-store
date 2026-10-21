@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free MCP Config Builder &amp; Validator (Claude Code, Claude Desktop, Cursor) — frank store</title>
+  <meta name="description" content="Free MCP config builder and validator. Pick MCP servers (filesystem, GitHub, Postgres, Playwright, Context7 and more) and generate .mcp.json for Claude Code, claude_desktop_config.json for Claude Desktop or .cursor/mcp.json for Cursor. Paste an existing config to check it. Runs in your browser.">
+  <link rel="canonical" href="https://store.frankfor.you/tools/mcp-config-builder.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free MCP Config Builder &amp; Validator (Claude Code, Claude Desktop, Cursor)">
+  <meta property="og:description" content="Free MCP config builder and validator. Pick MCP servers (filesystem, GitHub, Postgres, Playwright, Context7 and more) and generate .mcp.json for Claude Code, claude_desktop_config.json for Claude Desktop or .cursor/mcp.json for Cursor. Paste an existing config to check it. Runs in your browser.">
+  <meta property="og:url" content="https://store.frankfor.you/tools/mcp-config-builder.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free MCP Config Builder &amp; Validator (Claude Code, Claude Desktop, Cursor)">
+  <meta name="twitter:description" content="Free MCP config builder and validator. Pick MCP servers (filesystem, GitHub, Postgres, Playwright, Context7 and more) and generate .mcp.json for Claude Code, claude_desktop_config.json for Claude Desktop or .cursor/mcp.json for Cursor. Paste an existing config to check it. Runs in your browser.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MCP Config Builder & Validator","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser)","url":"https://store.frankfor.you/tools/mcp-config-builder.html","description":"Free MCP config builder and validator. Pick MCP servers (filesystem, GitHub, Postgres, Playwright, Context7 and more) and generate .mcp.json for Claude Code, claude_desktop_config.json for Claude Desktop or .cursor/mcp.json for Cursor. Paste an existing config to check it. Runs in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/style.css?v=2">
+  <style>
+    .lint-text{width:100%;box-sizing:border-box;min-height:260px;background:#111;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;line-height:1.5;padding:12px;border-radius:6px;resize:vertical}
+    .lint-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .lint-btns button{cursor:pointer;font-size:1rem;font-weight:700;padding:13px 20px;border-radius:6px}
+    .lint-primary{flex:1;min-width:180px;background:var(--accent);color:#0a0a0a;border:none}
+    .lint-secondary{background:#111;color:var(--accent);border:1px solid var(--accent)}
+    .lint-meta{color:var(--text-muted);font-size:.88rem;margin-bottom:18px}
+    .lint-f{border-top:1px solid #1f1f1f;padding:12px 0}
+    .lint-f h4{margin:0 0 6px;font-size:1rem;color:var(--text)}
+    .lint-f p{margin:0 0 6px;color:var(--text-muted);line-height:1.55;font-size:.92rem}
+    .lint-f .fix{color:var(--text)}
+    .sev{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-right:8px;vertical-align:middle}
+    .sev-fail{background:#3b1212;color:#f87171}
+    .sev-warn{background:#33300f;color:#facc15}
+    .sev-info{background:#111c2e;color:#60a5fa}
+    .sev-pass{background:#10301a;color:#4ade80}
+    .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0 4px}
+    .srv-item{border:1px solid #1f1f1f;border-radius:6px;padding:10px 12px;background:#111}
+    .srv-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-weight:700}
+    .srv-item small{display:block;color:var(--text-muted);font-weight:400;line-height:1.4;margin-top:2px}
+    .srv-fields{display:none;margin-top:10px}
+    .srv-item.on .srv-fields{display:block}
+    .srv-fields label{display:block;font-weight:400;font-size:.8rem;color:var(--text-muted);margin:6px 0 3px}
+    .srv-fields input,.srv-fields textarea,.mcp-select{width:100%;box-sizing:border-box;background:#0a0a0a;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;padding:7px;border-radius:4px}
+    .mcp-select{width:auto;min-width:240px;font-size:.95rem;padding:10px}
+    .mcp-opts{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:14px 0}
+    .code-box{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px;padding:14px;overflow:auto;max-height:420px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;color:var(--text);white-space:pre}
+    .hint{color:var(--text-muted);font-size:.88rem;line-height:1.6}
+    .gen-article p,.gen-article li{color:var(--text-muted);line-height:1.7}
+    .gen-article h2{margin-top:32px}
+    .gen-article code{background:#111;padding:1px 5px;border-radius:3px;font-size:.88em}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+
+
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-eyebrow"><a href="/">Store</a> / <a href="/tools/">Free Tools</a> / MCP Config Builder</div>
+    <h1>Free <span class="accent">MCP Config Builder &amp; Validator</span></h1>
+    <p class="lead">Pick the MCP servers you want and get a ready-to-paste config for Claude Code, Claude Desktop or Cursor. Or paste an existing config and check it for the mistakes that make servers silently fail. Runs entirely in your browser; nothing is uploaded.</p>
+  </div>
+</div>
+
+<div class="product-content">
+  <div class="container">
+    <div class="purchase-card" style="max-width:900px">
+      <h2 style="margin-top:0">1. Build a config</h2>
+      <p class="hint" style="margin-top:0">Tick the servers you need. Tokens are placeholders: replace them with your own values after copying, and never commit real secrets.</p>
+      <div class="srv-grid" id="srv-grid"></div>
+      <div class="mcp-opts">
+        <span>
+          <label for="target" style="font-weight:700;margin-right:8px">Target</label>
+          <select id="target" class="mcp-select">
+            <option value="code">Claude Code (.mcp.json)</option>
+            <option value="desktop">Claude Desktop (claude_desktop_config.json)</option>
+            <option value="cursor">Cursor (.cursor/mcp.json)</option>
+          </select>
+        </span>
+        <label style="cursor:pointer"><input type="checkbox" id="win"> Windows (native): wrap <code>npx</code> with <code>cmd /c</code></label>
+      </div>
+      <div class="lint-btns">
+        <button type="button" id="build-btn" class="lint-primary">Generate config</button>
+      </div>
+      <div id="build-note" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+
+      <div id="build-out" style="display:none;margin-top:20px" aria-live="polite">
+        <p class="hint" id="path-hint" style="margin:0"></p>
+        <div class="code-box" id="out-json" tabindex="0"></div>
+        <div class="lint-btns" style="margin-top:0">
+          <button type="button" id="copy-btn" class="lint-secondary">Copy</button>
+          <button type="button" id="dl-btn" class="lint-secondary">Download</button>
+          <button type="button" id="to-val-btn" class="lint-secondary">Check it in the validator</button>
+        </div>
+        <div id="cli-wrap" style="display:none;margin-top:18px">
+          <h3 style="margin-bottom:4px">Or add them with the Claude Code CLI</h3>
+          <p class="hint" style="margin:0">Run from your project folder. <code>--scope project</code> writes to <code>.mcp.json</code>; drop it for the default local scope.</p>
+          <div class="code-box" id="out-cli" tabindex="0"></div>
+          <div class="lint-btns" style="margin-top:0"><button type="button" id="copy-cli-btn" class="lint-secondary">Copy commands</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="purchase-card" id="validator" style="margin-top:28px;max-width:900px">
+      <h2 style="margin-top:0">2. Validate an existing config</h2>
+      <label for="val-input" style="display:block;font-weight:700;margin-bottom:8px">Paste your MCP config JSON</label>
+      <textarea id="val-input" class="lint-text" spellcheck="false" placeholder='{ "mcpServers": { ... } }'></textarea>
+      <div class="lint-btns">
+        <button type="button" id="val-btn" class="lint-primary">Validate config</button>
+        <button type="button" id="ex-btn" class="lint-secondary">Load example</button>
+      </div>
+      <div id="val-note" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+    </div>
+
+    <div id="val-results" class="purchase-card" style="display:none;margin-top:28px;max-width:900px" aria-live="polite">
+      <div class="lint-meta" id="res-meta" style="font-size:1rem;color:var(--text);font-weight:700"></div>
+      <div id="res-items"></div>
+    </div>
+
+    <div class="purchase-card" id="capture" style="display:none;margin-top:28px;max-width:640px">
+      <h2 style="margin-top:0">Get the free Agent Starter Pack</h2>
+      <p style="color:var(--text-muted)">Templates for MEMORY.md, SOUL.md and daily notes, plus a one-page setup guide. Free.</p>
+      <form id="subscribe-form" novalidate>
+        <input type="email" id="sub-email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+          style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+        <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+      </form>
+      <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+      <div id="sub-success" style="display:none;text-align:center;">
+        <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+        <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;">No spam. Unsubscribe any time.</p>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">Once your tools are connected, the <a href="/agent-setup-kit">Agent Setup Kit</a> has ready-made instruction files that tell your agent how to use them, and the <a href="/autonomous-agent-playbook">Autonomous Agent Playbook</a> covers approval gates and safe autonomy.</p>
+    </div>
+
+    <div class="gen-article" style="max-width:760px;margin-top:48px">
+      <h2>What is MCP?</h2>
+      <p>The Model Context Protocol (MCP) is an open protocol, introduced by Anthropic, that lets AI apps connect to external tools and data through small servers. An MCP client such as Claude Code, Claude Desktop or Cursor starts or connects to each server you list in its config, asks what tools it offers, and lets the model call them: read files, query a database, drive a browser, look up library docs.</p>
+      <p>Most local servers are launched as a command (<code>npx</code>, <code>uvx</code>, <code>node</code>, <code>python</code>) that talks to the client over stdio. Remote servers are reached by <code>url</code> over HTTP or SSE instead. Either way, the config is a JSON object under a top-level <code>mcpServers</code> key.</p>
+
+      <h2>Where the config file lives</h2>
+      <ul>
+        <li><strong>Claude Code:</strong> <code>.mcp.json</code> in your project root for project scope (shareable through git; Claude Code asks you to approve project servers). Local and user scope are stored in <code>~/.claude.json</code> and are managed with <code>claude mcp add</code>. Run <code>/mcp</code> inside Claude Code to see server status.</li>
+        <li><strong>Claude Desktop:</strong> <code>claude_desktop_config.json</code>. On macOS: <code>~/Library/Application Support/Claude/</code>. On Windows: <code>%APPDATA%\Claude\</code>. You can also open it from Settings, Developer, Edit Config.</li>
+        <li><strong>Cursor:</strong> <code>.cursor/mcp.json</code> in a project, or <code>~/.cursor/mcp.json</code> for all projects.</li>
+      </ul>
+      <p>Config locations and supported fields change between releases, so check your client's documentation if something here does not match what you see.</p>
+
+      <h2>5 common MCP config mistakes</h2>
+      <ol>
+        <li><strong>Using bare <code>npx</code> on native Windows.</strong> Some clients cannot launch <code>npx</code> directly there. Use <code>"command": "cmd"</code> with <code>"args": ["/c", "npx", "-y", ...]</code>. The builder has a checkbox for this.</li>
+        <li><strong>Leaving out <code>-y</code>.</strong> Without it, <code>npx</code> may stop to ask whether to install the package. The client has no terminal to answer, so the server just hangs or times out.</li>
+        <li><strong>Relative paths.</strong> The client decides the working directory, not you, and <code>~</code> is usually not expanded in args. Use absolute paths for directories, databases and scripts.</li>
+        <li><strong>Not restarting the client.</strong> Claude Desktop reads its config at launch, so quit it fully (not just close the window) and reopen. Claude Code and Cursor also need a restart or reload to pick up edited files.</li>
+        <li><strong>Committing secrets.</strong> A token pasted into <code>.mcp.json</code> goes into git history. Keep real values out of shared files: Claude Code supports <code>${VAR}</code> expansion in <code>.mcp.json</code>, or use user-scope config. If a key was committed, rotate it.</li>
+      </ol>
+      <p>Server packages and flags also change over time. Some of the reference servers have been moved or archived, so check each package's README before relying on it.</p>
+      <p>Next: write the instructions that tell your agent how to use these tools with the free <a href="/tools/agent-generator.html">Agent Generator</a>, then check them with the <a href="/tools/agent-prompt-linter.html">Prompt Linter</a> and <a href="/tools/agent-safety-audit.html">Safety Audit</a>.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/tools/agent-generator.html">Agent Generator</a>
+        <a href="/tools/agent-cost-calculator.html">Cost Calculator</a>
+        <a href="/tools/agent-safety-audit.html">Safety Audit</a>
+        <a href="/tools/agent-prompt-linter.html">Prompt Linter</a>
+        <a href="/tools/mcp-config-builder.html">MCP Config Builder</a>
+        <a href="/tools/">All free tools</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// <core>
+const SERVERS = [
+  { id: 'filesystem', label: 'filesystem', desc: 'Read and write files in folders you allow.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-filesystem'],
+    fields: [{ kind: 'lines', label: 'Allowed directories (one per line, absolute paths)', def: '/absolute/path/to/project' }] },
+  { id: 'memory', label: 'memory', desc: 'Knowledge-graph memory that persists between sessions.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-memory'],
+    fields: [{ kind: 'env', key: 'MEMORY_FILE_PATH', label: 'Memory file path (optional, absolute)', def: '', optional: true, ph: '/absolute/path/to/memory.json' }] },
+  { id: 'sequential-thinking', label: 'sequential-thinking', desc: 'Step-by-step reasoning scratchpad tool.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-sequential-thinking'], fields: [] },
+  { id: 'github', label: 'github', desc: 'Repos, issues and pull requests.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-github'],
+    fields: [{ kind: 'env', key: 'GITHUB_PERSONAL_ACCESS_TOKEN', label: 'GitHub personal access token', def: 'YOUR_TOKEN_HERE' }] },
+  { id: 'postgres', label: 'postgres', desc: 'Read-only SQL queries against a Postgres database.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-postgres'],
+    fields: [{ kind: 'arg', label: 'Connection string', def: 'postgresql://USER:YOUR_PASSWORD_HERE@localhost:5432/DBNAME' }] },
+  { id: 'fetch', label: 'fetch', desc: 'Fetch web pages and convert them to Markdown (needs uv).', cmd: 'uvx', base: ['mcp-server-fetch'], fields: [] },
+  { id: 'playwright', label: 'playwright', desc: 'Browser automation via accessibility snapshots.', cmd: 'npx', base: ['-y', '@playwright/mcp@latest'], fields: [] },
+  { id: 'context7', label: 'context7', desc: 'Up-to-date library documentation.', cmd: 'npx', base: ['-y', '@upstash/context7-mcp'], fields: [] },
+  { id: 'puppeteer', label: 'puppeteer', desc: 'Browser automation and screenshots.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-puppeteer'], fields: [] },
+  { id: 'brave-search', label: 'brave-search', desc: 'Web and local search through the Brave Search API.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-brave-search'],
+    fields: [{ kind: 'env', key: 'BRAVE_API_KEY', label: 'Brave API key', def: 'YOUR_API_KEY_HERE' }] },
+  { id: 'slack', label: 'slack', desc: 'Read channels and post messages.', cmd: 'npx', base: ['-y', '@modelcontextprotocol/server-slack'],
+    fields: [{ kind: 'env', key: 'SLACK_BOT_TOKEN', label: 'Slack bot token', def: 'YOUR_TOKEN_HERE' },
+             { kind: 'env', key: 'SLACK_TEAM_ID', label: 'Slack team ID', def: 'YOUR_TEAM_ID_HERE' }] },
+  { id: 'sqlite', label: 'sqlite', desc: 'Query and analyze a local SQLite database (needs uv).', cmd: 'uvx', base: ['mcp-server-sqlite'],
+    fields: [{ kind: 'arg', flag: '--db-path', label: 'Database file (absolute path)', def: '/absolute/path/to/database.db' }] }
+];
+
+// values: { serverId: [fieldValue, ...] } (blank/missing falls back to the default). Returns { name: serverObject }.
+function buildServers(selected, values, opts) {
+  const out = {};
+  selected.forEach(function (id) {
+    const s = SERVERS.filter(function (x) { return x.id === id; })[0];
+    if (!s) return;
+    const vals = (values && values[id]) || [];
+    let args = s.base.slice();
+    const env = {};
+    s.fields.forEach(function (f, i) {
+      let v = String(vals[i] == null ? '' : vals[i]).trim();
+      if (!v) v = f.def;
+      if (f.kind === 'lines') {
+        v.split(/\r?\n/).map(function (x) { return x.trim(); }).filter(Boolean).forEach(function (x) { args.push(x); });
+      } else if (f.kind === 'arg') {
+        if (f.flag) args.push(f.flag);
+        args.push(v);
+      } else if (f.kind === 'env') {
+        if (v) env[f.key] = v;
+      }
+    });
+    let cmd = s.cmd;
+    if (opts && opts.windows && cmd === 'npx') { args = ['/c', 'npx'].concat(args); cmd = 'cmd'; }
+    const o = { command: cmd, args: args };
+    if (Object.keys(env).length) o.env = env;
+    out[s.id] = o;
+  });
+  return out;
+}
+
+function buildConfig(target, servers) {
+  const m = {};
+  Object.keys(servers).forEach(function (k) {
+    m[k] = target === 'code' ? Object.assign({ type: 'stdio' }, servers[k]) : servers[k];
+  });
+  return { mcpServers: m };
+}
+
+function shq(s) {
+  return /^[A-Za-z0-9_@%+=:,.\/-]+$/.test(s) ? s : "'" + s.replace(/'/g, "'\\''") + "'";
+}
+
+function buildCli(servers) {
+  return Object.keys(servers).map(function (k) {
+    const s = servers[k];
+    const parts = ['claude mcp add --scope project --transport stdio'];
+    Object.keys(s.env || {}).forEach(function (e) { parts.push('--env ' + shq(e + '=' + s.env[e])); });
+    parts.push(shq(k), '--', shq(s.command));
+    s.args.forEach(function (a) { parts.push(shq(a)); });
+    return parts.join(' ');
+  }).join('\n');
+}
+
+// Find duplicate keys inside any JSON object (JSON.parse silently keeps only the last one).
+function findDuplicateKeys(text) {
+  const dups = [];
+  const stack = [];
+  let i = 0;
+  const n = text.length;
+  function readString() {
+    let j = i + 1, s = '';
+    while (j < n && text[j] !== '"') { if (text[j] === '\\') { s += text[j + 1]; j += 2; } else { s += text[j]; j++; } }
+    i = j + 1;
+    return s;
+  }
+  while (i < n) {
+    const c = text[i];
+    if (c === '"') {
+      const s = readString();
+      let k = i;
+      while (k < n && /\s/.test(text[k])) k++;
+      const top = stack[stack.length - 1];
+      if (text[k] === ':' && top && top.type === 'o') {
+        if (top.keys[s]) dups.push({ key: s, parent: top.name });
+        top.keys[s] = true;
+        top.last = s;
+      }
+      continue;
+    }
+    if (c === '{') { const p = stack[stack.length - 1]; stack.push({ type: 'o', keys: {}, name: p && p.type === 'o' ? p.last : '', last: '' }); }
+    else if (c === '[') { stack.push({ type: 'a' }); }
+    else if (c === '}' || c === ']') { stack.pop(); }
+    i++;
+  }
+  return dups;
+}
+
+const PLACEHOLDER_RE = /YOUR[_-]|<[^>]+>|\$\{|\$[A-Z_]+|\bxxx|placeholder|changeme|example|REPLACE|\.\.\./i;
+const SECRET_PREFIX_RES = [
+  [/\bgh[pousr]_[A-Za-z0-9]{20,}/, 'GitHub token (ghp_/gho_...)'],
+  [/\bgithub_pat_[A-Za-z0-9_]{20,}/, 'GitHub fine-grained token'],
+  [/\bsk-[A-Za-z0-9_-]{16,}/, 'API key starting with sk-'],
+  [/\bxox[baprs]-[A-Za-z0-9-]{10,}/, 'Slack token (xox...)'],
+  [/\bAKIA[0-9A-Z]{16}\b/, 'AWS access key ID'],
+  [/\bAIza[0-9A-Za-z_-]{30,}/, 'Google API key'],
+  [/\bBSA[A-Za-z0-9_-]{20,}/, 'Brave Search API key'],
+  [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, 'private key']
+];
+const SECRET_NAME_RE = /(token|secret|password|passwd|api[_-]?key|apikey|auth|credential)/i;
+
+function looksPlaceholder(v) { return PLACEHOLDER_RE.test(v); }
+
+// Returns a reason string if the value looks like a hardcoded secret, else null.
+function secretReason(v, keyName) {
+  if (typeof v !== 'string' || !v || looksPlaceholder(v)) return null;
+  for (let i = 0; i < SECRET_PREFIX_RES.length; i++) if (SECRET_PREFIX_RES[i][0].test(v)) return SECRET_PREFIX_RES[i][1];
+  const cs = v.match(/^[a-z][a-z0-9+.-]*:\/\/[^\s:\/@]+:([^\s@\/]+)@/i);
+  if (cs && !looksPlaceholder(cs[1])) return 'password inside a connection string';
+  if (/^(Bearer|Basic)\s+\S{16,}/i.test(v)) return 'Authorization header value';
+  if (/[?&](api[_-]?key|key|token|access_token)=[A-Za-z0-9_\-]{12,}/i.test(v)) return 'credential in a URL query string';
+  if (/^[A-Za-z0-9_\-+=.]{32,}$/.test(v) && /\d/.test(v) && /[A-Za-z]/.test(v)) return 'long token-like string';
+  if (keyName && SECRET_NAME_RE.test(keyName) && v.length >= 8 && !/^[\/~.]/.test(v) && !/^[a-z]+$/i.test(v)) return 'value of a secret-named variable (' + keyName + ')';
+  return null;
+}
+
+function isPathLike(a) { return /^(\.{1,2}([\/\\]|$)|~([\/\\]|$))/.test(a); }
+
+// Returns { items: [{level:'pass'|'warn'|'fail'|'info', title, detail?, fix?}], counts }.
+function validateConfig(text) {
+  const items = [];
+  function add(level, title, detail, fix) { items.push({ level: level, title: title, detail: detail || '', fix: fix || '' }); }
+  let cfg;
+  try { cfg = JSON.parse(text); }
+  catch (e) {
+    add('fail', 'Not valid JSON', String(e.message), 'Check for trailing commas, comments, single quotes, unquoted keys and unescaped backslashes (Windows paths need \\\\ or forward slashes).');
+    return finish(items);
+  }
+  add('pass', 'Valid JSON');
+  if (!cfg || typeof cfg !== 'object' || Array.isArray(cfg)) {
+    add('fail', 'Top level must be an object', '', 'Wrap everything in { "mcpServers": { ... } }.');
+    return finish(items);
+  }
+  if (!Object.prototype.hasOwnProperty.call(cfg, 'mcpServers')) {
+    const alt = ['servers', 'mcp', 'mcp_servers', 'mcpservers', 'context_servers'].filter(function (k) { return k in cfg; })[0];
+    add('fail', 'Missing top-level "mcpServers" key', alt ? 'Found "' + alt + '" instead. That key is used by other tools (for example VS Code uses "servers"), not by Claude Code, Claude Desktop or Cursor.' : '', 'Put your servers under { "mcpServers": { "name": { ... } } }.');
+    return finish(items);
+  }
+  const ms = cfg.mcpServers;
+  if (!ms || typeof ms !== 'object' || Array.isArray(ms)) {
+    add('fail', '"mcpServers" must be an object keyed by server name', '', 'Use { "mcpServers": { "my-server": { "command": "npx", "args": [...] } } }, not an array.');
+    return finish(items);
+  }
+  add('pass', 'Top-level "mcpServers" object found');
+  const names = Object.keys(ms);
+  if (!names.length) add('warn', 'No servers defined', '', 'Add at least one server, or use the builder above.');
+  const dups = findDuplicateKeys(text).filter(function (d) { return d.parent === 'mcpServers'; });
+  if (dups.length) dups.forEach(function (d) { add('fail', 'Duplicate server name "' + d.key + '"', 'JSON keeps only the last entry with the same name, so the earlier one is silently dropped.', 'Give each server a unique name.'); });
+  else if (names.length > 1) add('pass', 'No duplicate server names');
+  const lower = {};
+  names.forEach(function (nm) { const l = nm.toLowerCase(); (lower[l] = lower[l] || []).push(nm); });
+  Object.keys(lower).forEach(function (l) { if (lower[l].length > 1) add('warn', 'Server names differ only by case: ' + lower[l].join(', '), '', 'Use clearly distinct names.'); });
+
+  let npxNoted = false;
+  names.forEach(function (nm) {
+    const s = ms[nm];
+    const p = '"' + nm + '": ';
+    if (!s || typeof s !== 'object' || Array.isArray(s)) { add('fail', p + 'server entry must be an object', '', 'Use { "command": "...", "args": [...] } or { "url": "..." }.'); return; }
+    const hasCmd = s.command !== undefined, hasUrl = s.url !== undefined;
+    let ok = true;
+    if (!hasCmd && !hasUrl) { add('fail', p + 'needs "command" (local) or "url" (remote)', '', 'Add "command": "npx" with "args", or "url" for a remote HTTP/SSE server.'); ok = false; }
+    if (hasCmd && hasUrl) add('warn', p + 'has both "command" and "url"', '', 'A server is either local (command) or remote (url). Remove one.');
+    if (hasCmd && (typeof s.command !== 'string' || !s.command.trim())) { add('fail', p + '"command" must be a non-empty string', '', 'Example: "command": "npx".'); ok = false; }
+    if (hasUrl && (typeof s.url !== 'string' || !/^https?:\/\//i.test(s.url))) { add('fail', p + '"url" must be an http(s) URL', '', 'Example: "url": "https://example.com/mcp".'); ok = false; }
+    if (s.type !== undefined && ['stdio', 'http', 'sse', 'streamable-http'].indexOf(s.type) === -1) add('warn', p + 'unrecognized "type": ' + JSON.stringify(s.type), '', 'Common values are "stdio", "http" and "sse". Omit it for local command servers in clients that do not need it.');
+    if (typeof s.command === 'string' && /\s/.test(s.command.trim()) && !/^[A-Za-z]:[\\\/]|^\//.test(s.command.trim())) {
+      add('fail', p + '"command" contains spaces', 'The command is executed directly, not through a shell: "' + s.command + '"', 'Put only the executable in "command" and every other word in "args", e.g. "command": "npx", "args": ["-y", "pkg"].'); ok = false;
+    }
+    let args = [];
+    if (s.args !== undefined) {
+      if (!Array.isArray(s.args)) { add('fail', p + '"args" must be an array of strings', 'Got ' + (typeof s.args) + '.', 'Use "args": ["-y", "package-name"].'); ok = false; }
+      else if (s.args.some(function (a) { return typeof a !== 'string'; })) { add('fail', p + '"args" contains non-string values', 'Numbers and booleans must be quoted.', 'Wrap every item in quotes, e.g. "3000" instead of 3000.'); ok = false; }
+      else args = s.args;
+    }
+    if (s.env !== undefined) {
+      if (!s.env || typeof s.env !== 'object' || Array.isArray(s.env)) { add('fail', p + '"env" must be an object of strings', '', 'Use "env": { "NAME": "value" }.'); ok = false; }
+      else Object.keys(s.env).forEach(function (k) {
+        if (typeof s.env[k] !== 'string') { add('fail', p + 'env "' + k + '" must be a string', 'Got ' + (typeof s.env[k]) + '.', 'Quote the value, e.g. "' + k + '": "true".'); ok = false; }
+      });
+    }
+    if (s.headers !== undefined && (!s.headers || typeof s.headers !== 'object' || Array.isArray(s.headers))) { add('fail', p + '"headers" must be an object of strings', '', 'Use "headers": { "Authorization": "Bearer ${TOKEN}" }.'); ok = false; }
+
+    // npx checks (direct, or wrapped by cmd /c, or via env/bash -c)
+    const all = [s.command].concat(args).filter(function (x) { return typeof x === 'string'; });
+    const npxAt = all.map(function (x) { return /(^|[\\\/])npx(\.cmd)?$/i.test(x); }).indexOf(true);
+    if (npxAt !== -1) {
+      if (!all.some(function (x) { return x === '-y' || x === '--yes'; })) add('warn', p + 'npx without -y', 'If the package is not cached, npx stops to ask "Ok to proceed?". The client cannot answer, so the server hangs or times out.', 'Add "-y" as the first item in "args".');
+      else add('pass', p + 'npx runs with -y');
+      if (npxAt === 0 && !npxNoted) { npxNoted = true; add('info', 'bare "npx" command (' + nm + (names.length > 1 ? ' and possibly others' : '') + ')', 'Fine on macOS and Linux. On native Windows many clients cannot launch npx directly.', 'On Windows use "command": "cmd" with "args": ["/c", "npx", "-y", ...].'); }
+      if (false) add('info', p + 'bare "npx" command', 'Fine on macOS and Linux. On native Windows many clients cannot launch npx directly.', 'On Windows use "command": "cmd" with "args": ["/c", "npx", "-y", ...].');
+    }
+    // relative paths
+    const rel = all.filter(isPathLike);
+    if (rel.length) { add('warn', p + 'relative path in command/args: ' + rel.slice(0, 3).join(', '), 'The client chooses the working directory, and "~" is usually not expanded when no shell is involved.', 'Use an absolute path such as /Users/you/project or C:/Users/you/project.'); }
+    else if (args.length) add('pass', p + 'no relative paths in args');
+    if (s.cwd !== undefined && typeof s.cwd === 'string' && isPathLike(s.cwd)) add('warn', p + '"cwd" is a relative path', '', 'Use an absolute path.');
+    // secrets
+    const secrets = [];
+    args.forEach(function (a) { const r = secretReason(a, (a.match(/^--?([\w-]+)=/) || [])[1]); if (r) secrets.push('arg "' + a.slice(0, 8) + '…" (' + r + ')'); });
+    if (s.env && typeof s.env === 'object' && !Array.isArray(s.env)) Object.keys(s.env).forEach(function (k) { const r = secretReason(s.env[k], k); if (r) secrets.push('env ' + k + ' (' + r + ')'); });
+    if (s.headers && typeof s.headers === 'object' && !Array.isArray(s.headers)) Object.keys(s.headers).forEach(function (k) { const r = secretReason(s.headers[k], k); if (r) secrets.push('header ' + k + ' (' + r + ')'); });
+    if (typeof s.url === 'string') { const r = secretReason(s.url, ''); if (r) secrets.push('url (' + r + ')'); }
+    if (secrets.length) add('fail', p + 'looks like a hardcoded secret', secrets.join('; '), 'Replace with a placeholder or ${ENV_VAR} (Claude Code expands these in .mcp.json), rotate the key if this file was ever shared or committed, and keep real values out of git.');
+    else if (ok) add('pass', p + 'no hardcoded secrets detected');
+    if (ok) add('pass', p + 'structure looks valid');
+  });
+  return finish(items);
+
+  function finish(list) {
+    const order = { fail: 0, warn: 1, info: 2, pass: 3 };
+    const counts = { fail: 0, warn: 0, info: 0, pass: 0 };
+    list.forEach(function (x) { counts[x.level]++; });
+    list = list.map(function (x, i) { return { x: x, i: i }; }).sort(function (a, b) { return order[a.x.level] - order[b.x.level] || a.i - b.i; }).map(function (o) { return o.x; });
+    return { items: list, counts: counts };
+  }
+}
+// </core>
+
+const EXAMPLE = (function () {
+  // Fake tokens are assembled at runtime so no secret-looking literal sits in the source.
+  const fakeGh = 'ghp_' + 'A1b2C3d4'.repeat(5);
+  return JSON.stringify({
+    mcpServers: {
+      filesystem: { command: 'npx', args: ['@modelcontextprotocol/server-filesystem', './my-project'] },
+      github: { command: 'npx', args: ['-y', '@modelcontextprotocol/server-github'], env: { GITHUB_PERSONAL_ACCESS_TOKEN: fakeGh } },
+      fetch: { command: 'uvx mcp-server-fetch' },
+      memory: { command: 'npx', args: '-y @modelcontextprotocol/server-memory' },
+      sqlite: { command: 'uvx', args: ['mcp-server-sqlite', '--db-path', '/Users/you/data/app.db'], env: { DEBUG: true } }
+    }
+  }, null, 2);
+})();
+
+(function () {
+  const $ = function (id) { return document.getElementById(id); };
+  function el(tag, text, cls) { const e = document.createElement(tag); e.textContent = text; if (cls) e.className = cls; return e; }
+  const PATHS = {
+    code: 'Save as .mcp.json in your project root (project scope). Claude Code will ask you to approve it on first use; run /mcp to check status.',
+    desktop: 'Save as claude_desktop_config.json. macOS: ~/Library/Application Support/Claude/ · Windows: %APPDATA%\\Claude\\ · or Settings → Developer → Edit Config. Merge with any servers already there, then fully quit and reopen Claude Desktop.',
+    cursor: 'Save as .cursor/mcp.json in your project, or ~/.cursor/mcp.json for all projects. Reload Cursor afterwards.'
+  };
+  const FILES = { code: '.mcp.json', desktop: 'claude_desktop_config.json', cursor: 'mcp.json' };
+  let current = '', currentCli = '';
+
+  // Server checklist
+  const grid = $('srv-grid');
+  SERVERS.forEach(function (s) {
+    const box = document.createElement('div');
+    box.className = 'srv-item';
+    const lab = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.id = 'srv-' + s.id; cb.value = s.id;
+    const txt = document.createElement('span');
+    txt.appendChild(document.createTextNode(s.label));
+    txt.appendChild(el('small', s.desc));
+    lab.appendChild(cb); lab.appendChild(txt);
+    box.appendChild(lab);
+    if (s.fields.length) {
+      const f = document.createElement('div');
+      f.className = 'srv-fields';
+      s.fields.forEach(function (fd, i) {
+        const l = el('label', fd.label); l.setAttribute('for', 'f-' + s.id + '-' + i);
+        const inp = document.createElement(fd.kind === 'lines' ? 'textarea' : 'input');
+        inp.id = 'f-' + s.id + '-' + i;
+        if (fd.kind === 'lines') inp.rows = 2; else inp.type = 'text';
+        inp.value = fd.def; inp.placeholder = fd.ph || fd.def; inp.spellcheck = false; inp.autocomplete = 'off';
+        f.appendChild(l); f.appendChild(inp);
+      });
+      box.appendChild(f);
+    }
+    cb.addEventListener('change', function () { box.classList.toggle('on', cb.checked); });
+    grid.appendChild(box);
+  });
+
+  function flash(btn, msg) { const o = btn.textContent; btn.textContent = msg; setTimeout(function () { btn.textContent = o; }, 1400); }
+  function copy(text, btn) {
+    function fallback() {
+      const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); flash(btn, 'Copied'); } catch (e) { flash(btn, 'Copy failed'); }
+      document.body.removeChild(t);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { flash(btn, 'Copied'); }, fallback);
+    else fallback();
+  }
+
+  $('build-btn').addEventListener('click', function () {
+    const note = $('build-note');
+    note.style.display = 'none';
+    const selected = SERVERS.filter(function (s) { return $('srv-' + s.id).checked; }).map(function (s) { return s.id; });
+    if (!selected.length) { note.textContent = 'Tick at least one server first.'; note.style.display = 'block'; return; }
+    const values = {};
+    selected.forEach(function (id) {
+      const s = SERVERS.filter(function (x) { return x.id === id; })[0];
+      values[id] = s.fields.map(function (f, i) { return $('f-' + id + '-' + i).value; });
+    });
+    const target = $('target').value;
+    const servers = buildServers(selected, values, { windows: $('win').checked });
+    current = JSON.stringify(buildConfig(target, servers), null, 2);
+    $('out-json').textContent = current;
+    $('path-hint').textContent = PATHS[target];
+    currentCli = target === 'code' ? buildCli(servers) : '';
+    $('out-cli').textContent = currentCli;
+    $('cli-wrap').style.display = currentCli ? 'block' : 'none';
+    $('build-out').style.display = 'block';
+    $('capture').style.display = 'block';
+  });
+
+  $('copy-btn').addEventListener('click', function () { copy(current, this); });
+  $('copy-cli-btn').addEventListener('click', function () { copy(currentCli, this); });
+  $('dl-btn').addEventListener('click', function () {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([current + '\n'], { type: 'application/json' }));
+    a.download = FILES[$('target').value];
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $('to-val-btn').addEventListener('click', function () {
+    $('val-input').value = current;
+    $('val-btn').click();
+  });
+
+  $('ex-btn').addEventListener('click', function () {
+    $('val-input').value = EXAMPLE;
+    $('val-btn').click();
+  });
+
+  $('val-btn').addEventListener('click', function () {
+    const note = $('val-note');
+    const text = $('val-input').value;
+    note.style.display = 'none';
+    if (!text.trim()) { note.textContent = 'Paste a config first, or click "Load example".'; note.style.display = 'block'; return; }
+    const r = validateConfig(text);
+    const c = r.counts;
+    $('res-meta').textContent = c.fail + ' fail · ' + c.warn + ' warn · ' + c.info + ' note · ' + c.pass + ' pass';
+    const box = $('res-items');
+    box.textContent = '';
+    r.items.forEach(function (it) {
+      const d = el('div', '', 'lint-f');
+      const h = document.createElement('h4');
+      h.appendChild(el('span', it.level, 'sev sev-' + it.level));
+      h.appendChild(document.createTextNode(it.title));
+      d.appendChild(h);
+      if (it.detail) d.appendChild(el('p', it.detail));
+      if (it.fix) d.appendChild(el('p', 'Fix: ' + it.fix, 'fix'));
+      box.appendChild(d);
+    });
+    $('val-results').style.display = 'block';
+    $('capture').style.display = 'block';
+    $('val-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  $('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = $('sub-btn'), errorEl = $('sub-error');
+    const email = $('sub-email').value.trim();
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.frankfor.you/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'mcp-config-builder-tool' })
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      $('sub-download').href = data.downloadUrl;
+      $('subscribe-form').style.display = 'none';
+      $('sub-success').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Get the free pack';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
