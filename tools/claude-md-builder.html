@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free CLAUDE.md Generator &amp; AGENTS.md Template Builder (with Scorer) — frank store</title>
+  <meta name="description" content="Free CLAUDE.md generator and AGENTS.md template builder. Fill in your stack, commands, code style and guardrails to get CLAUDE.md, AGENTS.md and .cursorrules files, or paste an existing one to get a 0-100 score and fixes. Runs in your browser.">
+  <link rel="canonical" href="https://store.frankfor.you/tools/claude-md-builder.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free CLAUDE.md Generator &amp; AGENTS.md Template Builder (with Scorer)">
+  <meta property="og:description" content="Free CLAUDE.md generator and AGENTS.md template builder. Fill in your stack, commands, code style and guardrails to get CLAUDE.md, AGENTS.md and .cursorrules files, or paste an existing one to get a 0-100 score and fixes. Runs in your browser.">
+  <meta property="og:url" content="https://store.frankfor.you/tools/claude-md-builder.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free CLAUDE.md Generator &amp; AGENTS.md Template Builder (with Scorer)">
+  <meta name="twitter:description" content="Free CLAUDE.md generator and AGENTS.md template builder. Fill in your stack, commands, code style and guardrails to get CLAUDE.md, AGENTS.md and .cursorrules files, or paste an existing one to get a 0-100 score and fixes. Runs in your browser.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CLAUDE.md / AGENTS.md Builder & Scorer","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser)","url":"https://store.frankfor.you/tools/claude-md-builder.html","description":"Free CLAUDE.md generator and AGENTS.md template builder. Fill in your stack, commands, code style and guardrails to get CLAUDE.md, AGENTS.md and .cursorrules files, or paste an existing one to get a 0-100 score and fixes. Runs in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a CLAUDE.md file?","acceptedAnswer":{"@type":"Answer","text":"CLAUDE.md is a Markdown file in your project root that Claude Code reads at the start of every session. It holds the things the model cannot guess from the code: how to build, test and lint, your conventions, what never to touch, and where things live."}},{"@type":"Question","name":"What is the difference between CLAUDE.md and AGENTS.md?","acceptedAnswer":{"@type":"Answer","text":"CLAUDE.md is read by Claude Code. AGENTS.md is a vendor-neutral convention read by a growing number of coding agents, including Codex and Cursor. The content is largely the same, so many teams keep one source of truth and point the other at it. This tool generates both from the same form. Check each tool's documentation for the exact files it loads."}},{"@type":"Question","name":"How long should a CLAUDE.md be?","acceptedAnswer":{"@type":"Answer","text":"Short. Aim for well under 300 lines, and in practice 40 to 120 is plenty. Every line is loaded into context on every session, so long files dilute the rules that matter and some get ignored. Link to deeper docs instead of pasting them."}},{"@type":"Question","name":"What should I put in a CLAUDE.md?","acceptedAnswer":{"@type":"Answer","text":"Exact build, test and lint commands, a short directory map, code style rules that differ from defaults, explicit never-do guardrails, git and PR conventions, and secrets handling. Leave out generic advice like \"write clean code\" because the model already tries to do that."}},{"@type":"Question","name":"Does this tool upload my file?","acceptedAnswer":{"@type":"Answer","text":"No. Generation and scoring run entirely in your browser in JavaScript. Nothing you type or paste is sent anywhere, and there is no tracking. Only the optional email form for the free Starter Pack sends data, and only the email address."}},{"@type":"Question","name":"How is the score calculated?","acceptedAnswer":{"@type":"Answer","text":"The scorer checks for runnable commands, testing instructions, guardrails, a directory map, sane length, vague filler phrases, secrets and safety rules, and git conventions. Each check carries a weight out of 100 and failed checks come with a concrete fix. It is a heuristic for spotting gaps, not a guarantee of how an agent will behave."}}]}</script>
+  <link rel="stylesheet" href="/style.css?v=2">
+  <style>
+
+    .lint-text{width:100%;box-sizing:border-box;min-height:260px;background:#111;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;line-height:1.5;padding:12px;border-radius:6px;resize:vertical}
+    .lint-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .lint-btns button{cursor:pointer;font-size:1rem;font-weight:700;padding:13px 20px;border-radius:6px}
+    .lint-primary{flex:1;min-width:180px;background:var(--accent);color:#0a0a0a;border:none}
+    .lint-secondary{background:#111;color:var(--accent);border:1px solid var(--accent)}
+    .lint-meta{color:var(--text-muted);font-size:.88rem;margin-bottom:18px}
+    .lint-f{border-top:1px solid #1f1f1f;padding:12px 0}
+    .lint-f h4{margin:0 0 6px;font-size:1rem;color:var(--text)}
+    .lint-f p{margin:0 0 6px;color:var(--text-muted);line-height:1.55;font-size:.92rem}
+    .lint-f .fix{color:var(--text)}
+    .sev{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-right:8px;vertical-align:middle}
+    .sev-fail{background:#3b1212;color:#f87171}
+    .sev-warn{background:#33300f;color:#facc15}
+    .sev-info{background:#111c2e;color:#60a5fa}
+    .sev-pass{background:#10301a;color:#4ade80}
+    .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0 4px}
+    .srv-item{border:1px solid #1f1f1f;border-radius:6px;padding:10px 12px;background:#111}
+    .srv-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-weight:700}
+    .srv-item small{display:block;color:var(--text-muted);font-weight:400;line-height:1.4;margin-top:2px}
+    .srv-fields{display:none;margin-top:10px}
+    .srv-item.on .srv-fields{display:block}
+    .srv-fields label{display:block;font-weight:400;font-size:.8rem;color:var(--text-muted);margin:6px 0 3px}
+    .srv-fields input,.srv-fields textarea,.mcp-select{width:100%;box-sizing:border-box;background:#0a0a0a;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;padding:7px;border-radius:4px}
+    .mcp-select{width:auto;min-width:240px;font-size:.95rem;padding:10px}
+    .mcp-opts{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:14px 0}
+    .code-box{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px;padding:14px;overflow:auto;max-height:420px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;color:var(--text);white-space:pre}
+    .hint{color:var(--text-muted);font-size:.88rem;line-height:1.6}
+    .gen-article p,.gen-article li{color:var(--text-muted);line-height:1.7}
+    .gen-article h2{margin-top:32px}
+    .gen-article code{background:#111;padding:1px 5px;border-radius:3px;font-size:.88em}
+      .f-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:8px 0 14px}
+    .f-grid label{display:flex;gap:8px;align-items:center;cursor:pointer;background:#111;border:1px solid #1f1f1f;border-radius:6px;padding:8px 10px;font-size:.9rem}
+    .f-row{margin:0 0 14px}
+    .f-row>label{display:block;font-weight:700;margin-bottom:6px}
+    .f-row textarea,.f-row input[type=text]{width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;padding:9px;border-radius:6px}
+    .f-row textarea{min-height:84px;resize:vertical}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 8px}
+    .tabs button{cursor:pointer;background:#111;color:var(--text-muted);border:1px solid #1f1f1f;border-radius:6px;padding:9px 16px;font-weight:700;font-size:.95rem}
+    .tabs button.on{color:#0a0a0a;background:var(--accent);border-color:var(--accent)}
+    .code-box{max-height:520px}
+    .score-big{font-size:2.4rem;font-weight:800;color:var(--accent);margin:0}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+
+
+
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-eyebrow"><a href="/">Store</a> / <a href="/tools/">Free Tools</a> / CLAUDE.md Builder</div>
+    <h1>Free <span class="accent">CLAUDE.md &amp; AGENTS.md Builder &amp; Scorer</span></h1>
+    <p class="lead">Answer a few questions and get a CLAUDE.md, AGENTS.md and .cursorrules file for your project, live. Or paste the one you already have and get a 0-100 score with specific fixes. Runs entirely in your browser; nothing is uploaded.</p>
+  </div>
+</div>
+
+<div class="product-content">
+  <div class="container">
+    <div class="purchase-card" style="max-width:900px">
+      <h2 style="margin-top:0">1. Build your file</h2>
+      <p class="hint" style="margin-top:0">Leave anything blank to skip it. Output updates as you type.</p>
+      <div class="f-row"><label for="pname">Project name</label><input type="text" id="pname" placeholder="my-project" autocomplete="off"></div>
+      <div class="f-row"><label for="ptype">Project type</label>
+        <select id="ptype" class="mcp-select">
+          <option value="web app">Web app</option><option value="API / backend service">API</option><option value="CLI tool">CLI</option>
+          <option value="library / package">Library</option><option value="data / ML project">Data / ML</option><option value="monorepo">Monorepo</option>
+        </select></div>
+      <div class="f-row"><label>Language / stack</label><div class="f-grid" id="stack"></div></div>
+      <div class="f-row"><label for="cmds">Build, test and lint commands (one per line, e.g. <code>test: npm test</code>)</label><textarea id="cmds" spellcheck="false" placeholder="install: npm ci&#10;dev: npm run dev&#10;build: npm run build&#10;test: npm test&#10;lint: npm run lint"></textarea></div>
+      <div class="f-row"><label for="style">Code style rules (one per line)</label><textarea id="style" spellcheck="false" placeholder="TypeScript strict mode, no any&#10;Named exports only&#10;Prefer small pure functions"></textarea></div>
+      <div class="f-row"><label for="never">&ldquo;Never do&rdquo; guardrails (one per line)</label><textarea id="never" spellcheck="false" placeholder="Never edit files in /migrations that are already applied&#10;Never add a dependency without asking&#10;Never run destructive git commands"></textarea></div>
+      <div class="f-row"><label for="git">Git / PR conventions (one per line)</label><textarea id="git" spellcheck="false" placeholder="Conventional Commits (feat:, fix:, chore:)&#10;One logical change per PR&#10;Run tests before committing"></textarea></div>
+      <div class="f-row"><label for="dirs">Directory map (one per line, e.g. <code>src/api/ - route handlers</code>)</label><textarea id="dirs" spellcheck="false" placeholder="src/ - application code&#10;tests/ - unit and integration tests&#10;scripts/ - dev tooling"></textarea></div>
+      <div class="f-row"><label for="safety">Secrets / safety rules (one per line)</label><textarea id="safety" spellcheck="false" placeholder="Never commit .env files or print secrets&#10;Ask before deleting files or touching production config"></textarea></div>
+
+      <h2>2. Your files</h2>
+      <div class="tabs" role="tablist" id="tabs">
+        <button type="button" data-t="claude" class="on">CLAUDE.md</button>
+        <button type="button" data-t="agents">AGENTS.md</button>
+        <button type="button" data-t="cursor">.cursorrules</button>
+      </div>
+      <div class="code-box" id="out" tabindex="0" aria-live="polite"></div>
+      <div class="lint-btns" style="margin-top:0">
+        <button type="button" id="copy-btn" class="lint-secondary">Copy</button>
+        <button type="button" id="dl-btn" class="lint-secondary">Download</button>
+        <button type="button" id="score-btn" class="lint-secondary">Score it</button>
+      </div>
+    </div>
+
+    <div class="purchase-card" id="scorer" style="margin-top:28px;max-width:900px">
+      <h2 style="margin-top:0">3. Score an existing file</h2>
+      <label for="sc-input" style="display:block;font-weight:700;margin-bottom:8px">Paste your CLAUDE.md or AGENTS.md</label>
+      <textarea id="sc-input" class="lint-text" spellcheck="false" placeholder="# CLAUDE.md&#10;..."></textarea>
+      <div class="lint-btns">
+        <button type="button" id="sc-btn" class="lint-primary">Score it</button>
+      </div>
+      <div id="sc-note" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+    </div>
+
+    <div id="sc-results" class="purchase-card" style="display:none;margin-top:28px;max-width:900px" aria-live="polite">
+      <p class="score-big" id="sc-score"></p>
+      <div class="lint-meta" id="sc-meta"></div>
+      <div id="sc-items"></div>
+    </div>
+
+    <div class="purchase-card" id="capture" style="margin-top:28px;max-width:640px">
+      <h2 style="margin-top:0">Get the free Agent Starter Pack</h2>
+      <p style="color:var(--text-muted)">Templates for MEMORY.md, SOUL.md and daily notes, plus a one-page setup guide. Free.</p>
+      <form id="subscribe-form" novalidate>
+        <input type="email" id="sub-email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+          style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+        <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+      </form>
+      <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+      <div id="sub-success" style="display:none;text-align:center;">
+        <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+        <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;">No spam. Unsubscribe any time.</p>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">The <a href="/agent-setup-kit">Agent Setup Kit</a> has ready-made instruction files for common agent roles, and the <a href="/autonomous-agent-playbook">Autonomous Agent Playbook</a> covers approval gates and safe autonomy.</p>
+    </div>
+
+    <div class="gen-article" style="max-width:760px;margin-top:48px">
+      <h2>CLAUDE.md generator: what a good file contains</h2>
+      <p>A CLAUDE.md is loaded into Claude Code's context at the start of every session, so it works best as a short briefing for a new teammate: the commands to run, the shape of the repo, the rules that are not obvious from reading the code, and the lines the agent must not cross. Generic advice costs context and adds nothing.</p>
+      <h2>AGENTS.md template</h2>
+      <p>AGENTS.md is a plain Markdown convention for instructions to coding agents, read by a growing number of tools. The structure is the same as CLAUDE.md, which is why this builder produces both from one form. If you use several tools, keep one file as the source of truth and reference it from the others.</p>
+      <p>File names and loading rules change between releases, so check your tool's documentation for where it looks.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is a CLAUDE.md file?</h3>
+      <p>CLAUDE.md is a Markdown file in your project root that Claude Code reads at the start of every session. It holds the things the model cannot guess from the code: how to build, test and lint, your conventions, what never to touch, and where things live.</p>
+      <h3>What is the difference between CLAUDE.md and AGENTS.md?</h3>
+      <p>CLAUDE.md is read by Claude Code. AGENTS.md is a vendor-neutral convention read by a growing number of coding agents, including Codex and Cursor. The content is largely the same, so many teams keep one source of truth and point the other at it. This tool generates both from the same form. Check each tool's documentation for the exact files it loads.</p>
+      <h3>How long should a CLAUDE.md be?</h3>
+      <p>Short. Aim for well under 300 lines, and in practice 40 to 120 is plenty. Every line is loaded into context on every session, so long files dilute the rules that matter and some get ignored. Link to deeper docs instead of pasting them.</p>
+      <h3>What should I put in a CLAUDE.md?</h3>
+      <p>Exact build, test and lint commands, a short directory map, code style rules that differ from defaults, explicit never-do guardrails, git and PR conventions, and secrets handling. Leave out generic advice like "write clean code" because the model already tries to do that.</p>
+      <h3>Does this tool upload my file?</h3>
+      <p>No. Generation and scoring run entirely in your browser in JavaScript. Nothing you type or paste is sent anywhere, and there is no tracking. Only the optional email form for the free Starter Pack sends data, and only the email address.</p>
+      <h3>How is the score calculated?</h3>
+      <p>The scorer checks for runnable commands, testing instructions, guardrails, a directory map, sane length, vague filler phrases, secrets and safety rules, and git conventions. Each check carries a weight out of 100 and failed checks come with a concrete fix. It is a heuristic for spotting gaps, not a guarantee of how an agent will behave.</p>
+      <p>Next: check the rest of your agent setup with the <a href="/tools/agent-prompt-linter.html">Prompt Linter</a>, <a href="/tools/agent-safety-audit.html">Safety Audit</a> and <a href="/tools/mcp-config-builder.html">MCP Config Builder</a>.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/tools/agent-generator.html">Agent Generator</a>
+        <a href="/tools/agent-cost-calculator.html">Cost Calculator</a>
+        <a href="/tools/agent-safety-audit.html">Safety Audit</a>
+        <a href="/tools/agent-prompt-linter.html">Prompt Linter</a>
+        <a href="/tools/mcp-config-builder.html">MCP Config Builder</a>
+        <a href="/tools/claude-md-builder.html">CLAUDE.md Builder</a>
+        <a href="/tools/">All free tools</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// <core>
+const STACKS = ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust', 'Java', 'C#', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'React', 'Next.js', 'Vue', 'Node.js', 'Django', 'FastAPI', 'Docker', 'PostgreSQL', 'Tailwind'];
+
+function lines(s) { return String(s || '').split(/\r?\n/).map(function (x) { return x.trim().replace(/^[-*]\s+/, ''); }).filter(Boolean); }
+
+// f: { name, type, stack[], cmds, style, never, git, dirs, safety }
+function generate(kind, f) {
+  const name = (f.name || '').trim() || 'this project';
+  const file = kind === 'claude' ? 'CLAUDE.md' : kind === 'agents' ? 'AGENTS.md' : '.cursorrules';
+  const out = [];
+  const md = kind !== 'cursor';
+  function sec(title, body) { if (!body.length) return; out.push(md ? '## ' + title : title.toUpperCase() + ':'); out.push(''); body.forEach(function (b) { out.push(b); }); out.push(''); }
+  function bullets(a) { return a.map(function (x) { return '- ' + x; }); }
+  if (md) { out.push('# ' + file); out.push(''); }
+  out.push(md ? 'Guidance for AI coding agents working in ' + name + ', a ' + f.type + '.' : 'You are working in ' + name + ', a ' + f.type + '.');
+  out.push('');
+  if (f.stack.length) sec('Stack', ['Built with ' + f.stack.join(', ') + '.']);
+  const cmds = lines(f.cmds);
+  if (cmds.length) sec('Commands', md ? ['```bash'].concat(cmds.map(function (c) {
+    const m = c.match(/^([A-Za-z][\w -]{0,24}):\s+(.+)$/);
+    return m ? m[2] + '   # ' + m[1] : c;
+  }), ['```']) : bullets(cmds));
+  const dirs = lines(f.dirs);
+  if (dirs.length) sec('Project structure', md ? ['```'].concat(dirs, ['```']) : bullets(dirs));
+  sec('Code style', bullets(lines(f.style)));
+  sec('Testing', cmds.some(function (c) { return /test|pytest|spec/i.test(c); }) ? ['- Run the test command above before declaring a task done.', '- Add or update tests for any behavior you change.'] : []);
+  sec('Never do', bullets(lines(f.never)));
+  sec('Git and pull requests', bullets(lines(f.git)));
+  sec('Secrets and safety', bullets(lines(f.safety)));
+  while (out.length && out[out.length - 1] === '') out.pop();
+  return out.join('\n') + '\n';
+}
+
+const VAGUE = ['write clean code', 'clean code', 'follow best practices', 'best practices', 'high quality', 'high-quality code', 'be careful', 'be professional', 'do your best', 'write good code', 'readable code', 'maintainable code', 'production-ready', 'production ready', 'as needed', 'where appropriate', 'be helpful', 'think step by step'];
+
+// Returns { score, checks: [{ id, title, level, pts, max, detail, fix }] }
+function scoreDoc(text) {
+  const t = String(text || '');
+  const ls = t.split(/\r?\n/);
+  const n = ls.length;
+  const low = t.toLowerCase();
+  const checks = [];
+  function add(id, title, max, pts, detail, fix) {
+    const level = pts >= max ? 'pass' : pts > 0 ? 'warn' : 'fail';
+    checks.push({ id: id, title: title, level: level, pts: pts, max: max, detail: detail, fix: level === 'pass' ? '' : fix });
+  }
+  const CMD_RE = /\b(npm|npx|pnpm|yarn|bun|pip|pipx|uv|poetry|pytest|python|cargo|go|make|mvn|gradle|dotnet|bundle|rake|composer|docker|ruff|eslint|prettier|tsc|vitest|jest|mypy|black|flake8|swift|deno)[ \t]+[\w:./@-]+/i;
+  const codeBits = (t.match(/`[^`\n]+`|```[\s\S]*?```/g) || []).join('\n');
+  const cmdHits = (codeBits.match(new RegExp(CMD_RE.source + '|\\b(?:pytest|vitest|jest|mypy|ruff|eslint|tsc)\\b', 'gi')) || []).length;
+  add('commands', 'Has runnable commands', 20, cmdHits >= 2 ? 20 : cmdHits >= 1 ? 10 : 0,
+    cmdHits ? 'Found ' + cmdHits + ' command(s) in code spans.' : 'No build, test or lint commands in code formatting.',
+    'Add a Commands section with exact build, test and lint commands in a code block, e.g. `npm test`. Agents cannot guess your scripts.');
+  const hasTestCmd = /\b(test|pytest|jest|vitest|go test|cargo test|rspec|spec)\b/i.test(codeBits);
+  const testWord = /\b(test|tests|testing)\b/i.test(t);
+  add('testing', 'Has testing instructions', 15, hasTestCmd && testWord ? 15 : hasTestCmd || testWord ? 8 : 0,
+    hasTestCmd ? 'A test command is documented.' : testWord ? 'Tests are mentioned but no test command is given.' : 'Testing is not mentioned.',
+    'Add the exact test command, how to run a single test, and when tests must pass (e.g. "run tests before finishing a task").');
+  const guardHits = (t.match(/\b(never|do not|don't|must not|must never|forbidden|avoid|off[- ]limits|always ask|ask (me )?before)\b/gi) || []).length;
+  add('guardrails', 'Has guardrails', 15, guardHits >= 3 ? 15 : guardHits >= 1 ? 8 : 0,
+    guardHits ? 'Found ' + guardHits + ' guardrail phrase(s).' : 'No explicit never / do-not rules.',
+    'Add a "Never do" list: files not to edit, commands not to run, dependencies not to add without asking. Aim for 3 or more specific rules.');
+  const treeLines = ls.filter(function (l) { return /[├└│]|^\s*[-*]?\s*`?[\w.@-]+\/`?\s*(-|:|—|–|#|$)/.test(l); }).length;
+  const dirHeading = /^#{1,4}\s.*\b(structure|layout|directory|directories|architecture|repo map|codebase|project map)\b/im.test(t);
+  add('dirmap', 'Has a directory map', 15, treeLines >= 3 || (dirHeading && treeLines >= 1) ? 15 : treeLines >= 1 || dirHeading ? 8 : 0,
+    treeLines ? 'Found ' + treeLines + ' directory entries.' : dirHeading ? 'A structure heading exists but few directories are listed.' : 'No directory map found.',
+    'Add a short map of the top-level folders, e.g. `src/api/ - route handlers`, so the agent opens the right files first.');
+  let lenPts = 10, lenDetail = n + ' lines.', lenFix = '';
+  if (n > 500) { lenPts = 0; lenFix = 'Cut it below 300 lines. Move detail into linked docs; long files dilute the rules that matter.'; }
+  else if (n > 300) { lenPts = 4; lenFix = 'Trim to under 300 lines. Move detail into linked docs and keep only what the agent cannot infer from code.'; }
+  else if (n < 10) { lenPts = 3; lenFix = 'Too short to be useful. Add commands, structure and guardrails (aim for 40 to 120 lines).'; }
+  add('length', 'Length is sane (under 300 lines)', 10, lenPts, lenDetail, lenFix);
+  const found = VAGUE.filter(function (p) { return low.indexOf(p) !== -1; });
+  add('vague', 'No vague filler', 15, Math.max(0, 15 - found.length * 5),
+    found.length ? 'Found: ' + found.map(function (x) { return '"' + x + '"'; }).join(', ') + '.' : 'No generic filler phrases found.',
+    'Replace vague advice with a checkable rule. Instead of "write clean code": "functions under 40 lines, no default exports, run `npm run lint` before finishing".');
+  const safe = /\.env|secret|credential|api[ _-]?key|token|password|production|destructive|force[- ]push/i.test(t);
+  add('safety', 'Has secrets / safety rules', 5, safe ? 5 : 0, safe ? 'Secrets or safety are addressed.' : 'No secrets or safety guidance.',
+    'Add a line on secrets (never commit .env, never print keys) and which actions need approval (deleting data, production changes).');
+  const gitOk = /\b(commit|branch|pull request|\bPR\b|conventional commits|rebase|merge)\b/i.test(t);
+  add('git', 'Has git / PR conventions', 5, gitOk ? 5 : 0, gitOk ? 'Git conventions mentioned.' : 'No commit or PR conventions.',
+    'State your commit message format, branch naming and PR expectations.');
+  const score = checks.reduce(function (a, c) { return a + c.pts; }, 0);
+  return { score: score, checks: checks };
+}
+// </core>
+
+(function () {
+  const $ = function (id) { return document.getElementById(id); };
+  function el(tag, text, cls) { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+  const FILES = { claude: 'CLAUDE.md', agents: 'AGENTS.md', cursor: '.cursorrules' };
+  let tab = 'claude', current = '';
+
+  STACKS.forEach(function (s, i) {
+    const l = document.createElement('label');
+    const c = document.createElement('input'); c.type = 'checkbox'; c.value = s; c.id = 'st-' + i;
+    l.appendChild(c); l.appendChild(document.createTextNode(s)); $('stack').appendChild(l);
+  });
+
+  function form() {
+    return {
+      name: $('pname').value, type: $('ptype').value,
+      stack: STACKS.filter(function (s, i) { return $('st-' + i).checked; }),
+      cmds: $('cmds').value, style: $('style').value, never: $('never').value,
+      git: $('git').value, dirs: $('dirs').value, safety: $('safety').value
+    };
+  }
+  function render() { current = generate(tab, form()); $('out').textContent = current; }
+
+  document.querySelector('.product-content').addEventListener('input', function (e) {
+    if (e.target.closest('.f-row')) render();
+  });
+  $('tabs').addEventListener('click', function (e) {
+    const b = e.target.closest('button'); if (!b) return;
+    tab = b.getAttribute('data-t');
+    Array.prototype.forEach.call($('tabs').children, function (x) { x.classList.toggle('on', x === b); });
+    render();
+  });
+
+  function copy(text, btn) {
+    const done = function () { const o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+  }
+  $('copy-btn').addEventListener('click', function () { copy(current, this); });
+  $('dl-btn').addEventListener('click', function () {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([current], { type: 'text/markdown' }));
+    a.download = FILES[tab];
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  function runScore(text) {
+    const note = $('sc-note');
+    note.style.display = 'none';
+    if (!text.trim()) { note.textContent = 'Paste a file first.'; note.style.display = 'block'; return; }
+    const r = scoreDoc(text);
+    $('sc-score').textContent = r.score + ' / 100';
+    const fails = r.checks.filter(function (c) { return c.level !== 'pass'; }).length;
+    $('sc-meta').textContent = fails ? fails + ' check(s) need attention' : 'All checks passed';
+    const box = $('sc-items'); box.textContent = '';
+    r.checks.slice().sort(function (a, b) { return (b.max - b.pts) - (a.max - a.pts); }).forEach(function (c) {
+      const d = el('div', '', 'lint-f');
+      const h = document.createElement('h4');
+      h.appendChild(el('span', c.level, 'sev sev-' + c.level));
+      h.appendChild(document.createTextNode(c.title + ' (' + c.pts + '/' + c.max + ')'));
+      d.appendChild(h);
+      d.appendChild(el('p', c.detail));
+      if (c.fix) d.appendChild(el('p', 'Fix: ' + c.fix, 'fix'));
+      box.appendChild(d);
+    });
+    $('sc-results').style.display = 'block';
+    $('sc-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('sc-btn').addEventListener('click', function () { runScore($('sc-input').value); });
+  $('score-btn').addEventListener('click', function () { $('sc-input').value = current; runScore(current); });
+
+  $('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = $('sub-btn'), errorEl = $('sub-error');
+    const email = $('sub-email').value.trim();
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.frankfor.you/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'claude-md-builder-tool' })
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      $('sub-download').href = data.downloadUrl;
+      $('subscribe-form').style.display = 'none';
+      $('sub-success').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Get the free pack';
+    }
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
