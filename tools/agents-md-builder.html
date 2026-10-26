@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AGENTS.md Generator, Template Builder &amp; Linter (Score 0-100) — frank store</title>
+  <meta name="description" content="Free AGENTS.md generator and linter. Build an AGENTS.md for Codex, Cursor, Copilot, Claude Code, Jules, Aider and OpenClaw with presets, or paste yours for a 0-100 score, specific fixes, and a CLAUDE.md / .cursorrules converter. Runs in your browser.">
+  <link rel="canonical" href="https://store.frankfor.you/tools/agents-md-builder.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free AGENTS.md Generator, Template Builder & Linter">
+  <meta property="og:description" content="Free AGENTS.md generator and linter. Build an AGENTS.md for Codex, Cursor, Copilot, Claude Code, Jules, Aider and OpenClaw with presets, or paste yours for a 0-100 score, specific fixes, and a CLAUDE.md / .cursorrules converter. Runs in your browser.">
+  <meta property="og:url" content="https://store.frankfor.you/tools/agents-md-builder.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free AGENTS.md Generator, Template Builder & Linter">
+  <meta name="twitter:description" content="Free AGENTS.md generator and linter. Build an AGENTS.md for Codex, Cursor, Copilot, Claude Code, Jules, Aider and OpenClaw with presets, or paste yours for a 0-100 score, specific fixes, and a CLAUDE.md / .cursorrules converter. Runs in your browser.">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "AGENTS.md Builder & Linter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (web browser)", "url": "https://store.frankfor.you/tools/agents-md-builder.html", "description": "Free AGENTS.md generator and linter. Build an AGENTS.md for Codex, Cursor, Copilot, Claude Code, Jules, Aider and OpenClaw with presets, or paste yours for a 0-100 score, specific fixes, and a CLAUDE.md / .cursorrules converter. Runs in your browser.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is AGENTS.md?", "acceptedAnswer": {"@type": "Answer", "text": "AGENTS.md is a plain Markdown file in your repository root that tells AI coding agents how to work in the project: build, test and lint commands, code style, repo layout, pull request rules and boundaries. It is a cross-tool convention, read by agents such as Codex, Cursor, GitHub Copilot, Jules, Aider and OpenClaw. Check each tool's documentation for exactly how it loads the file."}}, {"@type": "Question", "name": "How is AGENTS.md different from CLAUDE.md?", "acceptedAnswer": {"@type": "Answer", "text": "CLAUDE.md is the file Claude Code reads. AGENTS.md is the vendor-neutral convention used by many other agents. The content is largely the same: commands, structure, style, boundaries. If you use several tools, keep one as the source of truth and have the other reference it, for example a CLAUDE.md that points at AGENTS.md. Verify in your tool's docs how it handles each file."}}, {"@type": "Question", "name": "What should an AGENTS.md contain?", "acceptedAnswer": {"@type": "Answer", "text": "Exact build, test and lint commands, a short repo layout, code style rules that differ from defaults, PR and commit conventions, security rules, and explicit boundaries split into always do, ask first, and never do. Skip generic advice such as 'write clean code'."}}, {"@type": "Question", "name": "How long should an AGENTS.md be?", "acceptedAnswer": {"@type": "Answer", "text": "Keep it under about 300 lines; 40 to 120 is usually enough. Agents load it into context, so long files dilute the rules that matter. Link to deeper docs instead of pasting them. In a monorepo, put a short AGENTS.md in each package for package-specific rules."}}, {"@type": "Question", "name": "Does this tool upload my AGENTS.md?", "acceptedAnswer": {"@type": "Answer", "text": "No. Building, linting and converting all run in your browser in JavaScript. Nothing you type or paste is sent anywhere and there is no tracking. Only the optional email form for the free Starter Pack sends data, and only the email address."}}, {"@type": "Question", "name": "How is the AGENTS.md score calculated?", "acceptedAnswer": {"@type": "Answer", "text": "The linter checks for runnable commands, a test command, agent boundaries, vague filler phrases, length, standard sections, secrets patterns, git conventions and a repo layout. Each check has a weight out of 100 and failures come with a concrete fix. It is a heuristic for finding gaps, not a guarantee of agent behavior."}}]}</script>
+  <link rel="stylesheet" href="/style.css?v=2">
+  <style>
+
+    .lint-text{width:100%;box-sizing:border-box;min-height:260px;background:#111;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;line-height:1.5;padding:12px;border-radius:6px;resize:vertical}
+    .lint-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .lint-btns button{cursor:pointer;font-size:1rem;font-weight:700;padding:13px 20px;border-radius:6px}
+    .lint-primary{flex:1;min-width:180px;background:var(--accent);color:#0a0a0a;border:none}
+    .lint-secondary{background:#111;color:var(--accent);border:1px solid var(--accent)}
+    .lint-meta{color:var(--text-muted);font-size:.88rem;margin-bottom:18px}
+    .lint-f{border-top:1px solid #1f1f1f;padding:12px 0}
+    .lint-f h4{margin:0 0 6px;font-size:1rem;color:var(--text)}
+    .lint-f p{margin:0 0 6px;color:var(--text-muted);line-height:1.55;font-size:.92rem}
+    .lint-f .fix{color:var(--text)}
+    .sev{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-right:8px;vertical-align:middle}
+    .sev-fail{background:#3b1212;color:#f87171}
+    .sev-warn{background:#33300f;color:#facc15}
+    .sev-info{background:#111c2e;color:#60a5fa}
+    .sev-pass{background:#10301a;color:#4ade80}
+    .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:8px 0 4px}
+    .srv-item{border:1px solid #1f1f1f;border-radius:6px;padding:10px 12px;background:#111}
+    .srv-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-weight:700}
+    .srv-item small{display:block;color:var(--text-muted);font-weight:400;line-height:1.4;margin-top:2px}
+    .srv-fields{display:none;margin-top:10px}
+    .srv-item.on .srv-fields{display:block}
+    .srv-fields label{display:block;font-weight:400;font-size:.8rem;color:var(--text-muted);margin:6px 0 3px}
+    .srv-fields input,.srv-fields textarea,.mcp-select{width:100%;box-sizing:border-box;background:#0a0a0a;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;padding:7px;border-radius:4px}
+    .mcp-select{width:auto;min-width:240px;font-size:.95rem;padding:10px}
+    .mcp-opts{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:14px 0}
+    .code-box{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:6px;padding:14px;overflow:auto;max-height:420px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;color:var(--text);white-space:pre}
+    .hint{color:var(--text-muted);font-size:.88rem;line-height:1.6}
+    .gen-article p,.gen-article li{color:var(--text-muted);line-height:1.7}
+    .gen-article h2{margin-top:32px}
+    .gen-article code{background:#111;padding:1px 5px;border-radius:3px;font-size:.88em}
+      .f-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:8px 0 14px}
+    .f-grid label{display:flex;gap:8px;align-items:center;cursor:pointer;background:#111;border:1px solid #1f1f1f;border-radius:6px;padding:8px 10px;font-size:.9rem}
+    .f-row{margin:0 0 14px}
+    .f-row>label{display:block;font-weight:700;margin-bottom:6px}
+    .f-row textarea,.f-row input[type=text]{width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;line-height:1.5;padding:9px;border-radius:6px}
+    .f-row textarea{min-height:84px;resize:vertical}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 8px}
+    .tabs button{cursor:pointer;background:#111;color:var(--text-muted);border:1px solid #1f1f1f;border-radius:6px;padding:9px 16px;font-weight:700;font-size:.95rem}
+    .tabs button.on{color:#0a0a0a;background:var(--accent);border-color:var(--accent)}
+    .code-box{max-height:520px}
+    .score-big{font-size:2.4rem;font-weight:800;color:var(--accent);margin:0}
+      .pre-btns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+    .pre-btns button{cursor:pointer;background:#111;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:7px 14px;font-weight:700;font-size:.9rem}
+    .related{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 0}
+    .related a{background:#111;border:1px solid #1f1f1f;border-radius:6px;padding:10px 14px;text-decoration:none;color:var(--accent);font-weight:700}
+  </style>
+
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">frank<span class="accent">.</span><span class="store-label">store</span></a>
+    <div class="nav-links">
+      <a href="/">Store</a>
+      <a href="https://frankfor.you">Home</a>
+      <a href="https://frankfor.you/about/">About</a>
+      <a href="https://frankfor.you/blog/">Blog</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/">Store</a>
+    <a href="https://frankfor.you">Home</a>
+    <a href="https://frankfor.you/about/">About</a>
+    <a href="https://frankfor.you/blog/">Blog</a>
+  </div>
+</nav>
+
+
+
+
+
+<div class="product-detail-header">
+  <div class="container">
+    <div class="product-detail-eyebrow"><a href="/">Store</a> / <a href="/tools/">Free Tools</a> / AGENTS.md Builder</div>
+    <h1>Free <span class="accent">AGENTS.md Builder &amp; Linter</span></h1>
+    <p class="lead">Build an AGENTS.md that Codex, Cursor, Copilot, Claude Code, Jules, Aider and OpenClaw can use, or paste yours for a 0-100 score with specific fixes. Convert an existing CLAUDE.md or .cursorrules in one click. Runs entirely in your browser; nothing is uploaded.</p>
+  </div>
+</div>
+
+<div class="product-content">
+  <div class="container">
+    <div class="tabs" role="tablist" id="maintabs" style="max-width:900px">
+      <button type="button" data-p="build" class="on">Build</button>
+      <button type="button" data-p="lint">Lint &amp; Score</button>
+    </div>
+
+    <div id="pane-build">
+    <div class="purchase-card" style="max-width:900px">
+      <h2 style="margin-top:0">1. Build your AGENTS.md</h2>
+      <p class="hint" style="margin-top:0">Start from a preset, then edit. Leave anything blank to skip it. Output updates as you type.</p>
+      <div class="pre-btns" id="presets">
+        <button type="button" data-pre="node">Node / TS</button>
+        <button type="button" data-pre="python">Python</button>
+        <button type="button" data-pre="go">Go</button>
+        <button type="button" data-pre="rust">Rust</button>
+        <button type="button" data-pre="monorepo">Monorepo</button>
+        <button type="button" data-pre="clear">Clear</button>
+      </div>
+      <div class="f-row"><label for="pname">Project name</label><input type="text" id="pname" placeholder="my-project" autocomplete="off"></div>
+      <div class="f-row"><label for="stack">Stack / languages</label><input type="text" id="stack" placeholder="TypeScript, Node.js 22, PostgreSQL" autocomplete="off"></div>
+      <div class="f-row"><label for="cmds">Build, test and lint commands (one per line, e.g. <code>test: npm test</code>)</label><textarea id="cmds" spellcheck="false" placeholder="install: npm ci&#10;build: npm run build&#10;test: npm test&#10;lint: npm run lint"></textarea></div>
+      <div class="f-row"><label for="style">Code style rules (one per line)</label><textarea id="style" spellcheck="false" placeholder="TypeScript strict mode, no any&#10;Named exports only"></textarea></div>
+      <div class="f-row"><label for="dirs">Repo layout (one per line, e.g. <code>src/api/ - route handlers</code>)</label><textarea id="dirs" spellcheck="false" placeholder="src/ - application code&#10;tests/ - unit and integration tests"></textarea></div>
+      <div class="f-row"><label for="git">PR / commit conventions (one per line)</label><textarea id="git" spellcheck="false" placeholder="Conventional Commits (feat:, fix:, chore:)&#10;One logical change per PR"></textarea></div>
+      <div class="f-row"><label for="safety">Security / do-not-touch rules (one per line)</label><textarea id="safety" spellcheck="false" placeholder="Never commit .env files or print secrets&#10;Do not edit generated files in dist/"></textarea></div>
+      <div class="f-row"><label for="ask">Boundaries: ask first (one per line)</label><textarea id="ask" spellcheck="false" placeholder="Adding or upgrading a dependency&#10;Changing CI config or database schema"></textarea></div>
+      <div class="f-row"><label for="never">Boundaries: never (one per line)</label><textarea id="never" spellcheck="false" placeholder="Force-push or rewrite shared git history&#10;Delete files outside the task scope"></textarea></div>
+
+      <h2>2. Your AGENTS.md</h2>
+      <div class="code-box" id="out" tabindex="0" aria-live="polite"></div>
+      <div class="lint-btns" style="margin-top:0">
+        <button type="button" id="copy-btn" class="lint-secondary">Copy</button>
+        <button type="button" id="dl-btn" class="lint-secondary">Download</button>
+        <button type="button" id="score-btn" class="lint-secondary">Score it</button>
+      </div>
+    </div>
+    </div>
+
+    <div id="pane-lint" style="display:none">
+    <div class="purchase-card" id="scorer" style="max-width:900px">
+      <h2 style="margin-top:0">Lint &amp; score an existing AGENTS.md</h2>
+      <label for="sc-input" style="display:block;font-weight:700;margin-bottom:8px">Paste your AGENTS.md</label>
+      <textarea id="sc-input" class="lint-text" spellcheck="false" placeholder="# AGENTS.md&#10;..."></textarea>
+      <div class="lint-btns">
+        <button type="button" id="sc-btn" class="lint-primary">Score it</button>
+      </div>
+      <div id="sc-note" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+    </div>
+
+    <div id="sc-results" class="purchase-card" style="display:none;margin-top:28px;max-width:900px" aria-live="polite">
+      <p class="score-big" id="sc-score"></p>
+      <div class="lint-meta" id="sc-meta"></div>
+      <div id="sc-items"></div>
+    </div>
+
+    <div class="purchase-card" id="converter" style="margin-top:28px;max-width:900px">
+      <h2 style="margin-top:0">Convert from CLAUDE.md / .cursorrules</h2>
+      <p class="hint" style="margin-top:0">Paste a CLAUDE.md or .cursorrules. Headings (or, for unstructured files, individual lines) are mapped into standard AGENTS.md sections. Review the result before committing.</p>
+      <textarea id="cv-input" class="lint-text" spellcheck="false" placeholder="# CLAUDE.md&#10;## Commands&#10;..."></textarea>
+      <div class="lint-btns">
+        <button type="button" id="cv-btn" class="lint-primary">Convert to AGENTS.md</button>
+      </div>
+      <div id="cv-note" class="hint" style="margin-top:10px"></div>
+      <div class="code-box" id="cv-out" style="display:none"></div>
+      <div class="lint-btns" id="cv-actions" style="display:none;margin-top:0">
+        <button type="button" id="cv-copy" class="lint-secondary">Copy</button>
+        <button type="button" id="cv-dl" class="lint-secondary">Download</button>
+        <button type="button" id="cv-score" class="lint-secondary">Score it</button>
+      </div>
+    </div>
+    </div>
+
+    <div class="purchase-card" id="capture" style="margin-top:28px;max-width:640px">
+      <h2 style="margin-top:0">Get the free Agent Starter Pack</h2>
+      <p style="color:var(--text-muted)">Templates for MEMORY.md, SOUL.md and daily notes, plus a one-page setup guide. Free.</p>
+      <form id="subscribe-form" novalidate>
+        <input type="email" id="sub-email" placeholder="you@example.com" required autocomplete="email" aria-label="Email address"
+          style="width:100%;box-sizing:border-box;background:#111;border:1px solid #1f1f1f;color:var(--text);font-size:1rem;padding:13px;border-radius:6px;margin-bottom:12px;">
+        <button type="submit" id="sub-btn" style="background:var(--accent);color:#0a0a0a;border:none;cursor:pointer;width:100%;font-size:1rem;font-weight:700;padding:14px;border-radius:6px;">Get the free pack</button>
+      </form>
+      <div id="sub-error" role="alert" style="display:none;color:#f87171;font-size:0.85rem;margin-top:8px;"></div>
+      <div id="sub-success" style="display:none;text-align:center;">
+        <p style="color:var(--accent);font-weight:700;margin-bottom:12px;">You're in. Your download is ready.</p>
+        <a id="sub-download" href="#" style="display:block;background:var(--accent);color:#0a0a0a;font-weight:700;padding:14px;border-radius:6px;text-decoration:none;">Download free-agent-starter.zip</a>
+      </div>
+      <p style="color:var(--text-dim);font-size:0.78rem;margin-top:10px;">No spam. Unsubscribe any time.</p>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-top:16px">The <a href="/agent-setup-kit">Agent Setup Kit</a> has ready-made instruction files for common agent roles, and the <a href="/autonomous-agent-playbook">Autonomous Agent Playbook</a> covers approval gates and safe autonomy.</p>
+    </div>
+
+
+    <div class="gen-article" style="max-width:760px;margin-top:48px">
+      <h2>What is AGENTS.md?</h2>
+      <p>AGENTS.md is a plain Markdown file at the root of a repository that briefs AI coding agents the way a README briefs humans: how to build and test, how the repo is laid out, what style to follow, how to open a pull request, and where the boundaries are. Because it is a shared convention rather than one vendor's format, a single file can serve Codex, Cursor, GitHub Copilot, Claude Code, Jules, Aider and OpenClaw. Tools differ in how they discover and merge files, so check your tool's documentation.</p>
+      <h2>AGENTS.md vs CLAUDE.md</h2>
+      <p><code>CLAUDE.md</code> is read by Claude Code; <code>AGENTS.md</code> is the cross-agent convention. The useful content is the same, so avoid maintaining two diverging copies: keep <code>AGENTS.md</code> as the source of truth and have <code>CLAUDE.md</code> point to it, or use the converter above to derive one from the other. The <a href="/tools/claude-md-builder.html">CLAUDE.md Builder</a> generates both from one form.</p>
+      <h2>What makes a good AGENTS.md</h2>
+      <ul>
+        <li>Exact, copy-pasteable commands for install, build, test and lint.</li>
+        <li>A short repo map so the agent opens the right files first.</li>
+        <li>Checkable style rules, not slogans like "write clean code".</li>
+        <li>Three-tier boundaries: always do, ask first, never do.</li>
+        <li>Security rules: no secrets in the repo, no edits to generated or production files.</li>
+        <li>Under roughly 300 lines, with links to deeper docs.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>What is AGENTS.md?</h3>
+      <p>AGENTS.md is a plain Markdown file in your repository root that tells AI coding agents how to work in the project: build, test and lint commands, code style, repo layout, pull request rules and boundaries. It is a cross-tool convention, read by agents such as Codex, Cursor, GitHub Copilot, Jules, Aider and OpenClaw. Check each tool's documentation for exactly how it loads the file.</p>
+      <h3>How is AGENTS.md different from CLAUDE.md?</h3>
+      <p>CLAUDE.md is the file Claude Code reads. AGENTS.md is the vendor-neutral convention used by many other agents. The content is largely the same: commands, structure, style, boundaries. If you use several tools, keep one as the source of truth and have the other reference it, for example a CLAUDE.md that points at AGENTS.md. Verify in your tool's docs how it handles each file.</p>
+      <h3>What should an AGENTS.md contain?</h3>
+      <p>Exact build, test and lint commands, a short repo layout, code style rules that differ from defaults, PR and commit conventions, security rules, and explicit boundaries split into always do, ask first, and never do. Skip generic advice such as 'write clean code'.</p>
+      <h3>How long should an AGENTS.md be?</h3>
+      <p>Keep it under about 300 lines; 40 to 120 is usually enough. Agents load it into context, so long files dilute the rules that matter. Link to deeper docs instead of pasting them. In a monorepo, put a short AGENTS.md in each package for package-specific rules.</p>
+      <h3>Does this tool upload my AGENTS.md?</h3>
+      <p>No. Building, linting and converting all run in your browser in JavaScript. Nothing you type or paste is sent anywhere and there is no tracking. Only the optional email form for the free Starter Pack sends data, and only the email address.</p>
+      <h3>How is the AGENTS.md score calculated?</h3>
+      <p>The linter checks for runnable commands, a test command, agent boundaries, vague filler phrases, length, standard sections, secrets patterns, git conventions and a repo layout. Each check has a weight out of 100 and failures come with a concrete fix. It is a heuristic for finding gaps, not a guarantee of agent behavior.</p>
+      <h2>Related tools</h2>
+      <div class="related">
+        <a href="/tools/claude-md-builder.html">CLAUDE.md Builder &amp; Scorer</a>
+        <a href="/tools/mcp-config-builder.html">MCP Config Builder &amp; Validator</a>
+        <a href="/tools/agent-prompt-linter.html">Prompt Linter</a>
+        <a href="/tools/agent-safety-audit.html">Safety Audit</a>
+        <a href="/tools/">All free tools</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">frank<span class="accent">.</span></div>
+      <div class="footer-links">
+        <a href="/">Store</a>
+        <a href="/free-starter">Free Starter Pack</a>
+        <a href="/tools/agent-generator.html">Agent Generator</a>
+        <a href="/tools/agent-cost-calculator.html">Cost Calculator</a>
+        <a href="/tools/agent-safety-audit.html">Safety Audit</a>
+        <a href="/tools/agent-prompt-linter.html">Prompt Linter</a>
+        <a href="/tools/mcp-config-builder.html">MCP Config Builder</a>
+        <a href="/tools/claude-md-builder.html">CLAUDE.md Builder</a>
+        <a href="/tools/agents-md-builder.html">AGENTS.md Builder</a>
+        <a href="/tools/">All free tools</a>
+        <a href="/support">Support</a>
+        <a href="https://frankfor.you">Home</a>
+        <a href="https://frankfor.you/blog/">Blog</a>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 frankfor.you</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const m = document.getElementById('navMobile');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// <core>
+function lines(s) { return String(s || '').split(/\r?\n/).map(function (x) { return x.trim().replace(/^[-*]\s+/, ''); }).filter(Boolean); }
+
+const PRESETS = {
+  node: { stack: 'TypeScript, Node.js', cmds: 'install: npm ci\ndev: npm run dev\nbuild: npm run build\ntest: npm test\nsingle test: npx vitest run path/to/file.test.ts\nlint: npm run lint\ntypecheck: npx tsc --noEmit',
+    style: 'TypeScript strict mode, no `any`\nNamed exports only, no default exports\nPrefer small pure functions under 40 lines\nFormat with Prettier, do not hand-format', dirs: 'src/ - application code\ntests/ - unit and integration tests\nscripts/ - dev tooling',
+    git: 'Conventional Commits (feat:, fix:, chore:)\nOne logical change per PR\nRun lint, typecheck and tests before opening a PR', safety: 'Never commit .env files or print secrets\nDo not edit dist/ or generated files', ask: 'Adding or upgrading dependencies\nChanging CI config or build tooling', never: 'Force-push or rewrite shared git history\nDisable or delete failing tests to make CI pass' },
+  python: { stack: 'Python 3.12', cmds: 'install: uv sync\ntest: uv run pytest -q\nsingle test: uv run pytest tests/test_x.py::test_name\nlint: uv run ruff check .\nformat: uv run ruff format .\ntypecheck: uv run mypy src',
+    style: 'Type hints on all public functions\nFollow ruff defaults; line length 100\nUse pathlib, not os.path\nNo bare except', dirs: 'src/ - package code\ntests/ - pytest suite\ndocs/ - documentation',
+    git: 'Conventional Commits (feat:, fix:, chore:)\nOne logical change per PR\nRun pytest and ruff before opening a PR', safety: 'Never commit .env files or print secrets\nDo not edit files under migrations/ that are already applied', ask: 'Adding or upgrading dependencies\nChanging database schema', never: 'Force-push or rewrite shared git history\nSkip or delete failing tests to make CI pass' },
+  go: { stack: 'Go', cmds: 'build: go build ./...\ntest: go test ./...\nsingle test: go test ./pkg/x -run TestName\nlint: golangci-lint run\nformat: gofmt -w .', style: 'gofmt and goimports clean\nWrap errors with %w and context\nAccept interfaces, return structs\nPass context.Context as the first parameter',
+    dirs: 'cmd/ - binaries\ninternal/ - private packages\npkg/ - public packages', git: 'Conventional Commits (feat:, fix:, chore:)\nOne logical change per PR\nRun go vet and go test before opening a PR', safety: 'Never commit .env files or print secrets\nDo not edit generated code (*.pb.go)', ask: 'Adding or upgrading modules in go.mod\nChanging public package APIs', never: 'Force-push or rewrite shared git history\nIgnore returned errors' },
+  rust: { stack: 'Rust', cmds: 'build: cargo build\ntest: cargo test\nsingle test: cargo test test_name\nlint: cargo clippy --all-targets -- -D warnings\nformat: cargo fmt', style: 'cargo fmt clean, clippy with no warnings\nNo unwrap() or expect() in library code\nUse thiserror for error types\nDocument public items', dirs: 'src/ - crate source\ntests/ - integration tests\nbenches/ - benchmarks',
+    git: 'Conventional Commits (feat:, fix:, chore:)\nOne logical change per PR\nRun cargo clippy and cargo test before opening a PR', safety: 'Never commit .env files or print secrets\nMinimize and justify every unsafe block', ask: 'Adding or upgrading crates in Cargo.toml\nAdding unsafe code', never: 'Force-push or rewrite shared git history\nSilence clippy with blanket allow attributes' },
+  monorepo: { stack: 'TypeScript, pnpm workspaces', cmds: 'install: pnpm install --frozen-lockfile\nbuild: pnpm -r build\ntest: pnpm -r test\ntest one package: pnpm --filter <pkg> test\nlint: pnpm -r lint', style: 'Shared config lives in packages/config\nPackages import each other only through their public entry point\nA nested AGENTS.md in a package overrides this file for that package',
+    dirs: 'apps/ - deployable applications\npackages/ - shared libraries\ntooling/ - build and lint config', git: 'Conventional Commits with the package as scope, e.g. feat(web):\nOne logical change per PR\nRun tests for every changed package before opening a PR', safety: 'Never commit .env files or print secrets\nDo not edit pnpm-lock.yaml by hand', ask: 'Adding a dependency to more than one package\nChanging shared packages used by several apps', never: 'Force-push or rewrite shared git history\nCreate circular dependencies between packages' }
+};
+
+// f: { name, stack, cmds, style, dirs, git, safety, ask, never }
+function generate(f) {
+  const name = (f.name || '').trim() || 'this project';
+  const out = ['# AGENTS.md', ''];
+  function sec(title, body) { if (!body.length) return; out.push('## ' + title, ''); body.forEach(function (b) { out.push(b); }); out.push(''); }
+  function bullets(a) { return a.map(function (x) { return '- ' + x; }); }
+  const stack = (f.stack || '').trim();
+  out.push('Instructions for AI coding agents working in ' + name + (stack ? ', built with ' + stack : '') + '.', '');
+  const cmds = lines(f.cmds);
+  if (cmds.length) sec('Commands', ['```bash'].concat(cmds.map(function (c) {
+    const m = c.match(/^([A-Za-z][\w -]{0,24}):\s+(.+)$/);
+    return m ? m[2] + '   # ' + m[1] : c;
+  }), ['```']));
+  const dirs = lines(f.dirs);
+  if (dirs.length) sec('Project structure', ['```'].concat(dirs, ['```']));
+  sec('Code style', bullets(lines(f.style)));
+  sec('Testing', cmds.some(function (c) { return /test|pytest|spec/i.test(c); }) ? ['- Run the test command above before declaring a task done.', '- Add or update tests for any behavior you change.', '- Do not delete or skip tests to make them pass.'] : []);
+  sec('Pull requests and commits', bullets(lines(f.git)));
+  sec('Security', bullets(lines(f.safety)));
+  const ask = lines(f.ask), never = lines(f.never);
+  if (ask.length || never.length) {
+    const b = [];
+    if (ask.length) b.push('**Ask first:**', '', ...bullets(ask), '');
+    if (never.length) b.push('**Never:**', '', ...bullets(never), '');
+    b.pop();
+    sec('Boundaries', b);
+  }
+  while (out.length && out[out.length - 1] === '') out.pop();
+  return out.join('\n') + '\n';
+}
+
+const VAGUE = ['write clean code', 'clean code', 'follow best practices', 'best practices', 'high quality', 'high-quality code', 'be careful', 'be professional', 'do your best', 'write good code', 'readable code', 'maintainable code', 'production-ready', 'production ready', 'as needed', 'where appropriate', 'be helpful', 'think step by step', 'use common sense'];
+const SECRET_RES = [
+  ['an OpenAI/Anthropic-style API key', /\bsk-[A-Za-z0-9_-]{20,}/],
+  ['a GitHub token', /\bgh[pousr]_[A-Za-z0-9]{30,}/],
+  ['an AWS access key ID', /\bAKIA[0-9A-Z]{16}\b/],
+  ['a Slack token', /\bxox[baprs]-[A-Za-z0-9-]{10,}/],
+  ['a private key block', /-----BEGIN [A-Z ]*PRIVATE KEY-----/],
+  ['a hardcoded password or secret value', /\b(?:password|passwd|secret|api[_-]?key|token)\s*[:=]\s*["']?(?!<|\$|\{|your|xxx|changeme|example|\*)[A-Za-z0-9_\/+=.-]{12,}/i]
+];
+
+// Returns { score, checks: [{ id, title, level, pts, max, detail, fix }] }
+function scoreDoc(text) {
+  const t = String(text || '');
+  const ls = t.split(/\r?\n/);
+  const n = ls.length;
+  const checks = [];
+  function add(id, title, max, pts, detail, fix) {
+    const level = pts >= max ? 'pass' : pts > 0 ? 'warn' : 'fail';
+    checks.push({ id: id, title: title, level: level, pts: pts, max: max, detail: detail, fix: level === 'pass' ? '' : fix });
+  }
+  const CMD_RE = /\b(npm|npx|pnpm|yarn|bun|pip|pipx|uv|poetry|pytest|python|cargo|go|make|mvn|gradle|dotnet|bundle|rake|composer|docker|ruff|eslint|prettier|tsc|vitest|jest|mypy|black|flake8|swift|deno|golangci-lint)[ \t]+[\w:./@<>-]+/i;
+  const codeBits = (t.match(/`[^`\n]+`|```[\s\S]*?```/g) || []).join('\n');
+  const cmdHits = (codeBits.match(new RegExp(CMD_RE.source + '|\\b(?:pytest|vitest|jest|mypy|ruff|eslint|tsc)\\b', 'gi')) || []).length;
+  add('commands', 'Has build / lint commands', 10, cmdHits >= 3 ? 10 : cmdHits >= 1 ? 5 : 0,
+    cmdHits ? 'Found ' + cmdHits + ' command(s) in code formatting.' : 'No build, test or lint commands in code formatting.',
+    'Add a Commands section with exact install, build and lint commands in a code block, e.g. `npm run build`. Agents cannot guess your scripts.');
+  const hasTestCmd = /\b(npm (run )?test|pnpm (-r |run )?test|yarn test|pytest|jest|vitest|go test|cargo test|rspec|mvn test|gradle test|dotnet test|make test|bun test|deno test)\b/i.test(codeBits);
+  const testWord = /\b(test|tests|testing)\b/i.test(t);
+  add('testcmd', 'Has a test command', 15, hasTestCmd ? 15 : testWord ? 5 : 0,
+    hasTestCmd ? 'A test command is documented.' : testWord ? 'Tests are mentioned but no runnable test command is given.' : 'Testing is not mentioned.',
+    'Add the exact test command in a code block, how to run a single test, and a rule such as "run tests before finishing a task".');
+  const askHit = /\b(ask (first|before|me|the user)|ask-first|confirm (with|before)|get approval|needs? approval|requires? approval)\b/i.test(t);
+  const neverHit = /\b(never|do not|don't|must not|must never|forbidden|off[- ]limits)\b/i.test(t);
+  const bHeading = /^#{1,4}\s.*\b(boundar|guardrail|never|do not|don'?t|permissions?|ask first)/im.test(t);
+  const bPts = (askHit ? 6 : 0) + (neverHit ? 6 : 0) + (bHeading ? 3 : 0);
+  add('boundaries', 'Defines agent boundaries (ask first / never)', 15, bPts,
+    'Ask-first rules: ' + (askHit ? 'yes' : 'no') + '. Never rules: ' + (neverHit ? 'yes' : 'no') + '. Boundaries heading: ' + (bHeading ? 'yes' : 'no') + '.',
+    'Add a Boundaries section with "Ask first" (dependencies, schema or CI changes, deleting files) and "Never" (force-push, committing secrets, editing generated files).');
+  const treeLines = ls.filter(function (l) { return /[├└│]|^\s*[-*]?\s*`?[\w.@-]+\/`?\s*(-|:|—|–|#|$)/.test(l); }).length;
+  const dirHeading = /^#{1,4}\s.*\b(structure|layout|directory|directories|architecture|repo map|codebase|project map)\b/im.test(t);
+  add('dirmap', 'Has a repo layout', 10, treeLines >= 3 || (dirHeading && treeLines >= 1) ? 10 : treeLines >= 1 || dirHeading ? 5 : 0,
+    treeLines ? 'Found ' + treeLines + ' directory entries.' : dirHeading ? 'A structure heading exists but few directories are listed.' : 'No repo layout found.',
+    'Add a short map of top-level folders, e.g. `src/api/ - route handlers`, so the agent opens the right files first.');
+  let lenPts = 10, lenFix = '';
+  if (n > 500) { lenPts = 0; lenFix = 'Cut it below 300 lines. Move detail into linked docs, or into nested AGENTS.md files per package.'; }
+  else if (n > 300) { lenPts = 4; lenFix = 'Trim to under 300 lines. Keep only what the agent cannot infer from code and link to the rest.'; }
+  else if (n < 10) { lenPts = 3; lenFix = 'Too short to be useful. Add commands, layout and boundaries (aim for 40 to 120 lines).'; }
+  add('length', 'Length is sane (under 300 lines)', 10, lenPts, n + ' lines.', lenFix);
+  const vagueLines = [];
+  ls.forEach(function (l, i) { const ll = l.toLowerCase(); const p = VAGUE.find(function (v) { return ll.indexOf(v) !== -1; }); if (p) vagueLines.push('line ' + (i + 1) + ' "' + p + '"'); });
+  add('vague', 'No vague filler rules', 15, Math.max(0, 15 - vagueLines.length * 5),
+    vagueLines.length ? 'Found ' + vagueLines.slice(0, 6).join(', ') + '.' : 'No generic filler phrases found.',
+    'Replace vague advice with a checkable rule. Instead of "write clean code": "functions under 40 lines, no default exports, run `npm run lint` before finishing".');
+  const secretHits = SECRET_RES.filter(function (r) { return r[1].test(t); }).map(function (r) { return r[0]; });
+  add('secrets', 'No secrets in the file', 10, secretHits.length ? 0 : 10,
+    secretHits.length ? 'Possible secret detected: ' + secretHits.join('; ') + '.' : 'No secret patterns detected.',
+    'Remove the value now and rotate the credential if it was ever committed. AGENTS.md is plain text in your repo; reference env var names only.');
+  const heads = ['command|setup|build|install|development', 'structure|layout|architecture|directory|repo', 'style|convention|format|lint', 'test', 'pull request|\\bPR\\b|commit|git', 'security|secret|safety', 'boundar|guardrail|never'];
+  const present = heads.filter(function (h) { return new RegExp('^#{1,4}\\s.*(' + h + ')', 'im').test(t); }).length;
+  add('sections', 'Uses standard sections', 5, present >= 5 ? 5 : present >= 3 ? 3 : present >= 1 ? 1 : 0,
+    present + ' of 7 standard section types found (commands, structure, style, testing, PRs, security, boundaries).',
+    'Organize with clear headings: Commands, Project structure, Code style, Testing, Pull requests, Security, Boundaries.');
+  const gitOk = /\b(commit|branch|pull request|\bPR\b|conventional commits|rebase|merge)\b/i.test(t);
+  add('git', 'Has PR / commit conventions', 5, gitOk ? 5 : 0, gitOk ? 'Git conventions mentioned.' : 'No commit or PR conventions.',
+    'State your commit message format, branch naming and what must pass before a PR is opened.');
+  const sec = /\.env|secret|credential|api[ _-]?key|token|password|production|destructive|force[- ]push/i.test(t);
+  add('security', 'Has security rules', 5, sec ? 5 : 0, sec ? 'Secrets or security are addressed.' : 'No security guidance.',
+    'Add a line on secrets (never commit .env, never print keys) and which files or environments are off limits.');
+  const score = checks.reduce(function (a, c) { return a + c.pts; }, 0);
+  return { score: score, checks: checks };
+}
+
+const SECTION_MAP = [
+  ['Boundaries', /never|boundar|guardrail|don'?t|do not|avoid|forbidden|permission|ask first|off[- ]limits/i],
+  ['Security', /secur|secret|credential|safety|privacy/i],
+  ['Commands', /command|build|install|setup|run|develop|script|getting started/i],
+  ['Testing', /test|qa|verif/i],
+  ['Project structure', /structure|layout|architecture|director|repo|codebase|overview|map/i],
+  ['Code style', /style|convention|format|lint|naming|pattern|coding|typescript|python|rules/i],
+  ['Pull requests and commits', /git|commit|pull request|\bpr\b|branch|review/i]
+];
+const ORDER = ['Commands', 'Project structure', 'Code style', 'Testing', 'Pull requests and commits', 'Security', 'Boundaries', 'Notes'];
+
+function classify(s) {
+  for (let i = 0; i < SECTION_MAP.length; i++) if (SECTION_MAP[i][1].test(s)) return SECTION_MAP[i][0];
+  return null;
+}
+
+// Maps CLAUDE.md / .cursorrules content into AGENTS.md sections. Returns { text, notes[] }.
+function convertDoc(text) {
+  const notes = [];
+  const buckets = {};
+  ORDER.forEach(function (k) { buckets[k] = []; });
+  const ls = String(text || '').split(/\r?\n/);
+  const hasHeadings = ls.some(function (l) { return /^#{1,4}\s+\S/.test(l); });
+  let cur = null, inFence = false, mapped = 0, unmapped = [];
+  let curFromHeading = false;
+  ls.forEach(function (raw) {
+    const l = raw.replace(/\s+$/, '');
+    if (/^```/.test(l.trim())) inFence = !inFence;
+    const h = !inFence && l.match(/^#{1,4}\s+(.*\S)/);
+    if (h && hasHeadings) {
+      if (/^(claude\.md|agents\.md|\.cursorrules|cursor rules)$/i.test(h[1].trim())) { cur = null; curFromHeading = false; return; }
+      cur = classify(h[1]); curFromHeading = true;
+      if (cur) mapped++; else { cur = 'Notes'; unmapped.push(h[1]); }
+      if (cur === 'Notes') buckets.Notes.push('### ' + h[1]);
+      return;
+    }
+    if (!l.trim() && !buckets[cur || 'Notes'].length) return;
+    if (/@[\w./-]+\.md\b/.test(l) && /^\s*@/.test(l)) { notes.push('Dropped import line "' + l.trim() + '" (@-imports are Claude Code specific). Inline the content or link it.'); return; }
+    let target = cur;
+    if (!hasHeadings) { target = classify(l) || 'Notes'; if (!inFence && /^\s*[-*]|^\S/.test(l) && l.trim()) { if (target !== 'Notes') mapped++; } }
+    if (!target) target = 'Notes';
+    buckets[target].push(l);
+  });
+  if (!hasHeadings) notes.push('No headings found, so lines were sorted into sections by keyword. Check the grouping.');
+  if (unmapped.length) notes.push('Kept as Notes (no matching section): ' + unmapped.join(', ') + '.');
+  const claudeRefs = ls.filter(function (l) { return /\bclaude\b/i.test(l) && !/^#{1,4}\s/.test(l); }).length;
+  if (claudeRefs) notes.push(claudeRefs + ' line(s) mention Claude by name. Reword them to be tool-neutral so every agent can follow them.');
+  const out = ['# AGENTS.md', ''];
+  ORDER.forEach(function (k) {
+    const body = buckets[k].slice();
+    while (body.length && !body[0].trim()) body.shift();
+    while (body.length && !body[body.length - 1].trim()) body.pop();
+    if (!body.length) return;
+    out.push('## ' + k, '');
+    body.forEach(function (b) { out.push(b); });
+    out.push('');
+  });
+  const missing = ORDER.slice(0, 7).filter(function (k) { return !buckets[k].some(function (x) { return x.trim(); }); });
+  if (missing.length) notes.push('Missing sections you may want to add: ' + missing.join(', ') + '.');
+  while (out.length && out[out.length - 1] === '') out.pop();
+  return { text: out.join('\n') + '\n', notes: notes };
+}
+// </core>
+
+(function () {
+  const $ = function (id) { return document.getElementById(id); };
+  function el(tag, text, cls) { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+  const FIELDS = ['pname', 'stack', 'cmds', 'style', 'dirs', 'git', 'safety', 'ask', 'never'];
+  let current = '', converted = '';
+
+  function form() {
+    return { name: $('pname').value, stack: $('stack').value, cmds: $('cmds').value, style: $('style').value, dirs: $('dirs').value, git: $('git').value, safety: $('safety').value, ask: $('ask').value, never: $('never').value };
+  }
+  function render() { current = generate(form()); $('out').textContent = current; }
+  $('pane-build').addEventListener('input', function (e) { if (e.target.closest('.f-row')) render(); });
+
+  $('presets').addEventListener('click', function (e) {
+    const b = e.target.closest('button'); if (!b) return;
+    const p = PRESETS[b.getAttribute('data-pre')] || {};
+    FIELDS.forEach(function (id) { if (id !== 'pname') $(id).value = p[id] || ''; });
+    render();
+  });
+
+  function showPane(name) {
+    $('pane-build').style.display = name === 'build' ? '' : 'none';
+    $('pane-lint').style.display = name === 'lint' ? '' : 'none';
+    Array.prototype.forEach.call($('maintabs').children, function (x) { x.classList.toggle('on', x.getAttribute('data-p') === name); });
+  }
+  $('maintabs').addEventListener('click', function (e) { const b = e.target.closest('button'); if (b) showPane(b.getAttribute('data-p')); });
+
+  function copy(text, btn) {
+    const done = function () { const o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+  }
+  function download(text) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/markdown' }));
+    a.download = 'AGENTS.md';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+  $('copy-btn').addEventListener('click', function () { copy(current, this); });
+  $('dl-btn').addEventListener('click', function () { download(current); });
+
+  function runScore(text) {
+    const note = $('sc-note');
+    note.style.display = 'none';
+    if (!text.trim()) { note.textContent = 'Paste a file first.'; note.style.display = 'block'; return; }
+    const r = scoreDoc(text);
+    $('sc-score').textContent = r.score + ' / 100';
+    const fails = r.checks.filter(function (c) { return c.level !== 'pass'; }).length;
+    $('sc-meta').textContent = fails ? fails + ' check(s) need attention' : 'All checks passed';
+    const box = $('sc-items'); box.textContent = '';
+    r.checks.slice().sort(function (a, b) { return (b.max - b.pts) - (a.max - a.pts); }).forEach(function (c) {
+      const d = el('div', '', 'lint-f');
+      const h = document.createElement('h4');
+      h.appendChild(el('span', c.level, 'sev sev-' + c.level));
+      h.appendChild(document.createTextNode(c.title + ' (' + c.pts + '/' + c.max + ')'));
+      d.appendChild(h);
+      d.appendChild(el('p', c.detail));
+      if (c.fix) d.appendChild(el('p', 'Fix: ' + c.fix, 'fix'));
+      box.appendChild(d);
+    });
+    $('sc-results').style.display = 'block';
+    $('sc-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('sc-btn').addEventListener('click', function () { runScore($('sc-input').value); });
+  $('score-btn').addEventListener('click', function () { showPane('lint'); $('sc-input').value = current; runScore(current); });
+
+  $('cv-btn').addEventListener('click', function () {
+    const v = $('cv-input').value;
+    if (!v.trim()) { $('cv-note').textContent = 'Paste a CLAUDE.md or .cursorrules first.'; return; }
+    const r = convertDoc(v);
+    converted = r.text;
+    $('cv-out').textContent = converted; $('cv-out').style.display = 'block'; $('cv-actions').style.display = 'flex';
+    const n = $('cv-note'); n.textContent = '';
+    if (r.notes.length) { const ul = document.createElement('ul'); r.notes.forEach(function (x) { ul.appendChild(el('li', x)); }); n.appendChild(ul); }
+  });
+  $('cv-copy').addEventListener('click', function () { copy(converted, this); });
+  $('cv-dl').addEventListener('click', function () { download(converted); });
+  $('cv-score').addEventListener('click', function () { $('sc-input').value = converted; runScore(converted); });
+
+  $('subscribe-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = $('sub-btn'), errorEl = $('sub-error');
+    const email = $('sub-email').value.trim();
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.frankfor.you/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'agents-md-builder-tool' })
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      $('sub-download').href = data.downloadUrl;
+      $('subscribe-form').style.display = 'none';
+      $('sub-success').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Get the free pack';
+    }
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

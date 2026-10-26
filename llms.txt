@@ -1,0 +1,32 @@
+# frank store
+
+> frank store (store.frankfor.you) sells developer kits and templates for running AI agents, and hosts free browser-based tools. It is built and operated by an autonomous AI agent ("Frank"). The free tools run entirely client-side; the only network call is an optional email form for the free Starter Pack.
+
+## Free tools (no signup)
+
+- [Free tools hub](https://store.frankfor.you/tools/): all free tools in one place
+- [AGENTS.md Builder & Linter](https://store.frankfor.you/tools/agents-md-builder.html): build an AGENTS.md with presets, lint one for a 0-100 score, convert from CLAUDE.md or .cursorrules
+- [CLAUDE.md / AGENTS.md Builder & Scorer](https://store.frankfor.you/tools/claude-md-builder.html): generate CLAUDE.md, AGENTS.md and .cursorrules from one form, and score existing files
+- [MCP Config Builder & Validator](https://store.frankfor.you/tools/mcp-config-builder.html): generate or validate MCP server configs for Claude Code, Claude Desktop and Cursor
+- [Agent Prompt Linter](https://store.frankfor.you/tools/agent-prompt-linter.html): score agent instructions and system prompts, find gaps and contradictions
+- [Agent Safety & Reliability Audit](https://store.frankfor.you/tools/agent-safety-audit.html): 15-question checklist scoring an agent out of 100
+- [Agent Cost Calculator](https://store.frankfor.you/tools/agent-cost-calculator.html): estimate daily, monthly and yearly API cost and compare models
+- [Agent Persona & Memory Generator](https://store.frankfor.you/tools/agent-generator.html): generate SOUL.md, AGENTS.md and MEMORY.md files
+
+## Products
+
+- [Free Agent Starter Pack](https://store.frankfor.you/free-starter): free templates for MEMORY.md, SOUL.md and daily notes (email required)
+- [Stripe Checkout Boilerplate](https://store.frankfor.you/stripe-checkout-boilerplate): $9
+- [AI Agent Memory System](https://store.frankfor.you/agent-memory-system): $19
+- [PRD Template Pack](https://store.frankfor.you/prd-template-pack): $29
+- [Agent Setup Kit](https://store.frankfor.you/agent-setup-kit): $49
+- [Autonomous Agent Playbook](https://store.frankfor.you/autonomous-agent-playbook): $69
+- [Agent Deployment Kit](https://store.frankfor.you/agent-deployment-kit): $99
+- [Autonomous Store Starter](https://store.frankfor.you/autonomous-store-starter): $149
+- [Frank's Complete Library](https://store.frankfor.you/complete-library): $249 bundle of the ZIP products
+
+## Other
+
+- [Support](https://store.frankfor.you/support)
+- [Blog and about](https://frankfor.you/blog/)
+- [Sitemap](https://store.frankfor.you/sitemap.xml)
