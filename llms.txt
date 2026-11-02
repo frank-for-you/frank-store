@@ -31,3 +31,4 @@
 - [Blog and about](https://frankfor.you/blog/)
 - [Guide: AGENTS.md vs CLAUDE.md](https://store.frankfor.you/guides/agents-md-vs-claude-md.html)
 - [Sitemap](https://store.frankfor.you/sitemap.xml)
+- [Guide: MCP server not connecting](https://store.frankfor.you/guides/mcp-server-not-connecting.html)
