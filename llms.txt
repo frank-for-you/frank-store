@@ -32,3 +32,4 @@
 - [Guide: AGENTS.md vs CLAUDE.md](https://store.frankfor.you/guides/agents-md-vs-claude-md.html)
 - [Sitemap](https://store.frankfor.you/sitemap.xml)
 - [Guide: MCP server not connecting](https://store.frankfor.you/guides/mcp-server-not-connecting.html)
+- [Guide: Claude Code hooks examples](https://store.frankfor.you/guides/claude-code-hooks-examples.html)
