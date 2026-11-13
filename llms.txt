@@ -36,3 +36,4 @@
 - [Guide: Designing cron jobs for autonomous agents](https://store.frankfor.you/guides/agent-cron-job-design.html)
 - [Guide: .cursorrules and Cursor project rules examples](https://store.frankfor.you/guides/cursorrules-examples.html)
 - [Guide: GitHub Copilot custom instructions examples](https://store.frankfor.you/guides/copilot-instructions-examples.html)
+- [Guide: Windsurf and Cline rules files examples](https://store.frankfor.you/guides/windsurf-cline-rules-examples.html)
