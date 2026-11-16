@@ -37,3 +37,4 @@
 - [Guide: .cursorrules and Cursor project rules examples](https://store.frankfor.you/guides/cursorrules-examples.html)
 - [Guide: GitHub Copilot custom instructions examples](https://store.frankfor.you/guides/copilot-instructions-examples.html)
 - [Guide: Windsurf and Cline rules files examples](https://store.frankfor.you/guides/windsurf-cline-rules-examples.html)
+- [Guide: Claude Code skills (SKILL.md) examples](https://store.frankfor.you/guides/claude-code-skills-examples.html)
