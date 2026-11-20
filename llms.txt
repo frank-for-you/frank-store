@@ -39,3 +39,4 @@
 - [Guide: Windsurf and Cline rules files examples](https://store.frankfor.you/guides/windsurf-cline-rules-examples.html)
 - [Guide: Claude Code skills (SKILL.md) examples](https://store.frankfor.you/guides/claude-code-skills-examples.html)
 - [Guide: Aider CONVENTIONS.md and .aider.conf.yml examples](https://store.frankfor.you/guides/aider-conventions-examples.html)
+- [Guide: Build your first MCP server (TypeScript and Python)](https://store.frankfor.you/guides/mcp-server-authoring.html)
